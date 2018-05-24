@@ -2,22 +2,22 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Container class="javax.swing.JDialog" name="Crear_Var">
+    <Container class="javax.swing.JDialog" name="Crear_Fij">
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+              <Component id="jp_fija" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+              <Component id="jp_fija" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel2">
+        <Container class="javax.swing.JPanel" name="jp_fija">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="99" green="99" red="0" type="rgb"/>
@@ -27,7 +27,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -36,71 +36,88 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jTextField1" min="-2" pref="125" max="-2" attributes="0"/>
-                          <Component id="jSpinner1" min="-2" pref="46" max="-2" attributes="0"/>
+                          <Component id="tf_nombre" min="-2" pref="125" max="-2" attributes="0"/>
+                          <Component id="js_longitud" min="-2" pref="46" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jRadioButton4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jRadioButton3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jRadioButton1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rb_char" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rb_string" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jRadioButton5" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jRadioButton6" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jRadioButton7" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rb_double" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rb_float" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="rb_long" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="rb_int" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="rb_short" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jButton18" linkSize="4" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jButton20" linkSize="4" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace pref="34" max="32767" attributes="0"/>
+                      <EmptySpace pref="22" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButton18" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel8" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tf_nombre" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jSpinner1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="js_longitud" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jRadioButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jRadioButton5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="rb_string" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rb_double" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rb_int" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rb_short" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jRadioButton3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jRadioButton6" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="rb_float" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rb_long" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="rb_char" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jRadioButton4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jRadioButton7" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton18" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton20" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButton18" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="28" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+            <Component class="javax.swing.JRadioButton" name="rb_string">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="0" type="rgb"/>
@@ -115,7 +132,7 @@
                 <Property name="text" type="java.lang.String" value="String"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton1ActionPerformed"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rb_stringMouseClicked"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
@@ -126,9 +143,9 @@
                 <Property name="text" type="java.lang.String" value="Nombre del Campo:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="tf_nombre">
             </Component>
-            <Component class="javax.swing.JSpinner" name="jSpinner1">
+            <Component class="javax.swing.JSpinner" name="js_longitud">
               <Properties>
                 <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
                   <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
@@ -154,7 +171,7 @@
                 <Property name="text" type="java.lang.String" value="Tipo de Dato:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton3">
+            <Component class="javax.swing.JRadioButton" name="rb_char">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="0" type="rgb"/>
@@ -167,8 +184,11 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Char"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rb_charMouseClicked"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton4">
+            <Component class="javax.swing.JRadioButton" name="rb_int">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="0" type="rgb"/>
@@ -182,10 +202,10 @@
                 <Property name="text" type="java.lang.String" value="Int"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton4ActionPerformed"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rb_intMouseClicked"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton5">
+            <Component class="javax.swing.JRadioButton" name="rb_double">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="0" type="rgb"/>
@@ -198,8 +218,11 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Double"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rb_doubleMouseClicked"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton6">
+            <Component class="javax.swing.JRadioButton" name="rb_float">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="0" type="rgb"/>
@@ -212,8 +235,11 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Float"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rb_floatMouseClicked"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton7">
+            <Component class="javax.swing.JRadioButton" name="rb_long">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="0" type="rgb"/>
@@ -227,19 +253,65 @@
                 <Property name="text" type="java.lang.String" value="Long"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton7ActionPerformed"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rb_longMouseClicked"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton18">
               <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="99" red="0" type="rgb"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Agregar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton18MouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="rb_short">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="99" red="0" type="rgb"/>
+                </Property>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="dato"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Short"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rb_shortMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton20">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="99" red="0" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Salir"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton20MouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel8">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Corbel" size="24" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="Campo de Longitud Fija"/>
               </Properties>
             </Component>
           </SubComponents>
         </Container>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JDialog" name="Crear_Fij">
+    <Container class="javax.swing.JDialog" name="Crear_Var">
 
       <Layout>
         <DimensionLayout dim="0">
@@ -264,7 +336,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -273,73 +345,89 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
-                              <Component id="jButton19" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTextField2" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jRadioButton9" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jRadioButton8" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jRadioButton2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          <Component id="jRadioButton10" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="rb_char1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="rb_string1" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jRadioButton12" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jRadioButton11" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                              <Component id="rb_double1" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Component id="rb_float1" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
+                                  <Component id="tf_nombre1" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="rb_short1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                      <Component id="rb_int1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="rb_long1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="jButton19" linkSize="5" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jButton21" linkSize="5" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace pref="28" max="32767" attributes="0"/>
+                      <EmptySpace pref="64" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel6" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tf_nombre1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jRadioButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jRadioButton10" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="rb_string1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rb_double1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rb_short1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rb_int1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jRadioButton8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jRadioButton11" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="rb_char1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="rb_float1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="rb_long1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jRadioButton9" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jRadioButton12" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton21" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton19" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButton19" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="33" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+            <Component class="javax.swing.JRadioButton" name="rb_string1">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="0" type="rgb"/>
@@ -362,7 +450,7 @@
                 <Property name="text" type="java.lang.String" value="Nombre del Campo:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField2">
+            <Component class="javax.swing.JTextField" name="tf_nombre1">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">
               <Properties>
@@ -375,7 +463,7 @@
                 <Property name="text" type="java.lang.String" value="Tipo de Dato:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton8">
+            <Component class="javax.swing.JRadioButton" name="rb_char1">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="0" type="rgb"/>
@@ -389,7 +477,7 @@
                 <Property name="text" type="java.lang.String" value="Char"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton9">
+            <Component class="javax.swing.JRadioButton" name="rb_int1">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="0" type="rgb"/>
@@ -403,10 +491,10 @@
                 <Property name="text" type="java.lang.String" value="Int"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton9ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rb_int1ActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton10">
+            <Component class="javax.swing.JRadioButton" name="rb_double1">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="0" type="rgb"/>
@@ -419,8 +507,11 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Double"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rb_double1ActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton11">
+            <Component class="javax.swing.JRadioButton" name="rb_float1">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="0" type="rgb"/>
@@ -434,7 +525,7 @@
                 <Property name="text" type="java.lang.String" value="Float"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton12">
+            <Component class="javax.swing.JRadioButton" name="rb_long1">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="0" type="rgb"/>
@@ -447,13 +538,53 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Long"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton12ActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton19">
               <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="99" red="0" type="rgb"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Agregar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton19MouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="rb_short1">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="99" red="0" type="rgb"/>
+                </Property>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="dato2"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Short"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton21">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="99" red="0" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Salir"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton21MouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel6">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Corbel" size="24" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="Campo de Longitud Variable"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -493,7 +624,10 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -519,7 +653,9 @@
                           <EmptySpace min="-2" pref="331" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Component id="jLabel9" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="189" max="-2" attributes="0"/>
                       </Group>
@@ -533,15 +669,22 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTabbedPane1" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <Component id="jButton16" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="jTabbedPane1" pref="361" max="32767" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                  <Component id="jButton16" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -563,30 +706,15 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton17" min="-2" pref="99" max="-2" attributes="0"/>
-                          <EmptySpace pref="179" max="32767" attributes="0"/>
-                      </Group>
+                      <EmptySpace min="0" pref="288" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="jButton17" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="363" max="32767" attributes="0"/>
-                      </Group>
+                      <EmptySpace min="0" pref="333" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
-              <SubComponents>
-                <Component class="javax.swing.JButton" name="jButton17">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jButton17"/>
-                  </Properties>
-                </Component>
-              </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel3">
               <Constraints>
@@ -623,7 +751,7 @@
                           <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jButton4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="295" max="32767" attributes="0"/>
+                          <EmptySpace pref="202" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -707,7 +835,7 @@
                           <Component id="jButton10" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jButton11" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="188" max="32767" attributes="0"/>
+                          <EmptySpace pref="95" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -800,7 +928,7 @@
                           <Component id="jButton12" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jButton13" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="358" max="32767" attributes="0"/>
+                          <EmptySpace pref="265" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -853,7 +981,7 @@
                           <Component id="jButton14" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton15" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="363" max="32767" attributes="0"/>
+                          <EmptySpace pref="270" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -888,8 +1016,17 @@
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel9">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Escriba un Titulo"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Corbel" size="24" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Proyecto"/>
           </Properties>
         </Component>
       </SubComponents>

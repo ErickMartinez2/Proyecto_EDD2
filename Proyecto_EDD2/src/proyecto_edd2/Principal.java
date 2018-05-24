@@ -5,6 +5,13 @@
  */
 package proyecto_edd2;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,9 +23,15 @@ public class Principal extends javax.swing.JFrame {
     /**
      * Creates new form Principal
      */
+    //Variables
+    ArrayList<Campo> campos = new ArrayList();
+    File file;
+
     public Principal() {
         initComponents();
         this.setLocationRelativeTo(this);
+        Crear_Fij.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        Crear_Var.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
 
     /**
@@ -30,38 +43,43 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Crear_Var = new javax.swing.JDialog();
-        jPanel2 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        Crear_Fij = new javax.swing.JDialog();
+        jp_fija = new javax.swing.JPanel();
+        rb_string = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jSpinner1 = new javax.swing.JSpinner();
+        tf_nombre = new javax.swing.JTextField();
+        js_longitud = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
+        rb_char = new javax.swing.JRadioButton();
+        rb_int = new javax.swing.JRadioButton();
+        rb_double = new javax.swing.JRadioButton();
+        rb_float = new javax.swing.JRadioButton();
+        rb_long = new javax.swing.JRadioButton();
         jButton18 = new javax.swing.JButton();
-        Crear_Fij = new javax.swing.JDialog();
+        rb_short = new javax.swing.JRadioButton();
+        jButton20 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        Crear_Var = new javax.swing.JDialog();
         jPanel8 = new javax.swing.JPanel();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rb_string1 = new javax.swing.JRadioButton();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        tf_nombre1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jRadioButton8 = new javax.swing.JRadioButton();
-        jRadioButton9 = new javax.swing.JRadioButton();
-        jRadioButton10 = new javax.swing.JRadioButton();
-        jRadioButton11 = new javax.swing.JRadioButton();
-        jRadioButton12 = new javax.swing.JRadioButton();
+        rb_char1 = new javax.swing.JRadioButton();
+        rb_int1 = new javax.swing.JRadioButton();
+        rb_double1 = new javax.swing.JRadioButton();
+        rb_float1 = new javax.swing.JRadioButton();
+        rb_long1 = new javax.swing.JRadioButton();
         jButton19 = new javax.swing.JButton();
+        rb_short1 = new javax.swing.JRadioButton();
+        jButton21 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         dato = new javax.swing.ButtonGroup();
         dato2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel7 = new javax.swing.JPanel();
-        jButton17 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -83,24 +101,25 @@ public class Principal extends javax.swing.JFrame {
         jButton15 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
-        jPanel2.setBackground(new java.awt.Color(0, 153, 153));
+        jp_fija.setBackground(new java.awt.Color(0, 153, 153));
 
-        jRadioButton1.setBackground(new java.awt.Color(0, 153, 153));
-        dato.add(jRadioButton1);
-        jRadioButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("String");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+        rb_string.setBackground(new java.awt.Color(0, 153, 153));
+        dato.add(rb_string);
+        rb_string.setForeground(new java.awt.Color(255, 255, 255));
+        rb_string.setSelected(true);
+        rb_string.setText("String");
+        rb_string.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rb_stringMouseClicked(evt);
             }
         });
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre del Campo:");
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        js_longitud.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Longitud:");
@@ -109,121 +128,181 @@ public class Principal extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Tipo de Dato:");
 
-        jRadioButton3.setBackground(new java.awt.Color(0, 153, 153));
-        dato.add(jRadioButton3);
-        jRadioButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton3.setText("Char");
-
-        jRadioButton4.setBackground(new java.awt.Color(0, 153, 153));
-        dato.add(jRadioButton4);
-        jRadioButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton4.setText("Int");
-        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton4ActionPerformed(evt);
+        rb_char.setBackground(new java.awt.Color(0, 153, 153));
+        dato.add(rb_char);
+        rb_char.setForeground(new java.awt.Color(255, 255, 255));
+        rb_char.setText("Char");
+        rb_char.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rb_charMouseClicked(evt);
             }
         });
 
-        jRadioButton5.setBackground(new java.awt.Color(0, 153, 153));
-        dato.add(jRadioButton5);
-        jRadioButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton5.setText("Double");
-
-        jRadioButton6.setBackground(new java.awt.Color(0, 153, 153));
-        dato.add(jRadioButton6);
-        jRadioButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton6.setText("Float");
-
-        jRadioButton7.setBackground(new java.awt.Color(0, 153, 153));
-        dato.add(jRadioButton7);
-        jRadioButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton7.setText("Long");
-        jRadioButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton7ActionPerformed(evt);
+        rb_int.setBackground(new java.awt.Color(0, 153, 153));
+        dato.add(rb_int);
+        rb_int.setForeground(new java.awt.Color(255, 255, 255));
+        rb_int.setText("Int");
+        rb_int.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rb_intMouseClicked(evt);
             }
         });
 
+        rb_double.setBackground(new java.awt.Color(0, 153, 153));
+        dato.add(rb_double);
+        rb_double.setForeground(new java.awt.Color(255, 255, 255));
+        rb_double.setText("Double");
+        rb_double.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rb_doubleMouseClicked(evt);
+            }
+        });
+
+        rb_float.setBackground(new java.awt.Color(0, 153, 153));
+        dato.add(rb_float);
+        rb_float.setForeground(new java.awt.Color(255, 255, 255));
+        rb_float.setText("Float");
+        rb_float.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rb_floatMouseClicked(evt);
+            }
+        });
+
+        rb_long.setBackground(new java.awt.Color(0, 153, 153));
+        dato.add(rb_long);
+        rb_long.setForeground(new java.awt.Color(255, 255, 255));
+        rb_long.setText("Long");
+        rb_long.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rb_longMouseClicked(evt);
+            }
+        });
+
+        jButton18.setBackground(new java.awt.Color(0, 153, 153));
         jButton18.setText("Agregar");
+        jButton18.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton18MouseClicked(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        rb_short.setBackground(new java.awt.Color(0, 153, 153));
+        dato.add(rb_short);
+        rb_short.setForeground(new java.awt.Color(255, 255, 255));
+        rb_short.setText("Short");
+        rb_short.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rb_shortMouseClicked(evt);
+            }
+        });
+
+        jButton20.setBackground(new java.awt.Color(0, 153, 153));
+        jButton20.setText("Salir");
+        jButton20.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton20MouseClicked(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Corbel", 1, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Campo de Longitud Fija");
+
+        javax.swing.GroupLayout jp_fijaLayout = new javax.swing.GroupLayout(jp_fija);
+        jp_fija.setLayout(jp_fijaLayout);
+        jp_fijaLayout.setHorizontalGroup(
+            jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jp_fijaLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton4)
-                            .addComponent(jRadioButton3)
-                            .addComponent(jRadioButton1))
+                .addGroup(jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tf_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(js_longitud, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jp_fijaLayout.createSequentialGroup()
+                        .addGroup(jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rb_char)
+                            .addComponent(rb_string))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton5)
-                            .addComponent(jRadioButton6)
-                            .addComponent(jRadioButton7))))
-                .addContainerGap(34, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton18)
-                .addGap(62, 62, 62))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jRadioButton1)
-                        .addComponent(jRadioButton5)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton7))
-                .addGap(18, 18, 18)
-                .addComponent(jButton18)
-                .addContainerGap(28, Short.MAX_VALUE))
+                        .addGroup(jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rb_double)
+                            .addComponent(rb_float))
+                        .addGap(18, 18, 18)
+                        .addGroup(jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rb_long)
+                            .addGroup(jp_fijaLayout.createSequentialGroup()
+                                .addComponent(rb_int)
+                                .addGap(18, 18, 18)
+                                .addComponent(rb_short))))
+                    .addGroup(jp_fijaLayout.createSequentialGroup()
+                        .addComponent(jButton18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton20)))
+                .addContainerGap(22, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_fijaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        javax.swing.GroupLayout Crear_VarLayout = new javax.swing.GroupLayout(Crear_Var.getContentPane());
-        Crear_Var.getContentPane().setLayout(Crear_VarLayout);
-        Crear_VarLayout.setHorizontalGroup(
-            Crear_VarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        jp_fijaLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton18, jButton20});
+
+        jp_fijaLayout.setVerticalGroup(
+            jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_fijaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(tf_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(js_longitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addGroup(jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rb_string)
+                        .addComponent(rb_double)
+                        .addComponent(rb_int)
+                        .addComponent(rb_short)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rb_float)
+                        .addComponent(rb_long))
+                    .addComponent(rb_char))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton18)
+                    .addComponent(jButton20))
+                .addContainerGap())
         );
-        Crear_VarLayout.setVerticalGroup(
-            Crear_VarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+
+        javax.swing.GroupLayout Crear_FijLayout = new javax.swing.GroupLayout(Crear_Fij.getContentPane());
+        Crear_Fij.getContentPane().setLayout(Crear_FijLayout);
+        Crear_FijLayout.setHorizontalGroup(
+            Crear_FijLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jp_fija, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        Crear_FijLayout.setVerticalGroup(
+            Crear_FijLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jp_fija, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel8.setBackground(new java.awt.Color(0, 153, 153));
 
-        jRadioButton2.setBackground(new java.awt.Color(0, 153, 153));
-        dato2.add(jRadioButton2);
-        jRadioButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton2.setSelected(true);
-        jRadioButton2.setText("String");
+        rb_string1.setBackground(new java.awt.Color(0, 153, 153));
+        dato2.add(rb_string1);
+        rb_string1.setForeground(new java.awt.Color(255, 255, 255));
+        rb_string1.setSelected(true);
+        rb_string1.setText("String");
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Nombre del Campo:");
@@ -232,42 +311,66 @@ public class Principal extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Tipo de Dato:");
 
-        jRadioButton8.setBackground(new java.awt.Color(0, 153, 153));
-        dato2.add(jRadioButton8);
-        jRadioButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton8.setText("Char");
+        rb_char1.setBackground(new java.awt.Color(0, 153, 153));
+        dato2.add(rb_char1);
+        rb_char1.setForeground(new java.awt.Color(255, 255, 255));
+        rb_char1.setText("Char");
 
-        jRadioButton9.setBackground(new java.awt.Color(0, 153, 153));
-        dato2.add(jRadioButton9);
-        jRadioButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton9.setText("Int");
-        jRadioButton9.addActionListener(new java.awt.event.ActionListener() {
+        rb_int1.setBackground(new java.awt.Color(0, 153, 153));
+        dato2.add(rb_int1);
+        rb_int1.setForeground(new java.awt.Color(255, 255, 255));
+        rb_int1.setText("Int");
+        rb_int1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton9ActionPerformed(evt);
+                rb_int1ActionPerformed(evt);
             }
         });
 
-        jRadioButton10.setBackground(new java.awt.Color(0, 153, 153));
-        dato2.add(jRadioButton10);
-        jRadioButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton10.setText("Double");
-
-        jRadioButton11.setBackground(new java.awt.Color(0, 153, 153));
-        dato2.add(jRadioButton11);
-        jRadioButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton11.setText("Float");
-
-        jRadioButton12.setBackground(new java.awt.Color(0, 153, 153));
-        dato2.add(jRadioButton12);
-        jRadioButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton12.setText("Long");
-        jRadioButton12.addActionListener(new java.awt.event.ActionListener() {
+        rb_double1.setBackground(new java.awt.Color(0, 153, 153));
+        dato2.add(rb_double1);
+        rb_double1.setForeground(new java.awt.Color(255, 255, 255));
+        rb_double1.setText("Double");
+        rb_double1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton12ActionPerformed(evt);
+                rb_double1ActionPerformed(evt);
             }
         });
 
+        rb_float1.setBackground(new java.awt.Color(0, 153, 153));
+        dato2.add(rb_float1);
+        rb_float1.setForeground(new java.awt.Color(255, 255, 255));
+        rb_float1.setText("Float");
+
+        rb_long1.setBackground(new java.awt.Color(0, 153, 153));
+        dato2.add(rb_long1);
+        rb_long1.setForeground(new java.awt.Color(255, 255, 255));
+        rb_long1.setText("Long");
+
+        jButton19.setBackground(new java.awt.Color(0, 153, 153));
         jButton19.setText("Agregar");
+        jButton19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton19MouseClicked(evt);
+            }
+        });
+
+        rb_short1.setBackground(new java.awt.Color(0, 153, 153));
+        dato2.add(rb_short1);
+        rb_short1.setForeground(new java.awt.Color(255, 255, 255));
+        rb_short1.setText("Short");
+
+        jButton21.setBackground(new java.awt.Color(0, 153, 153));
+        jButton21.setText("Salir");
+        jButton21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton21MouseClicked(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Corbel", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Campo de Longitud Variable");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -281,61 +384,77 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jButton19))
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jRadioButton9)
-                                .addComponent(jRadioButton8)
-                                .addComponent(jRadioButton2))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                                    .addGap(0, 0, Short.MAX_VALUE)
-                                    .addComponent(jRadioButton10))
-                                .addGroup(jPanel8Layout.createSequentialGroup()
-                                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jRadioButton12)
-                                        .addComponent(jRadioButton11))
-                                    .addGap(0, 0, Short.MAX_VALUE))))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(rb_char1)
+                                    .addComponent(rb_string1))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(rb_double1))
+                                    .addGroup(jPanel8Layout.createSequentialGroup()
+                                        .addComponent(rb_float1)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(tf_nombre1))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(rb_short1)
+                                .addGap(10, 10, 10)
+                                .addComponent(rb_int1))
+                            .addComponent(rb_long1)))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jButton19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton21)))
+                .addContainerGap(64, Short.MAX_VALUE))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        jPanel8Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton19, jButton21});
+
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_nombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jRadioButton2)
-                        .addComponent(jRadioButton10)))
+                        .addComponent(rb_string1)
+                        .addComponent(rb_double1)
+                        .addComponent(rb_short1)
+                        .addComponent(rb_int1)))
                 .addGap(8, 8, 8)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton8)
-                    .addComponent(jRadioButton11))
+                    .addComponent(rb_char1)
+                    .addComponent(rb_float1)
+                    .addComponent(rb_long1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton9)
-                    .addComponent(jRadioButton12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton19)
-                .addContainerGap(33, Short.MAX_VALUE))
+                    .addComponent(jButton21)
+                    .addComponent(jButton19))
+                .addGap(24, 24, 24))
         );
 
-        javax.swing.GroupLayout Crear_FijLayout = new javax.swing.GroupLayout(Crear_Fij.getContentPane());
-        Crear_Fij.getContentPane().setLayout(Crear_FijLayout);
-        Crear_FijLayout.setHorizontalGroup(
-            Crear_FijLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout Crear_VarLayout = new javax.swing.GroupLayout(Crear_Var.getContentPane());
+        Crear_Var.getContentPane().setLayout(Crear_VarLayout);
+        Crear_VarLayout.setHorizontalGroup(
+            Crear_VarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        Crear_FijLayout.setVerticalGroup(
-            Crear_FijLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        Crear_VarLayout.setVerticalGroup(
+            Crear_VarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -345,23 +464,15 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 204, 204));
         jPanel1.setForeground(new java.awt.Color(0, 102, 102));
 
-        jButton17.setText("jButton17");
-
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(179, Short.MAX_VALUE))
+            .addGap(0, 288, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jButton17)
-                .addContainerGap(363, Short.MAX_VALUE))
+            .addGap(0, 333, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Archivos", jPanel7);
@@ -402,7 +513,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
-                .addContainerGap(295, Short.MAX_VALUE))
+                .addContainerGap(202, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Campos", jPanel3);
@@ -464,7 +575,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jButton10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton11)
-                .addContainerGap(188, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Registros", jPanel4);
@@ -496,7 +607,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jButton12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton13)
-                .addContainerGap(358, Short.MAX_VALUE))
+                .addContainerGap(265, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Indices", jPanel5);
@@ -528,7 +639,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jButton14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton15)
-                .addContainerGap(363, Short.MAX_VALUE))
+                .addContainerGap(270, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Estandarizacion", jPanel6);
@@ -540,7 +651,10 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Escriba un Titulo");
+        jLabel9.setFont(new java.awt.Font("Corbel", 1, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Proyecto");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -553,7 +667,9 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(jButton16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(331, 331, 331))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)
                         .addGap(189, 189, 189)))
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -563,14 +679,18 @@ public class Principal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel1))
+                            .addComponent(jLabel9))
+                        .addGap(10, 10, 10)
+                        .addComponent(jButton16)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel1)
-                .addGap(28, 28, 28)
-                .addComponent(jButton16)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -581,7 +701,9 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -589,7 +711,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del archivo");
-        if (nombre != null) {
+        if (nombre != null && !"".equals(nombre)) {
+            file = new File("./" + nombre + ".txt");
             int num = JOptionPane.showConfirmDialog(this, "¿Quiere sus campos de longitud variable?");
             if (num == 0) {
                 Crear_Var.setModal(true);
@@ -605,25 +728,222 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton16ActionPerformed
 
-    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+    private void rb_int1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_int1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton4ActionPerformed
+    }//GEN-LAST:event_rb_int1ActionPerformed
 
-    private void jRadioButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton7ActionPerformed
+    private void rb_double1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_double1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton7ActionPerformed
+    }//GEN-LAST:event_rb_double1ActionPerformed
 
-    private void jRadioButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton9ActionPerformed
+    private void rb_charMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rb_charMouseClicked
+        js_longitud.setValue(1);
+        js_longitud.setEnabled(false);
+    }//GEN-LAST:event_rb_charMouseClicked
 
-    private void jRadioButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton12ActionPerformed
+    private void rb_stringMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rb_stringMouseClicked
+        js_longitud.setEnabled(true);
+    }//GEN-LAST:event_rb_stringMouseClicked
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    private void rb_doubleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rb_doubleMouseClicked
+        js_longitud.setEnabled(true);
+    }//GEN-LAST:event_rb_doubleMouseClicked
+
+    private void rb_floatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rb_floatMouseClicked
+        js_longitud.setEnabled(true);
+    }//GEN-LAST:event_rb_floatMouseClicked
+
+    private void rb_intMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rb_intMouseClicked
+        js_longitud.setEnabled(true);
+    }//GEN-LAST:event_rb_intMouseClicked
+
+    private void rb_longMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rb_longMouseClicked
+        js_longitud.setEnabled(true);
+    }//GEN-LAST:event_rb_longMouseClicked
+
+    private void rb_shortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rb_shortMouseClicked
+        js_longitud.setEnabled(true);
+    }//GEN-LAST:event_rb_shortMouseClicked
+
+    private void jButton18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseClicked
+        try {
+            String nombre = tf_nombre.getText();
+            String tipo;
+            if (rb_string.isSelected()) {
+                tipo = "String";
+            } else if (rb_int.isSelected()) {
+                tipo = "Int";
+            } else if (rb_long.isSelected()) {
+                tipo = "Long";
+            } else if (rb_char.isSelected()) {
+                tipo = "Char";
+            } else if (rb_double.isSelected()) {
+                tipo = "Double";
+            } else if (rb_short.isSelected()) {
+                tipo = "Short";
+            } else {
+                tipo = "Float";
+            }
+            int longitud = (int) js_longitud.getValue();
+            int respuesta = JOptionPane.showConfirmDialog(Crear_Fij, "¿Desea que el campo " + nombre + " sea la llave principal?");
+            boolean llave;
+            llave = respuesta == 0;
+            Campo campo = new Campo(nombre, tipo, longitud, llave);
+            campos.add(campo);
+            JOptionPane.showMessageDialog(Crear_Fij, "Campo agregado");
+            tf_nombre.setText("");
+            js_longitud.setValue(1);
+            rb_string.setSelected(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(Crear_Fij, "Error");
+        }
+    }//GEN-LAST:event_jButton18MouseClicked
+
+    private void jButton20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton20MouseClicked
+        if (!campos.isEmpty()) {
+            boolean llave_principal = false;
+            for (int i = 0; i < campos.size(); i++) {
+                if (campos.get(i).isLlave()) {
+                    llave_principal = true;
+                }
+            }
+            if (!llave_principal) {
+                String opciones = "-> Campos del Archivo \n";
+                for (int i = 0; i < campos.size(); i++) {
+                    opciones += (i + 1) + ". " + campos.get(i).getNombre() + "\n";
+                }
+                opciones += "Seleccione la llave principal: ";
+                boolean seguir = true;
+                int opcion = 0;
+                do {
+                    seguir = true;
+                    try {
+                        opcion = Integer.parseInt(JOptionPane.showInputDialog(this, opciones));
+                    } catch (Exception e) {
+                        seguir = false;
+                        JOptionPane.showMessageDialog(Crear_Fij, "¡Datos incorrectos!");
+                    }
+                    if (seguir) {
+                        if (opcion <= 0 || opcion > campos.size()) {
+                            seguir = false;
+                            JOptionPane.showMessageDialog(Crear_Fij, "¡Numero incorrecto!");
+                        }
+                    }
+                } while (!seguir);
+                campos.get(opcion - 1).setLlave(true);
+            }
+            File archivo;
+            FileWriter fw = null;
+            BufferedWriter bw = null;
+            try {
+                archivo = file;
+                fw = new FileWriter(archivo, true);
+                bw = new BufferedWriter(fw);
+                for (int i = 0; i < campos.size(); i++) {
+                    bw.write(campos.get(i).toString() + "|");
+                }
+                bw.flush();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                bw.close();
+                fw.close();
+            } catch (IOException ex) {
+            }
+            campos = new ArrayList();
+        }
+        Crear_Fij.dispose();
+    }//GEN-LAST:event_jButton20MouseClicked
+
+    private void jButton19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton19MouseClicked
+        try {
+            String nombre = tf_nombre1.getText();
+            String tipo;
+            if (rb_string1.isSelected()) {
+                tipo = "String";
+            } else if (rb_int1.isSelected()) {
+                tipo = "Int";
+            } else if (rb_long1.isSelected()) {
+                tipo = "Long";
+            } else if (rb_char1.isSelected()) {
+                tipo = "Char";
+            } else if (rb_double1.isSelected()) {
+                tipo = "Double";
+            } else if (rb_short1.isSelected()) {
+                tipo = "Short";
+            } else {
+                tipo = "Float";
+            }
+            int respuesta = JOptionPane.showConfirmDialog(Crear_Var, "¿Desea que el campo " + nombre + " sea la llave principal?");
+            boolean llave;
+            llave = respuesta == 0;
+            Campo campo = new Campo(nombre, tipo, 0, llave);
+            campos.add(campo);
+            JOptionPane.showMessageDialog(Crear_Var, "Campo agregado");
+            tf_nombre1.setText("");
+            rb_string1.setSelected(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(Crear_Var, "Error");
+        }
+    }//GEN-LAST:event_jButton19MouseClicked
+
+    private void jButton21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton21MouseClicked
+        if (!campos.isEmpty()) {
+            boolean llave_principal = false;
+            for (int i = 0; i < campos.size(); i++) {
+                if (campos.get(i).isLlave()) {
+                    llave_principal = true;
+                }
+            }
+            if (!llave_principal) {
+                String opciones = "-> Campos del Archivo \n";
+                for (int i = 0; i < campos.size(); i++) {
+                    opciones += (i + 1) + ". " + campos.get(i).getNombre() + "\n";
+                }
+                opciones += "Seleccione la llave principal: ";
+                boolean seguir;
+                int opcion = 0;
+                do {
+                    seguir = true;
+                    try {
+                        opcion = Integer.parseInt(JOptionPane.showInputDialog(this, opciones));
+                    } catch (Exception e) {
+                        seguir = false;
+                        JOptionPane.showMessageDialog(Crear_Var, "¡Datos incorrectos!");
+                    }
+                    if (seguir) {
+                        if (opcion <= 0 || opcion > campos.size()) {
+                            seguir = false;
+                            JOptionPane.showMessageDialog(Crear_Var, "¡Numero incorrecto!");
+                        }
+                    }
+                } while (!seguir);
+                campos.get(opcion - 1).setLlave(true);
+            }
+            File archivo;
+            FileWriter fw = null;
+            BufferedWriter bw = null;
+            try {
+                archivo = file;
+                fw = new FileWriter(archivo, true);
+                bw = new BufferedWriter(fw);
+                for (int i = 0; i < campos.size(); i++) {
+                    bw.write(campos.get(i).toString() + "|");
+                }
+                bw.flush();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                bw.close();
+                fw.close();
+            } catch (IOException ex) {
+            }
+            campos = new ArrayList();
+        }
+        Crear_Var.dispose();
+    }//GEN-LAST:event_jButton21MouseClicked
 
     /**
      * @param args the command line arguments
@@ -673,10 +993,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton20;
+    private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -689,30 +1010,35 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton10;
-    private javax.swing.JRadioButton jRadioButton11;
-    private javax.swing.JRadioButton jRadioButton12;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
-    private javax.swing.JRadioButton jRadioButton8;
-    private javax.swing.JRadioButton jRadioButton9;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JPanel jp_fija;
+    private javax.swing.JSpinner js_longitud;
+    private javax.swing.JRadioButton rb_char;
+    private javax.swing.JRadioButton rb_char1;
+    private javax.swing.JRadioButton rb_double;
+    private javax.swing.JRadioButton rb_double1;
+    private javax.swing.JRadioButton rb_float;
+    private javax.swing.JRadioButton rb_float1;
+    private javax.swing.JRadioButton rb_int;
+    private javax.swing.JRadioButton rb_int1;
+    private javax.swing.JRadioButton rb_long;
+    private javax.swing.JRadioButton rb_long1;
+    private javax.swing.JRadioButton rb_short;
+    private javax.swing.JRadioButton rb_short1;
+    private javax.swing.JRadioButton rb_string;
+    private javax.swing.JRadioButton rb_string1;
+    private javax.swing.JTextField tf_nombre;
+    private javax.swing.JTextField tf_nombre1;
     // End of variables declaration//GEN-END:variables
 }

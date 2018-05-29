@@ -203,6 +203,11 @@ public class Principal extends javax.swing.JFrame {
                 jButton20MouseClicked(evt);
             }
         });
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton20ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Corbel", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -785,12 +790,26 @@ public class Principal extends javax.swing.JFrame {
                 tipo = "Float";
             }
             int longitud = (int) js_longitud.getValue();
-            int respuesta = JOptionPane.showConfirmDialog(Crear_Fij, "¿Desea que el campo " + nombre + " sea la llave principal?");
-            boolean llave;
-            llave = respuesta == 0;
+
+            boolean entrar = true;
+            for (int i = 0; i < campos.size(); i++) {
+                if (campos.get(i).isLlave()) {
+                    entrar = false;
+                }
+            }
+
+            boolean llave = false;
+            if (entrar) {
+                int respuesta = JOptionPane.showConfirmDialog(Crear_Fij, "¿Desea que el campo " + nombre + " sea la llave principal?");
+
+                if (respuesta == 0) {
+                    llave = true;
+                }
+            }
+
             Campo campo = new Campo(nombre, tipo, longitud, llave);
             campos.add(campo);
-            JOptionPane.showMessageDialog(Crear_Fij, "Campo agregado");
+            JOptionPane.showMessageDialog(Crear_Fij, "¡Campo " + nombre + " agregado exitosamente!");
             tf_nombre.setText("");
             js_longitud.setValue(1);
             rb_string.setSelected(true);
@@ -852,6 +871,7 @@ public class Principal extends javax.swing.JFrame {
             } catch (IOException ex) {
             }
             campos = new ArrayList();
+            JOptionPane.showMessageDialog(Crear_Fij, "¡Archivo agregado exitosamente!");
         }
         Crear_Fij.dispose();
     }//GEN-LAST:event_jButton20MouseClicked
@@ -875,12 +895,24 @@ public class Principal extends javax.swing.JFrame {
             } else {
                 tipo = "Float";
             }
-            int respuesta = JOptionPane.showConfirmDialog(Crear_Var, "¿Desea que el campo " + nombre + " sea la llave principal?");
-            boolean llave;
-            llave = respuesta == 0;
+            boolean entrar = true;
+            for (int i = 0; i < campos.size(); i++) {
+                if (campos.get(i).isLlave()) {
+                    entrar = false;
+                }
+            }
+            boolean llave = false;
+            if (entrar) {
+                int respuesta = JOptionPane.showConfirmDialog(Crear_Var, "¿Desea que el campo " + nombre + " sea la llave principal?");
+
+                if (respuesta == 0) {
+                    llave = true;
+                }
+            }
+
             Campo campo = new Campo(nombre, tipo, 0, llave);
             campos.add(campo);
-            JOptionPane.showMessageDialog(Crear_Var, "Campo agregado");
+            JOptionPane.showMessageDialog(Crear_Var, "¡Campo " + nombre + " agregado exitosamente!");
             tf_nombre1.setText("");
             rb_string1.setSelected(true);
         } catch (Exception e) {
@@ -941,9 +973,14 @@ public class Principal extends javax.swing.JFrame {
             } catch (IOException ex) {
             }
             campos = new ArrayList();
+            JOptionPane.showMessageDialog(Crear_Var, "¡Archivo agregado exitosamente!");
         }
         Crear_Var.dispose();
     }//GEN-LAST:event_jButton21MouseClicked
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton20ActionPerformed
 
     /**
      * @param args the command line arguments

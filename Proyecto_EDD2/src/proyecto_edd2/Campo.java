@@ -59,9 +59,9 @@ public class Campo {
     public String toString() {
         String numero_llave = "";
         if (llave) {
-            numero_llave = "0";
+            numero_llave = "1";
         } else {
-            numero_llave = "1"; 
+            numero_llave = "0"; 
         }
         return nombre + ";" + tipo + ";" + longitud + ";" + numero_llave + ";";
     }

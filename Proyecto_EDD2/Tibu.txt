@@ -1,0 +1,1 @@
+Nombre;String;20;0;Cuenta;String;10;1;Edad;Int;2;0;&;

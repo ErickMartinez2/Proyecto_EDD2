@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -78,9 +79,12 @@ public class Principal extends javax.swing.JFrame {
         dato = new javax.swing.ButtonGroup();
         dato2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jButton16 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jl_archivoactual = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ta_meta = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -470,51 +474,60 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 204, 204));
         jPanel1.setForeground(new java.awt.Color(0, 102, 102));
 
-        jButton16.setText("Crear Archivo");
-        jButton16.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton16MouseClicked(evt);
-            }
-        });
-        jButton16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton16ActionPerformed(evt);
-            }
-        });
-
         jLabel9.setFont(new java.awt.Font("Corbel", 1, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Proyecto");
+
+        jLabel10.setFont(new java.awt.Font("Berlin Sans FB Demi", 2, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Archivo Actual:");
+
+        jl_archivoactual.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jl_archivoactual.setForeground(new java.awt.Color(255, 255, 255));
+
+        ta_meta.setEditable(false);
+        ta_meta.setColumns(20);
+        ta_meta.setRows(5);
+        jScrollPane1.setViewportView(ta_meta);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(17, 17, 17)
-                .addComponent(jButton16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(571, 571, 571))
+                .addGap(120, 120, 120)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                        .addGap(198, 198, 198)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jl_archivoactual, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel9)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jButton16)
-                .addGap(55, 366, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jl_archivoactual, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(31, 31, 31)
+                            .addComponent(jLabel1))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jLabel9))))
+                .addGap(57, 57, 57)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(173, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Archivo");
@@ -525,7 +538,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Crear Archivo");
+        jMenuItem1.setText("Crear");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -533,14 +546,19 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("jMenuItem2");
+        jMenuItem2.setText("Abrir");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Campos");
 
-        jMenuItem3.setText("Crear Campo");
+        jMenuItem3.setText("Crear");
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("Listar");
@@ -586,7 +604,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu5.setText("Estandarizacion");
+        jMenu5.setText("Estandarización");
 
         jMenuItem15.setText("Exportar Excel");
         jMenu5.add(jMenuItem15);
@@ -613,25 +631,6 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del archivo");
-        if (nombre != null && !"".equals(nombre)) {
-            file = new File("./" + nombre + ".txt");
-            int num = JOptionPane.showConfirmDialog(this, "¿Quiere sus campos de longitud variable?");
-            if (num == 0) {
-                Crear_Var.setModal(true);
-                Crear_Var.pack();
-                Crear_Var.setLocationRelativeTo(this);
-                Crear_Var.setVisible(true);
-            } else if (num == 1) {
-                Crear_Fij.setModal(true);
-                Crear_Fij.pack();
-                Crear_Fij.setLocationRelativeTo(this);
-                Crear_Fij.setVisible(true);
-            }
-        }
-    }//GEN-LAST:event_jButton16ActionPerformed
 
     private void rb_int1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_int1ActionPerformed
         // TODO add your handling code here:
@@ -714,7 +713,7 @@ public class Principal extends javax.swing.JFrame {
             js_longitud.setValue(1);
             rb_string.setSelected(true);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(Crear_Fij, "Error");
+            JOptionPane.showMessageDialog(Crear_Fij, "¡Error!");
         }
     }//GEN-LAST:event_jButton18MouseClicked
 
@@ -759,8 +758,9 @@ public class Principal extends javax.swing.JFrame {
                 fw = new FileWriter(archivo, true);
                 bw = new BufferedWriter(fw);
                 for (int i = 0; i < campos.size(); i++) {
-                    bw.write(campos.get(i).toString() + "|");
+                    bw.write(campos.get(i).toString());
                 }
+                bw.write("&;");
                 bw.flush();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -771,7 +771,7 @@ public class Principal extends javax.swing.JFrame {
             } catch (IOException ex) {
             }
             campos = new ArrayList();
-            JOptionPane.showMessageDialog(Crear_Fij, "¡Archivo agregado exitosamente!");
+            JOptionPane.showMessageDialog(Crear_Fij, "¡Archivo " + file.getName() + " agregado exitosamente!");
         }
         Crear_Fij.dispose();
     }//GEN-LAST:event_jButton20MouseClicked
@@ -816,7 +816,7 @@ public class Principal extends javax.swing.JFrame {
             tf_nombre1.setText("");
             rb_string1.setSelected(true);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(Crear_Var, "Error");
+            JOptionPane.showMessageDialog(Crear_Var, "¡Error!");
         }
     }//GEN-LAST:event_jButton19MouseClicked
 
@@ -861,8 +861,9 @@ public class Principal extends javax.swing.JFrame {
                 fw = new FileWriter(archivo, true);
                 bw = new BufferedWriter(fw);
                 for (int i = 0; i < campos.size(); i++) {
-                    bw.write(campos.get(i).toString() + "|");
+                    bw.write(campos.get(i).toString());
                 }
+                bw.write("&;");
                 bw.flush();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -873,7 +874,7 @@ public class Principal extends javax.swing.JFrame {
             } catch (IOException ex) {
             }
             campos = new ArrayList();
-            JOptionPane.showMessageDialog(Crear_Var, "¡Archivo agregado exitosamente!");
+            JOptionPane.showMessageDialog(Crear_Var, "¡Archivo " + file.getName() + " agregado exitosamente!");
         }
         Crear_Var.dispose();
     }//GEN-LAST:event_jButton21MouseClicked
@@ -882,16 +883,12 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton20ActionPerformed
 
-    private void jButton16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton16MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton16MouseClicked
-
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
-        
+
     }//GEN-LAST:event_jMenu1MouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del archivo");
+        String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del nuevo archivo: ");
         if (nombre != null && !"".equals(nombre)) {
             file = new File("./" + nombre + ".txt");
             int num = JOptionPane.showConfirmDialog(this, "¿Quiere sus campos de longitud variable?");
@@ -908,6 +905,42 @@ public class Principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        try {
+            String archivo = JOptionPane.showInputDialog(this, "Ingrese el nombre del archivo: ");
+            File archivo1 = new File("./" + archivo + ".txt");
+            if (archivo1.exists()) {
+                file = archivo1;
+                Scanner sc;
+                try {
+                    sc = new Scanner(file);
+                    sc.useDelimiter(";");
+                    Campo campo;
+                    while (sc.hasNext()) {
+                        String nombre = sc.next();
+                        if (!nombre.equals("&")) {
+                            campo = new Campo(nombre, sc.next(), sc.nextInt(), sc.nextInt() != 0);
+                            campos.add(campo);
+                        } else {
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "¡Error!");
+                }
+                jl_archivoactual.setText(archivo + ".txt");
+                ta_meta.setText("");
+                for (int i = 0; i < campos.size(); i++) {
+                    ta_meta.append(campos.get(i).getTipo() + " " + campos.get(i).getNombre() + " " + campos.get(i).getLongitud()+"\n");
+                }
+                JOptionPane.showMessageDialog(this, "¡Datos cargados exitosamente!");
+            } else {
+                JOptionPane.showMessageDialog(this, "¡El archivo solicitado no existe!");
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -949,12 +982,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDialog Crear_Var;
     private javax.swing.ButtonGroup dato;
     private javax.swing.ButtonGroup dato2;
-    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -987,6 +1020,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jl_archivoactual;
     private javax.swing.JPanel jp_fija;
     private javax.swing.JSpinner js_longitud;
     private javax.swing.JRadioButton rb_char;
@@ -1003,6 +1038,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JRadioButton rb_short1;
     private javax.swing.JRadioButton rb_string;
     private javax.swing.JRadioButton rb_string1;
+    private javax.swing.JTextArea ta_meta;
     private javax.swing.JTextField tf_nombre;
     private javax.swing.JTextField tf_nombre1;
     // End of variables declaration//GEN-END:variables

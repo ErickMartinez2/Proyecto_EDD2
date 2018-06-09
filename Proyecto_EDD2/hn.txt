@@ -1,1 +1,0 @@
-nj;String;0;1;|999;Double;0;0;|

@@ -11,23 +11,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author usuario
+ * @author Erick Martinez, Juan Guevara and Iliana Pinto
  */
 public class Principal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Principal
-     */
     //Variables
     ArrayList<Campo> campos = new ArrayList();
     File file;
+    boolean tipo_archivo;
 
     public Principal() {
         initComponents();
@@ -58,9 +54,9 @@ public class Principal extends javax.swing.JFrame {
         rb_double = new javax.swing.JRadioButton();
         rb_float = new javax.swing.JRadioButton();
         rb_long = new javax.swing.JRadioButton();
-        jButton18 = new javax.swing.JButton();
+        jb_agregar_fij = new javax.swing.JButton();
         rb_short = new javax.swing.JRadioButton();
-        jButton20 = new javax.swing.JButton();
+        jb_salir_fij = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         Crear_Var = new javax.swing.JDialog();
         jPanel8 = new javax.swing.JPanel();
@@ -73,9 +69,9 @@ public class Principal extends javax.swing.JFrame {
         rb_double1 = new javax.swing.JRadioButton();
         rb_float1 = new javax.swing.JRadioButton();
         rb_long1 = new javax.swing.JRadioButton();
-        jButton19 = new javax.swing.JButton();
+        jb_agregar_var = new javax.swing.JButton();
         rb_short1 = new javax.swing.JRadioButton();
-        jButton21 = new javax.swing.JButton();
+        jb_salir_var = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         dato = new javax.swing.ButtonGroup();
         dato2 = new javax.swing.ButtonGroup();
@@ -84,30 +80,29 @@ public class Principal extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jl_archivoactual = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        ta_meta = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         jt_Campo = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jm_archivo = new javax.swing.JMenu();
+        jmi_crear = new javax.swing.JMenuItem();
+        jmi_abrir = new javax.swing.JMenuItem();
+        jm_campo = new javax.swing.JMenu();
+        jmi_crear1 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        jm_registro = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        jm_indice = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
+        jm_estandarizacion = new javax.swing.JMenu();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
 
@@ -186,11 +181,11 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton18.setBackground(new java.awt.Color(0, 153, 153));
-        jButton18.setText("Agregar");
-        jButton18.addMouseListener(new java.awt.event.MouseAdapter() {
+        jb_agregar_fij.setBackground(new java.awt.Color(0, 153, 153));
+        jb_agregar_fij.setText("Agregar");
+        jb_agregar_fij.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton18MouseClicked(evt);
+                jb_agregar_fijMouseClicked(evt);
             }
         });
 
@@ -204,16 +199,11 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton20.setBackground(new java.awt.Color(0, 153, 153));
-        jButton20.setText("Salir");
-        jButton20.addMouseListener(new java.awt.event.MouseAdapter() {
+        jb_salir_fij.setBackground(new java.awt.Color(0, 153, 153));
+        jb_salir_fij.setText("Salir");
+        jb_salir_fij.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton20MouseClicked(evt);
-            }
-        });
-        jButton20.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton20ActionPerformed(evt);
+                jb_salir_fijMouseClicked(evt);
             }
         });
 
@@ -252,9 +242,9 @@ public class Principal extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(rb_short))))
                     .addGroup(jp_fijaLayout.createSequentialGroup()
-                        .addComponent(jButton18)
+                        .addComponent(jb_agregar_fij)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton20)))
+                        .addComponent(jb_salir_fij)))
                 .addContainerGap(22, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_fijaLayout.createSequentialGroup()
                 .addContainerGap()
@@ -262,7 +252,7 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jp_fijaLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton18, jButton20});
+        jp_fijaLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_agregar_fij, jb_salir_fij});
 
         jp_fijaLayout.setVerticalGroup(
             jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,8 +283,8 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(rb_char))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jp_fijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton18)
-                    .addComponent(jButton20))
+                    .addComponent(jb_agregar_fij)
+                    .addComponent(jb_salir_fij))
                 .addContainerGap())
         );
 
@@ -333,21 +323,11 @@ public class Principal extends javax.swing.JFrame {
         dato2.add(rb_int1);
         rb_int1.setForeground(new java.awt.Color(255, 255, 255));
         rb_int1.setText("Int");
-        rb_int1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rb_int1ActionPerformed(evt);
-            }
-        });
 
         rb_double1.setBackground(new java.awt.Color(0, 153, 153));
         dato2.add(rb_double1);
         rb_double1.setForeground(new java.awt.Color(255, 255, 255));
         rb_double1.setText("Double");
-        rb_double1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rb_double1ActionPerformed(evt);
-            }
-        });
 
         rb_float1.setBackground(new java.awt.Color(0, 153, 153));
         dato2.add(rb_float1);
@@ -359,11 +339,11 @@ public class Principal extends javax.swing.JFrame {
         rb_long1.setForeground(new java.awt.Color(255, 255, 255));
         rb_long1.setText("Long");
 
-        jButton19.setBackground(new java.awt.Color(0, 153, 153));
-        jButton19.setText("Agregar");
-        jButton19.addMouseListener(new java.awt.event.MouseAdapter() {
+        jb_agregar_var.setBackground(new java.awt.Color(0, 153, 153));
+        jb_agregar_var.setText("Agregar");
+        jb_agregar_var.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton19MouseClicked(evt);
+                jb_agregar_varMouseClicked(evt);
             }
         });
 
@@ -372,11 +352,11 @@ public class Principal extends javax.swing.JFrame {
         rb_short1.setForeground(new java.awt.Color(255, 255, 255));
         rb_short1.setText("Short");
 
-        jButton21.setBackground(new java.awt.Color(0, 153, 153));
-        jButton21.setText("Salir");
-        jButton21.addMouseListener(new java.awt.event.MouseAdapter() {
+        jb_salir_var.setBackground(new java.awt.Color(0, 153, 153));
+        jb_salir_var.setText("Salir");
+        jb_salir_var.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton21MouseClicked(evt);
+                jb_salir_varMouseClicked(evt);
             }
         });
 
@@ -419,9 +399,9 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(rb_int1))
                             .addComponent(rb_long1)))
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jButton19)
+                        .addComponent(jb_agregar_var)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton21)))
+                        .addComponent(jb_salir_var)))
                 .addContainerGap(64, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
@@ -429,7 +409,7 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel8Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton19, jButton21});
+        jPanel8Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_agregar_var, jb_salir_var});
 
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -455,8 +435,8 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(rb_long1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton21)
-                    .addComponent(jButton19))
+                    .addComponent(jb_salir_var)
+                    .addComponent(jb_agregar_var))
                 .addGap(24, 24, 24))
         );
 
@@ -482,18 +462,12 @@ public class Principal extends javax.swing.JFrame {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Proyecto EDD2");
 
-        jLabel10.setFont(new java.awt.Font("Berlin Sans FB Demi", 2, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Berlin Sans FB Demi", 2, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Archivo Actual:");
 
-        jl_archivoactual.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jl_archivoactual.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jl_archivoactual.setForeground(new java.awt.Color(255, 255, 255));
-        jl_archivoactual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        ta_meta.setEditable(false);
-        ta_meta.setColumns(20);
-        ta_meta.setRows(5);
-        jScrollPane1.setViewportView(ta_meta);
 
         jt_Campo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -518,7 +492,15 @@ public class Principal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jt_Campo.setToolTipText("");
         jScrollPane2.setViewportView(jt_Campo);
+
+        jButton1.setText("Cargar Tabla");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -531,15 +513,18 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 864, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jl_archivoactual, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(8, 8, 8)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jl_archivoactual, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(174, 174, 174)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -551,99 +536,100 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jl_archivoactual, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(178, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("Archivo");
-        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu1MouseClicked(evt);
-            }
-        });
+        jm_archivo.setText("Archivo");
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Crear");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jmi_crear.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        jmi_crear.setText("Crear");
+        jmi_crear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jmi_crearActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jm_archivo.add(jmi_crear);
 
-        jMenuItem2.setText("Abrir");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jmi_abrir.setText("Abrir");
+        jmi_abrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jmi_abrirActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jm_archivo.add(jmi_abrir);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jm_archivo);
 
-        jMenu2.setText("Campos");
+        jm_campo.setText("Campo");
+        jm_campo.setEnabled(false);
 
-        jMenuItem3.setText("Crear");
-        jMenu2.add(jMenuItem3);
+        jmi_crear1.setText("Crear");
+        jmi_crear1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_crear1ActionPerformed(evt);
+            }
+        });
+        jm_campo.add(jmi_crear1);
 
         jMenuItem4.setText("Listar");
-        jMenu2.add(jMenuItem4);
+        jm_campo.add(jMenuItem4);
 
         jMenuItem5.setText("Modificar");
-        jMenu2.add(jMenuItem5);
+        jm_campo.add(jMenuItem5);
 
         jMenuItem6.setText("Borrar");
-        jMenu2.add(jMenuItem6);
+        jm_campo.add(jMenuItem6);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jm_campo);
 
-        jMenu4.setText("Registro");
+        jm_registro.setText("Registro");
+        jm_registro.setEnabled(false);
 
         jMenuItem7.setText("Cargar ");
-        jMenu4.add(jMenuItem7);
+        jm_registro.add(jMenuItem7);
 
         jMenuItem8.setText("Introducir");
-        jMenu4.add(jMenuItem8);
+        jm_registro.add(jMenuItem8);
 
         jMenuItem9.setText("Modificar ");
-        jMenu4.add(jMenuItem9);
+        jm_registro.add(jMenuItem9);
 
         jMenuItem10.setText("Buscar");
-        jMenu4.add(jMenuItem10);
+        jm_registro.add(jMenuItem10);
 
         jMenuItem11.setText("Borrar ");
-        jMenu4.add(jMenuItem11);
+        jm_registro.add(jMenuItem11);
 
         jMenuItem12.setText("Listar");
-        jMenu4.add(jMenuItem12);
+        jm_registro.add(jMenuItem12);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(jm_registro);
 
-        jMenu3.setText("Indice");
+        jm_indice.setText("Indice");
+        jm_indice.setEnabled(false);
 
         jMenuItem13.setText("Crear");
-        jMenu3.add(jMenuItem13);
+        jm_indice.add(jMenuItem13);
 
         jMenuItem14.setText("Re_Indexar");
-        jMenu3.add(jMenuItem14);
+        jm_indice.add(jMenuItem14);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(jm_indice);
 
-        jMenu5.setText("Estandarización");
+        jm_estandarizacion.setText("Estandarización");
+        jm_estandarizacion.setEnabled(false);
 
         jMenuItem15.setText("Exportar Excel");
-        jMenu5.add(jMenuItem15);
+        jm_estandarizacion.add(jMenuItem15);
 
         jMenuItem16.setText("Exportar XML con Schema");
-        jMenu5.add(jMenuItem16);
+        jm_estandarizacion.add(jMenuItem16);
 
-        jMenuBar1.add(jMenu5);
+        jMenuBar1.add(jm_estandarizacion);
 
         setJMenuBar(jMenuBar1);
 
@@ -662,14 +648,6 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void rb_int1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_int1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rb_int1ActionPerformed
-
-    private void rb_double1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_double1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rb_double1ActionPerformed
 
     private void rb_charMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rb_charMouseClicked
         js_longitud.setValue(1);
@@ -700,7 +678,7 @@ public class Principal extends javax.swing.JFrame {
         js_longitud.setEnabled(true);
     }//GEN-LAST:event_rb_shortMouseClicked
 
-    private void jButton18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseClicked
+    private void jb_agregar_fijMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_agregar_fijMouseClicked
         try {
             String nombre = tf_nombre.getText();
             String tipo;
@@ -720,23 +698,19 @@ public class Principal extends javax.swing.JFrame {
                 tipo = "Float";
             }
             int longitud = (int) js_longitud.getValue();
-
             boolean entrar = true;
             for (int i = 0; i < campos.size(); i++) {
                 if (campos.get(i).isLlave()) {
                     entrar = false;
                 }
             }
-
             boolean llave = false;
             if (entrar) {
                 int respuesta = JOptionPane.showConfirmDialog(Crear_Fij, "¿Desea que el campo " + nombre + " sea la llave principal?");
-
                 if (respuesta == 0) {
                     llave = true;
                 }
             }
-
             Campo campo = new Campo(nombre, tipo, longitud, llave);
             campos.add(campo);
             JOptionPane.showMessageDialog(Crear_Fij, "¡Campo " + nombre + " agregado exitosamente!");
@@ -746,9 +720,9 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(Crear_Fij, "¡Error!");
         }
-    }//GEN-LAST:event_jButton18MouseClicked
+    }//GEN-LAST:event_jb_agregar_fijMouseClicked
 
-    private void jButton20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton20MouseClicked
+    private void jb_salir_fijMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salir_fijMouseClicked
         if (!campos.isEmpty()) {
             boolean llave_principal = false;
             for (int i = 0; i < campos.size(); i++) {
@@ -762,7 +736,7 @@ public class Principal extends javax.swing.JFrame {
                     opciones += (i + 1) + ". " + campos.get(i).getNombre() + "\n";
                 }
                 opciones += "Seleccione la llave principal: ";
-                boolean seguir = true;
+                boolean seguir;
                 int opcion = 0;
                 do {
                     seguir = true;
@@ -786,8 +760,9 @@ public class Principal extends javax.swing.JFrame {
             BufferedWriter bw = null;
             try {
                 archivo = file;
-                fw = new FileWriter(archivo, true);
+                fw = new FileWriter(archivo, false);
                 bw = new BufferedWriter(fw);
+                bw.write("0;");
                 for (int i = 0; i < campos.size(); i++) {
                     bw.write(campos.get(i).toString());
                 }
@@ -801,13 +776,12 @@ public class Principal extends javax.swing.JFrame {
                 fw.close();
             } catch (IOException ex) {
             }
-            campos = new ArrayList();
             JOptionPane.showMessageDialog(Crear_Fij, "¡Archivo " + file.getName() + " agregado exitosamente!");
         }
         Crear_Fij.dispose();
-    }//GEN-LAST:event_jButton20MouseClicked
+    }//GEN-LAST:event_jb_salir_fijMouseClicked
 
-    private void jButton19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton19MouseClicked
+    private void jb_agregar_varMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_agregar_varMouseClicked
         try {
             String nombre = tf_nombre1.getText();
             String tipo;
@@ -835,12 +809,10 @@ public class Principal extends javax.swing.JFrame {
             boolean llave = false;
             if (entrar) {
                 int respuesta = JOptionPane.showConfirmDialog(Crear_Var, "¿Desea que el campo " + nombre + " sea la llave principal?");
-
                 if (respuesta == 0) {
                     llave = true;
                 }
             }
-
             Campo campo = new Campo(nombre, tipo, 0, llave);
             campos.add(campo);
             JOptionPane.showMessageDialog(Crear_Var, "¡Campo " + nombre + " agregado exitosamente!");
@@ -849,9 +821,9 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(Crear_Var, "¡Error!");
         }
-    }//GEN-LAST:event_jButton19MouseClicked
+    }//GEN-LAST:event_jb_agregar_varMouseClicked
 
-    private void jButton21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton21MouseClicked
+    private void jb_salir_varMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salir_varMouseClicked
         if (!campos.isEmpty()) {
             boolean llave_principal = false;
             for (int i = 0; i < campos.size(); i++) {
@@ -889,10 +861,11 @@ public class Principal extends javax.swing.JFrame {
             BufferedWriter bw = null;
             try {
                 archivo = file;
-                fw = new FileWriter(archivo, true);
+                fw = new FileWriter(archivo, false);
                 bw = new BufferedWriter(fw);
+                bw.write("1;");
                 for (int i = 0; i < campos.size(); i++) {
-                    bw.write(campos.get(i).toString());
+                    bw.write(campos.get(i).toString2());
                 }
                 bw.write("&;");
                 bw.flush();
@@ -904,25 +877,17 @@ public class Principal extends javax.swing.JFrame {
                 fw.close();
             } catch (IOException ex) {
             }
-            campos = new ArrayList();
             JOptionPane.showMessageDialog(Crear_Var, "¡Archivo " + file.getName() + " agregado exitosamente!");
         }
         Crear_Var.dispose();
-    }//GEN-LAST:event_jButton21MouseClicked
+    }//GEN-LAST:event_jb_salir_varMouseClicked
 
-    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton20ActionPerformed
-
-    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
-
-    }//GEN-LAST:event_jMenu1MouseClicked
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jmi_crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_crearActionPerformed
         String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del nuevo archivo: ");
+        campos = new ArrayList();
         if (nombre != null && !"".equals(nombre)) {
             file = new File("./" + nombre + ".txt");
-            int num = JOptionPane.showConfirmDialog(this, "¿Quiere sus campos de longitud variable?");
+            int num = JOptionPane.showConfirmDialog(this, "¿Desea sus campos de longitud variable?");
             if (num == 0) {
                 Crear_Var.setModal(true);
                 Crear_Var.pack();
@@ -935,19 +900,21 @@ public class Principal extends javax.swing.JFrame {
                 Crear_Fij.setVisible(true);
             }
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jmi_crearActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void jmi_abrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_abrirActionPerformed
         try {
             String archivo = JOptionPane.showInputDialog(this, "Ingrese el nombre del archivo: ");
             File archivo1 = new File("./" + archivo + ".txt");
             if (archivo1.exists()) {
                 file = archivo1;
                 Scanner sc;
+                campos = new ArrayList();
                 try {
                     sc = new Scanner(file);
                     sc.useDelimiter(";");
                     Campo campo;
+                    tipo_archivo = !sc.next().equals("0");
                     while (sc.hasNext()) {
                         String nombre = sc.next();
                         if (!nombre.equals("&")) {
@@ -961,30 +928,69 @@ public class Principal extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "¡Error!");
                 }
                 jl_archivoactual.setText(archivo + ".txt");
-                ta_meta.setText("");
-                DefaultTableModel modelo = (DefaultTableModel)jt_Campo.getModel();
+                DefaultTableModel modelo = (DefaultTableModel) jt_Campo.getModel();
                 modelo.setRowCount(0);
                 int cont = 0;
                 for (int i = 0; i < campos.size(); i++) {
-                    cont ++;
+                    cont++;
                     String bool;
                     if (campos.get(i).isLlave()) {
                         bool = "Verdadero";
-                    }else{
+                    } else {
                         bool = "Falso";
                     }
-                    Object[] row = {"Campo #"+cont,campos.get(i).getNombre(),campos.get(i).getTipo(),campos.get(i).getLongitud(),bool};
+                    Object[] row = {"Campo #" + cont, campos.get(i).getNombre(), campos.get(i).getTipo(), campos.get(i).getLongitud(), bool};
                     modelo.addRow(row);
-                    ta_meta.append(campos.get(i).getTipo() + " " + campos.get(i).getNombre() + " " + campos.get(i).getLongitud()+"\n");
                 }
-                
-                JOptionPane.showMessageDialog(this, "¡Datos cargados exitosamente!");
+                jm_campo.setEnabled(true);
+                jm_registro.setEnabled(true);
+                jm_indice.setEnabled(true);
+                jm_estandarizacion.setEnabled(true);
+                JOptionPane.showMessageDialog(this, "¡Archivo " + file.getName() + " cargado exitosamente!");
             } else {
                 JOptionPane.showMessageDialog(this, "¡El archivo solicitado no existe!");
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "¡Error!");
         }
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jmi_abrirActionPerformed
+
+    private void jmi_crear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_crear1ActionPerformed
+        try {
+            int num = JOptionPane.showConfirmDialog(this, "¿Desea su nuevo campo de longitud variable?");
+            if (num == 0) {
+                Crear_Var.setModal(true);
+                Crear_Var.pack();
+                Crear_Var.setLocationRelativeTo(this);
+                Crear_Var.setVisible(true);
+            } else if (num == 1) {
+                Crear_Fij.setModal(true);
+                Crear_Fij.pack();
+                Crear_Fij.setLocationRelativeTo(this);
+                Crear_Fij.setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "¡Error!");
+        }
+    }//GEN-LAST:event_jmi_crear1ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        DefaultTableModel modelo = (DefaultTableModel) jt_Campo.getModel();
+        modelo.setRowCount(0);
+        System.out.println(campos);
+        int cont = 0;
+        for (int i = 0; i < campos.size(); i++) {
+            cont++;
+            String bool;
+            if (campos.get(i).isLlave()) {
+                bool = "Verdadero";
+            } else {
+                bool = "Falso";
+            }
+            Object[] row = {"Campo #" + cont, campos.get(i).getNombre(), campos.get(i).getTipo(), campos.get(i).getLongitud(), bool};
+            modelo.addRow(row);
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1026,10 +1032,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDialog Crear_Var;
     private javax.swing.ButtonGroup dato;
     private javax.swing.ButtonGroup dato2;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -1040,13 +1043,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
@@ -1054,8 +1051,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
@@ -1064,9 +1059,20 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton jb_agregar_fij;
+    private javax.swing.JButton jb_agregar_var;
+    private javax.swing.JButton jb_salir_fij;
+    private javax.swing.JButton jb_salir_var;
     private javax.swing.JLabel jl_archivoactual;
+    private javax.swing.JMenu jm_archivo;
+    private javax.swing.JMenu jm_campo;
+    private javax.swing.JMenu jm_estandarizacion;
+    private javax.swing.JMenu jm_indice;
+    private javax.swing.JMenu jm_registro;
+    private javax.swing.JMenuItem jmi_abrir;
+    private javax.swing.JMenuItem jmi_crear;
+    private javax.swing.JMenuItem jmi_crear1;
     private javax.swing.JPanel jp_fija;
     private javax.swing.JSpinner js_longitud;
     private javax.swing.JTable jt_Campo;
@@ -1084,7 +1090,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JRadioButton rb_short1;
     private javax.swing.JRadioButton rb_string;
     private javax.swing.JRadioButton rb_string1;
-    private javax.swing.JTextArea ta_meta;
     private javax.swing.JTextField tf_nombre;
     private javax.swing.JTextField tf_nombre1;
     // End of variables declaration//GEN-END:variables

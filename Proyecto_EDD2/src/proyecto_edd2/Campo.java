@@ -22,7 +22,7 @@ public class Campo {
         this.longitud = longitud;
         this.llave = llave;
     }
-
+    
     public String getNombre() {
         return nombre;
     }
@@ -57,7 +57,7 @@ public class Campo {
 
     @Override
     public String toString() {
-        String numero_llave = "";
+        String numero_llave;
         if (llave) {
             numero_llave = "1";
         } else {
@@ -66,4 +66,13 @@ public class Campo {
         return nombre + ";" + tipo + ";" + longitud + ";" + numero_llave + ";";
     }
     
+    public String toString2() {
+        String numero_llave;
+        if (llave) {
+            numero_llave = "1";
+        } else {
+            numero_llave = "0"; 
+        }
+        return nombre + ";" + tipo + ";" + numero_llave + ";";
+    }
 }

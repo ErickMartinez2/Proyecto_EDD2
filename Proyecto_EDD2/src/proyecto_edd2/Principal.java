@@ -89,9 +89,9 @@ public class Principal extends javax.swing.JFrame {
         jmi_abrir = new javax.swing.JMenuItem();
         jm_campo = new javax.swing.JMenu();
         jmi_crear1 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        jm_listar1 = new javax.swing.JMenuItem();
+        jm_modificar1 = new javax.swing.JMenuItem();
+        jm_borrar1 = new javax.swing.JMenuItem();
         jm_registro = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -575,14 +575,24 @@ public class Principal extends javax.swing.JFrame {
         });
         jm_campo.add(jmi_crear1);
 
-        jMenuItem4.setText("Listar");
-        jm_campo.add(jMenuItem4);
+        jm_listar1.setText("Listar");
+        jm_campo.add(jm_listar1);
 
-        jMenuItem5.setText("Modificar");
-        jm_campo.add(jMenuItem5);
+        jm_modificar1.setText("Modificar");
+        jm_modificar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_modificar1ActionPerformed(evt);
+            }
+        });
+        jm_campo.add(jm_modificar1);
 
-        jMenuItem6.setText("Borrar");
-        jm_campo.add(jMenuItem6);
+        jm_borrar1.setText("Borrar");
+        jm_borrar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_borrar1ActionPerformed(evt);
+            }
+        });
+        jm_campo.add(jm_borrar1);
 
         jMenuBar1.add(jm_campo);
 
@@ -769,7 +779,7 @@ public class Principal extends javax.swing.JFrame {
                 bw.write("&;");
                 bw.flush();
             } catch (Exception e) {
-                e.printStackTrace();
+                // e.printStackTrace();
             }
             try {
                 bw.close();
@@ -914,16 +924,29 @@ public class Principal extends javax.swing.JFrame {
                     sc = new Scanner(file);
                     sc.useDelimiter(";");
                     Campo campo;
-                    tipo_archivo = !sc.next().equals("0");
-                    while (sc.hasNext()) {
-                        String nombre = sc.next();
-                        if (!nombre.equals("&")) {
-                            campo = new Campo(nombre, sc.next(), sc.nextInt(), sc.nextInt() != 0);
-                            campos.add(campo);
-                        } else {
-                            break;
+                    tipo_archivo = sc.next().equals("0");
+                    if (tipo_archivo) {
+                        while (sc.hasNext()) {
+                            String nombre = sc.next();
+                            if (!nombre.equals("&")) {
+                                campo = new Campo(nombre, sc.next(), sc.nextInt(), sc.nextInt() != 0);
+                                campos.add(campo);
+                            } else {
+                                break;
+                            }
+                        }
+                    } else {
+                        while (sc.hasNext()) {
+                            String nombre = sc.next();
+                            if (!nombre.equals("&")) {
+                                campo = new Campo(nombre, sc.next(), 0, sc.nextInt() != 0);
+                                campos.add(campo);
+                            } else {
+                                break;
+                            }
                         }
                     }
+
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "¡Error!");
                 }
@@ -957,18 +980,31 @@ public class Principal extends javax.swing.JFrame {
 
     private void jmi_crear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_crear1ActionPerformed
         try {
-            int num = JOptionPane.showConfirmDialog(this, "¿Desea su nuevo campo de longitud variable?");
-            if (num == 0) {
-                Crear_Var.setModal(true);
-                Crear_Var.pack();
-                Crear_Var.setLocationRelativeTo(this);
-                Crear_Var.setVisible(true);
-            } else if (num == 1) {
-                Crear_Fij.setModal(true);
-                Crear_Fij.pack();
-                Crear_Fij.setLocationRelativeTo(this);
-                Crear_Fij.setVisible(true);
+            // int num = JOptionPane.showConfirmDialog(this, "¿Desea su nuevo campo de longitud variable?");
+            Scanner sc = new Scanner(file);
+
+            sc.useDelimiter("&");
+            sc.next();
+            System.out.println(sc.next());
+
+            sc.useDelimiter(";");
+            System.out.println(sc.next());
+            if (!sc.hasNext()) {
+                if (!tipo_archivo) {
+                    Crear_Var.setModal(true);
+                    Crear_Var.pack();
+                    Crear_Var.setLocationRelativeTo(this);
+                    Crear_Var.setVisible(true);
+                } else {
+                    Crear_Fij.setModal(true);
+                    Crear_Fij.pack();
+                    Crear_Fij.setLocationRelativeTo(this);
+                    Crear_Fij.setVisible(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "¡El archivo ya contiene registros, no es posible agregar campos!");
             }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "¡Error!");
         }
@@ -991,6 +1027,88 @@ public class Principal extends javax.swing.JFrame {
             modelo.addRow(row);
         }
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jm_borrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_borrar1ActionPerformed
+        try {
+            Scanner sc = new Scanner(file);
+
+            sc.useDelimiter("&");
+            sc.next();
+            sc.next();
+            sc.useDelimiter(";");
+            sc.next();
+            if (!sc.hasNext()) {
+                int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese el numero del campo que desea eliminar: "));
+                int numero_lista = numero - 1;
+                if (numero_lista >= 0 && numero_lista < campos.size()) {
+                    campos.remove(numero_lista);
+
+                    File archivo;
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
+                    try {
+                        archivo = file;
+                        fw = new FileWriter(archivo, false);
+                        bw = new BufferedWriter(fw);
+                        if (tipo_archivo) {
+                            bw.write("0;");
+                            for (int i = 0; i < campos.size(); i++) {
+                                bw.write(campos.get(i).toString());
+                            }
+                            bw.write("&;");
+                            bw.flush();
+                        } else {
+                            bw.write("1;");
+                            for (int i = 0; i < campos.size(); i++) {
+                                bw.write(campos.get(i).toString2());
+                            }
+                            bw.write("&;");
+                            bw.flush();
+                        }
+                        bw.close();
+                        fw.close();
+                    } catch (Exception e) {
+                        //e.printStackTrace();
+                    }
+                    try {
+                        bw.close();
+                        fw.close();
+                    } catch (IOException ex) {
+                    }
+                    JOptionPane.showMessageDialog(this, "¡Campo eliminado exitosamente!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "¡El campo no existe!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "¡El archivo ya contiene registros, no es posible eliminar campos!");
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jm_borrar1ActionPerformed
+
+    private void jm_modificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_modificar1ActionPerformed
+        try {
+            Scanner sc = new Scanner(file);
+
+            sc.useDelimiter("&");
+            sc.next();
+            sc.next();
+            sc.useDelimiter(";");
+            sc.next();
+            if (!sc.hasNext()) {
+                int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese el numero del campo que desea modificar: "));
+                int numero_lista = numero - 1;
+                if (numero_lista >= 0 && numero_lista < campos.size()) {
+                    Campo temporal = campos.get(numero_lista);
+                    
+                } else {
+                    JOptionPane.showMessageDialog(this, "¡El campo no existe!");
+                }
+            } else {
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jm_modificar1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1051,9 +1169,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
@@ -1066,9 +1181,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jb_salir_var;
     private javax.swing.JLabel jl_archivoactual;
     private javax.swing.JMenu jm_archivo;
+    private javax.swing.JMenuItem jm_borrar1;
     private javax.swing.JMenu jm_campo;
     private javax.swing.JMenu jm_estandarizacion;
     private javax.swing.JMenu jm_indice;
+    private javax.swing.JMenuItem jm_listar1;
+    private javax.swing.JMenuItem jm_modificar1;
     private javax.swing.JMenu jm_registro;
     private javax.swing.JMenuItem jmi_abrir;
     private javax.swing.JMenuItem jmi_crear;

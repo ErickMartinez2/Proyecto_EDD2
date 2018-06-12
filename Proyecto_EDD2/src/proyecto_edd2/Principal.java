@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -82,7 +83,7 @@ public class Principal extends javax.swing.JFrame {
         jl_archivoactual = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jt_Campo = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        jb_cargartabla = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jm_archivo = new javax.swing.JMenu();
         jmi_crear = new javax.swing.JMenuItem();
@@ -495,10 +496,10 @@ public class Principal extends javax.swing.JFrame {
         jt_Campo.setToolTipText("");
         jScrollPane2.setViewportView(jt_Campo);
 
-        jButton1.setText("Cargar Tabla");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jb_cargartabla.setText("Cargar Tabla");
+        jb_cargartabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                jb_cargartablaMouseClicked(evt);
             }
         });
 
@@ -523,7 +524,7 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(174, 174, 174)
-                .addComponent(jButton1)
+                .addComponent(jb_cargartabla)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -539,7 +540,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(jb_cargartabla)
                 .addContainerGap(178, Short.MAX_VALUE))
         );
 
@@ -576,6 +577,11 @@ public class Principal extends javax.swing.JFrame {
         jm_campo.add(jmi_crear1);
 
         jm_listar1.setText("Listar");
+        jm_listar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_listar1ActionPerformed(evt);
+            }
+        });
         jm_campo.add(jm_listar1);
 
         jm_modificar1.setText("Modificar");
@@ -776,7 +782,7 @@ public class Principal extends javax.swing.JFrame {
                 for (int i = 0; i < campos.size(); i++) {
                     bw.write(campos.get(i).toString());
                 }
-                bw.write("&;");
+                bw.write("&;-1&;");
                 bw.flush();
             } catch (Exception e) {
                 // e.printStackTrace();
@@ -786,7 +792,7 @@ public class Principal extends javax.swing.JFrame {
                 fw.close();
             } catch (IOException ex) {
             }
-            JOptionPane.showMessageDialog(Crear_Fij, "¡Archivo " + file.getName() + " agregado exitosamente!");
+            //JOptionPane.showMessageDialog(Crear_Fij, "¡Archivo " + file.getName() + " agregado exitosamente!");
         }
         Crear_Fij.dispose();
     }//GEN-LAST:event_jb_salir_fijMouseClicked
@@ -877,7 +883,7 @@ public class Principal extends javax.swing.JFrame {
                 for (int i = 0; i < campos.size(); i++) {
                     bw.write(campos.get(i).toString2());
                 }
-                bw.write("&;");
+                bw.write("&;-1&;");
                 bw.flush();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -887,7 +893,7 @@ public class Principal extends javax.swing.JFrame {
                 fw.close();
             } catch (IOException ex) {
             }
-            JOptionPane.showMessageDialog(Crear_Var, "¡Archivo " + file.getName() + " agregado exitosamente!");
+            //JOptionPane.showMessageDialog(Crear_Var, "¡Archivo " + file.getName() + " agregado exitosamente!");
         }
         Crear_Var.dispose();
     }//GEN-LAST:event_jb_salir_varMouseClicked
@@ -980,15 +986,12 @@ public class Principal extends javax.swing.JFrame {
 
     private void jmi_crear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_crear1ActionPerformed
         try {
-            // int num = JOptionPane.showConfirmDialog(this, "¿Desea su nuevo campo de longitud variable?");
             Scanner sc = new Scanner(file);
-
             sc.useDelimiter("&");
             sc.next();
-            System.out.println(sc.next());
-
+            sc.next();
             sc.useDelimiter(";");
-            System.out.println(sc.next());
+            sc.next();
             if (!sc.hasNext()) {
                 if (!tipo_archivo) {
                     Crear_Var.setModal(true);
@@ -1004,13 +1007,12 @@ public class Principal extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "¡El archivo ya contiene registros, no es posible agregar campos!");
             }
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "¡Error!");
         }
     }//GEN-LAST:event_jmi_crear1ActionPerformed
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void jb_cargartablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_cargartablaMouseClicked
         DefaultTableModel modelo = (DefaultTableModel) jt_Campo.getModel();
         modelo.setRowCount(0);
         System.out.println(campos);
@@ -1026,12 +1028,11 @@ public class Principal extends javax.swing.JFrame {
             Object[] row = {"Campo #" + cont, campos.get(i).getNombre(), campos.get(i).getTipo(), campos.get(i).getLongitud(), bool};
             modelo.addRow(row);
         }
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_jb_cargartablaMouseClicked
 
     private void jm_borrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_borrar1ActionPerformed
         try {
             Scanner sc = new Scanner(file);
-
             sc.useDelimiter("&");
             sc.next();
             sc.next();
@@ -1041,41 +1042,45 @@ public class Principal extends javax.swing.JFrame {
                 int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese el numero del campo que desea eliminar: "));
                 int numero_lista = numero - 1;
                 if (numero_lista >= 0 && numero_lista < campos.size()) {
-                    campos.remove(numero_lista);
-
-                    File archivo;
-                    FileWriter fw = null;
-                    BufferedWriter bw = null;
-                    try {
-                        archivo = file;
-                        fw = new FileWriter(archivo, false);
-                        bw = new BufferedWriter(fw);
-                        if (tipo_archivo) {
-                            bw.write("0;");
-                            for (int i = 0; i < campos.size(); i++) {
-                                bw.write(campos.get(i).toString());
+                    if (!campos.get(numero_lista).isLlave()) {
+                        String nombre = campos.get(numero_lista).getNombre();
+                        campos.remove(numero_lista);
+                        File archivo;
+                        FileWriter fw = null;
+                        BufferedWriter bw = null;
+                        try {
+                            archivo = file;
+                            fw = new FileWriter(archivo, false);
+                            bw = new BufferedWriter(fw);
+                            if (tipo_archivo) {
+                                bw.write("0;");
+                                for (int i = 0; i < campos.size(); i++) {
+                                    bw.write(campos.get(i).toString());
+                                }
+                                bw.write("&;-1&;");
+                                bw.flush();
+                            } else {
+                                bw.write("1;");
+                                for (int i = 0; i < campos.size(); i++) {
+                                    bw.write(campos.get(i).toString2());
+                                }
+                                bw.write("&;-1&;");
+                                bw.flush();
                             }
-                            bw.write("&;");
-                            bw.flush();
-                        } else {
-                            bw.write("1;");
-                            for (int i = 0; i < campos.size(); i++) {
-                                bw.write(campos.get(i).toString2());
-                            }
-                            bw.write("&;");
-                            bw.flush();
+                            bw.close();
+                            fw.close();
+                        } catch (Exception e) {
+                            //e.printStackTrace();
                         }
-                        bw.close();
-                        fw.close();
-                    } catch (Exception e) {
-                        //e.printStackTrace();
+                        try {
+                            bw.close();
+                            fw.close();
+                        } catch (IOException ex) {
+                        }
+                        JOptionPane.showMessageDialog(this, "¡Campo " + nombre + " eliminado exitosamente!");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "¡No se puede eliminar un campo que es llave principal!");
                     }
-                    try {
-                        bw.close();
-                        fw.close();
-                    } catch (IOException ex) {
-                    }
-                    JOptionPane.showMessageDialog(this, "¡Campo eliminado exitosamente!");
                 } else {
                     JOptionPane.showMessageDialog(this, "¡El campo no existe!");
                 }
@@ -1083,13 +1088,13 @@ public class Principal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "¡El archivo ya contiene registros, no es posible eliminar campos!");
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "¡Error!");
         }
     }//GEN-LAST:event_jm_borrar1ActionPerformed
 
     private void jm_modificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_modificar1ActionPerformed
         try {
             Scanner sc = new Scanner(file);
-
             sc.useDelimiter("&");
             sc.next();
             sc.next();
@@ -1099,16 +1104,222 @@ public class Principal extends javax.swing.JFrame {
                 int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese el numero del campo que desea modificar: "));
                 int numero_lista = numero - 1;
                 if (numero_lista >= 0 && numero_lista < campos.size()) {
-                    Campo temporal = campos.get(numero_lista);
-                    
+                    if (!campos.get(numero_lista).isLlave()) {
+                        if (tipo_archivo) {
+                            boolean salir;
+                            String respuesta;
+                            do {
+                                salir = false;
+                                respuesta = JOptionPane.showInputDialog(this, "-> Caracteristicas del Campo " + campos.get(numero_lista).getNombre() + "\n"
+                                        + "1. Nombre \n"
+                                        + "2. Tipo \n"
+                                        + "3. Longitud \n"
+                                        + "Ingrese el numero de su opción: ");
+                                if (respuesta.equals("1") || respuesta.equals("2") || respuesta.equals("3")) {
+                                    salir = true;
+                                }
+                            } while (!salir);
+                            switch (respuesta) {
+                                case "1":
+                                    String nombre = JOptionPane.showInputDialog(this, "Ingrese el nuevo nombre del campo " + campos.get(numero_lista).getNombre());
+                                    campos.get(numero_lista).setNombre(nombre);
+                                    break;
+                                case "2":
+                                    boolean salir2;
+                                    String respuesta2;
+                                    do {
+                                        salir2 = false;
+                                        respuesta2 = JOptionPane.showInputDialog(this, "-> Tipos del Campo \n"
+                                                + "1. String \n"
+                                                + "2. Double \n"
+                                                + "3. Int \n"
+                                                + "4. Short \n"
+                                                + "5. Char \n"
+                                                + "6. Float \n"
+                                                + "7. Long \n"
+                                                + "Ingrese el numero de su opción: ");
+                                        if (respuesta2.equals("1") || respuesta2.equals("2") || respuesta2.equals("3") || respuesta2.equals("4") || respuesta2.equals("5") || respuesta2.equals("6") || respuesta2.equals("7")) {
+                                            salir2 = true;
+                                        }
+                                    } while (!salir2);
+                                    String tipo = "";
+                                    switch (respuesta2) {
+                                        case "1":
+                                            tipo = "String";
+                                            break;
+                                        case "2":
+                                            tipo = "Double";
+                                            break;
+                                        case "3":
+                                            tipo = "Int";
+                                            break;
+                                        case "4":
+                                            tipo = "Short";
+                                            break;
+                                        case "5":
+                                            tipo = "Char";
+                                            break;
+                                        case "6":
+                                            tipo = "Float";
+                                            break;
+                                        case "7":
+                                            tipo = "Long";
+                                            break;
+                                    }
+                                    campos.get(numero_lista).setTipo(tipo);
+                                    break;
+                                case "3":
+                                    int longitud = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese la nueva edad del campo " + campos.get(numero_lista).getNombre()));
+                                    campos.get(numero_lista).setLongitud(longitud);
+                                    break;
+                            }
+                            File archivo;
+                            FileWriter fw = null;
+                            BufferedWriter bw = null;
+                            try {
+                                archivo = file;
+                                fw = new FileWriter(archivo, false);
+                                bw = new BufferedWriter(fw);
+                                if (tipo_archivo) {
+                                    bw.write("0;");
+                                    for (int i = 0; i < campos.size(); i++) {
+                                        bw.write(campos.get(i).toString());
+                                    }
+                                    bw.write("&;-1&;");
+                                    bw.flush();
+                                } else {
+                                    bw.write("1;");
+                                    for (int i = 0; i < campos.size(); i++) {
+                                        bw.write(campos.get(i).toString2());
+                                    }
+                                    bw.write("&;-1&;");
+                                    bw.flush();
+                                }
+                                bw.close();
+                                fw.close();
+                            } catch (Exception e) {
+                                //e.printStackTrace();
+                            }
+                            try {
+                                bw.close();
+                                fw.close();
+                            } catch (IOException ex) {
+                            }
+                        } else {
+                            boolean salir;
+                            String respuesta;
+                            do {
+                                salir = false;
+                                respuesta = JOptionPane.showInputDialog(this, "-> Caracteristicas del Campo " + campos.get(numero_lista).getNombre() + "\n"
+                                        + "1. Nombre \n"
+                                        + "2. Tipo \n"
+                                        + "Ingrese el numero de su opción: ");
+                                if (respuesta.equals("1") || respuesta.equals("2")) {
+                                    salir = true;
+                                }
+                            } while (!salir);
+                            switch (respuesta) {
+                                case "1":
+                                    String nombre = JOptionPane.showInputDialog(this, "Ingrese el nuevo nombre del campo " + campos.get(numero_lista).getNombre());
+                                    campos.get(numero_lista).setNombre(nombre);
+                                    break;
+                                case "2":
+                                    boolean salir2;
+                                    String respuesta2;
+                                    do {
+                                        salir2 = false;
+                                        respuesta2 = JOptionPane.showInputDialog(this, "-> Tipos del Campo\n "
+                                                + "1. String \n"
+                                                + "2. Double \n"
+                                                + "3. Int \n"
+                                                + "4. Short \n"
+                                                + "5. Char \n"
+                                                + "6. Float \n"
+                                                + "7. Long \n"
+                                                + "Ingrese el numero de su opción: ");
+                                        if (respuesta2.equals("1") || respuesta2.equals("2") || respuesta2.equals("3") || respuesta2.equals("4") || respuesta2.equals("5") || respuesta2.equals("6") || respuesta2.equals("7")) {
+                                            salir2 = true;
+                                        }
+                                    } while (!salir2);
+                                    String tipo = "";
+                                    switch (respuesta2) {
+                                        case "1":
+                                            tipo = "String";
+                                            break;
+                                        case "2":
+                                            tipo = "Double";
+                                            break;
+                                        case "3":
+                                            tipo = "Int";
+                                            break;
+                                        case "4":
+                                            tipo = "Short";
+                                            break;
+                                        case "5":
+                                            tipo = "Char";
+                                            break;
+                                        case "6":
+                                            tipo = "Float";
+                                            break;
+                                        case "7":
+                                            tipo = "Long";
+                                            break;
+                                    }
+                                    campos.get(numero_lista).setTipo(tipo);
+                                    break;
+                            }
+                            File archivo;
+                            FileWriter fw = null;
+                            BufferedWriter bw = null;
+                            try {
+                                archivo = file;
+                                fw = new FileWriter(archivo, false);
+                                bw = new BufferedWriter(fw);
+                                if (tipo_archivo) {
+                                    bw.write("0;");
+                                    for (int i = 0; i < campos.size(); i++) {
+                                        bw.write(campos.get(i).toString());
+                                    }
+                                    bw.write("&;-1&;");
+                                    bw.flush();
+                                } else {
+                                    bw.write("1;");
+                                    for (int i = 0; i < campos.size(); i++) {
+                                        bw.write(campos.get(i).toString2());
+                                    }
+                                    bw.write("&;-1&;");
+                                    bw.flush();
+                                }
+                                bw.close();
+                                fw.close();
+                            } catch (Exception e) {
+                                //e.printStackTrace();
+                            }
+                            try {
+                                bw.close();
+                                fw.close();
+                            } catch (IOException ex) {
+                            }
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "¡No se puede modificar un campo que es llave principal!");
+                    }
                 } else {
                     JOptionPane.showMessageDialog(this, "¡El campo no existe!");
                 }
             } else {
+                JOptionPane.showMessageDialog(this, "¡El campo no existe!");
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "¡Error!");
         }
     }//GEN-LAST:event_jm_modificar1ActionPerformed
+
+    private void jm_listar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_listar1ActionPerformed
+        DefaultTableModel modelo = (DefaultTableModel) jt_Campo.getModel();
+        //Border border = new Border();
+        //jt_Campo.setBorder(border);
+    }//GEN-LAST:event_jm_listar1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1150,7 +1361,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDialog Crear_Var;
     private javax.swing.ButtonGroup dato;
     private javax.swing.ButtonGroup dato2;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -1177,6 +1387,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jb_agregar_fij;
     private javax.swing.JButton jb_agregar_var;
+    private javax.swing.JButton jb_cargartabla;
     private javax.swing.JButton jb_salir_fij;
     private javax.swing.JButton jb_salir_var;
     private javax.swing.JLabel jl_archivoactual;

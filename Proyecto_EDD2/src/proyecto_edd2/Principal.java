@@ -90,12 +90,12 @@ public class Principal extends javax.swing.JFrame {
         jmi_abrir = new javax.swing.JMenuItem();
         jm_campo = new javax.swing.JMenu();
         jmi_crear1 = new javax.swing.JMenuItem();
-        jm_listar1 = new javax.swing.JMenuItem();
-        jm_modificar1 = new javax.swing.JMenuItem();
-        jm_borrar1 = new javax.swing.JMenuItem();
+        jmi_listar1 = new javax.swing.JMenuItem();
+        jmi_modificar1 = new javax.swing.JMenuItem();
+        jmi_borrar1 = new javax.swing.JMenuItem();
         jm_registro = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        jmi_introducir2 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
@@ -576,29 +576,29 @@ public class Principal extends javax.swing.JFrame {
         });
         jm_campo.add(jmi_crear1);
 
-        jm_listar1.setText("Listar");
-        jm_listar1.addActionListener(new java.awt.event.ActionListener() {
+        jmi_listar1.setText("Listar");
+        jmi_listar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jm_listar1ActionPerformed(evt);
+                jmi_listar1ActionPerformed(evt);
             }
         });
-        jm_campo.add(jm_listar1);
+        jm_campo.add(jmi_listar1);
 
-        jm_modificar1.setText("Modificar");
-        jm_modificar1.addActionListener(new java.awt.event.ActionListener() {
+        jmi_modificar1.setText("Modificar");
+        jmi_modificar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jm_modificar1ActionPerformed(evt);
+                jmi_modificar1ActionPerformed(evt);
             }
         });
-        jm_campo.add(jm_modificar1);
+        jm_campo.add(jmi_modificar1);
 
-        jm_borrar1.setText("Borrar");
-        jm_borrar1.addActionListener(new java.awt.event.ActionListener() {
+        jmi_borrar1.setText("Borrar");
+        jmi_borrar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jm_borrar1ActionPerformed(evt);
+                jmi_borrar1ActionPerformed(evt);
             }
         });
-        jm_campo.add(jm_borrar1);
+        jm_campo.add(jmi_borrar1);
 
         jMenuBar1.add(jm_campo);
 
@@ -608,8 +608,13 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem7.setText("Cargar ");
         jm_registro.add(jMenuItem7);
 
-        jMenuItem8.setText("Introducir");
-        jm_registro.add(jMenuItem8);
+        jmi_introducir2.setText("Introducir");
+        jmi_introducir2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_introducir2ActionPerformed(evt);
+            }
+        });
+        jm_registro.add(jmi_introducir2);
 
         jMenuItem9.setText("Modificar ");
         jm_registro.add(jMenuItem9);
@@ -1030,7 +1035,7 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jb_cargartablaMouseClicked
 
-    private void jm_borrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_borrar1ActionPerformed
+    private void jmi_borrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_borrar1ActionPerformed
         try {
             Scanner sc = new Scanner(file);
             sc.useDelimiter("&");
@@ -1090,9 +1095,9 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "¡Error!");
         }
-    }//GEN-LAST:event_jm_borrar1ActionPerformed
+    }//GEN-LAST:event_jmi_borrar1ActionPerformed
 
-    private void jm_modificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_modificar1ActionPerformed
+    private void jmi_modificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_modificar1ActionPerformed
         try {
             Scanner sc = new Scanner(file);
             sc.useDelimiter("&");
@@ -1313,13 +1318,17 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "¡Error!");
         }
-    }//GEN-LAST:event_jm_modificar1ActionPerformed
+    }//GEN-LAST:event_jmi_modificar1ActionPerformed
 
-    private void jm_listar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_listar1ActionPerformed
+    private void jmi_listar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_listar1ActionPerformed
         DefaultTableModel modelo = (DefaultTableModel) jt_Campo.getModel();
         //Border border = new Border();
         //jt_Campo.setBorder(border);
-    }//GEN-LAST:event_jm_listar1ActionPerformed
+    }//GEN-LAST:event_jmi_listar1ActionPerformed
+
+    private void jmi_introducir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_introducir2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmi_introducir2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1380,7 +1389,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel8;
@@ -1392,16 +1400,17 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jb_salir_var;
     private javax.swing.JLabel jl_archivoactual;
     private javax.swing.JMenu jm_archivo;
-    private javax.swing.JMenuItem jm_borrar1;
     private javax.swing.JMenu jm_campo;
     private javax.swing.JMenu jm_estandarizacion;
     private javax.swing.JMenu jm_indice;
-    private javax.swing.JMenuItem jm_listar1;
-    private javax.swing.JMenuItem jm_modificar1;
     private javax.swing.JMenu jm_registro;
     private javax.swing.JMenuItem jmi_abrir;
+    private javax.swing.JMenuItem jmi_borrar1;
     private javax.swing.JMenuItem jmi_crear;
     private javax.swing.JMenuItem jmi_crear1;
+    private javax.swing.JMenuItem jmi_introducir2;
+    private javax.swing.JMenuItem jmi_listar1;
+    private javax.swing.JMenuItem jmi_modificar1;
     private javax.swing.JPanel jp_fija;
     private javax.swing.JSpinner js_longitud;
     private javax.swing.JTable jt_Campo;

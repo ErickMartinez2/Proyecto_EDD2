@@ -1327,7 +1327,143 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_listar1ActionPerformed
 
     private void jmi_introducir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_introducir2ActionPerformed
-        // TODO add your handling code here:
+
+        try {
+            if (tipo_archivo) {//longitud fija
+                String buffer = "";
+                for (int i = 0; i < campos.size(); i++) {
+                    boolean salir;
+                    do {
+                        salir = false;
+                        int longitud = campos.get(i).getLongitud();
+                        if (campos.get(i).getTipo().equals("String")) {
+                            String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud);
+                            if (cadena.length() > longitud) {
+                                salir = true;
+                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                            } else {
+                                buffer += cadena + ";";
+                            }
+                        } else if (campos.get(i).getTipo().equals("Char")) {
+                            String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud);
+                            if (caracter.length() > longitud) {
+                                salir = true;
+                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                            } else {
+                                buffer += caracter + ";";
+                            }
+                        } else if (campos.get(i).getTipo().equals("Int")) {
+                            int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
+                            String num = numero + "";
+                            if (num.length() > longitud) {
+                                salir = true;
+                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                            } else {
+                                buffer += numero + ";";
+                            }
+                        } else if (campos.get(i).getTipo().equals("Double")) {
+                            double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
+                            String num = numero + "";
+                            if (num.length() > longitud) {
+                                salir = true;
+                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                            } else {
+                                buffer += numero + ";";
+                            }
+                        } else if (campos.get(i).getTipo().equals("Short")) {
+                            short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
+                            String num = peque + "";
+                            if (num.length() > longitud) {
+                                salir = true;
+                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                            } else {
+                                buffer += peque + ";";
+                            }
+                        } else if (campos.get(i).getTipo().equals("Long")) {
+                            long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
+                            String num = largo + "";
+                            if (num.length() > longitud) {
+                                salir = true;
+                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                            } else {
+                                buffer += largo + ";";
+                            }
+                        } else {//float
+                            float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
+                            String num = flotante + "";
+                            if (num.length() > longitud) {
+                                salir = true;
+                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                            } else {
+                                buffer += flotante + ";";
+                            }
+                        }
+                    } while (salir);
+                }
+                //escribir
+                FileWriter fw = null;
+                BufferedWriter bw = null;
+                if (false) {
+
+                } else {
+                    try {
+                        fw = new FileWriter(file, true);
+                        bw = new BufferedWriter(fw);
+                        bw.write(buffer);
+                        bw.flush();
+                        bw.close();
+                        fw.close();
+                    } catch (Exception e) {
+                    }
+                }
+
+                JOptionPane.showMessageDialog(this, "!Registro Agregado exitosamente¡");
+            } else {//longitud variable
+                String buffer = "";
+                for (int i = 0; i < campos.size(); i++) {
+                    if (campos.get(i).getTipo().equals("String")) {
+                        String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre());
+                        buffer += cadena + ";";
+                    } else if (campos.get(i).getTipo().equals("Char")) {
+                        String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre());
+                        buffer += caracter + ";";
+                    } else if (campos.get(i).getTipo().equals("Int")) {
+                        int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                        buffer += numero + ";";
+                    } else if (campos.get(i).getTipo().equals("Double")) {
+                        double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                        buffer += numero + ";";
+                    } else if (campos.get(i).getTipo().equals("Short")) {
+                        short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                        buffer += peque + ";";
+                    } else if (campos.get(i).getTipo().equals("Long")) {
+                        long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                        buffer += largo + ";";
+                    } else {//float
+                        float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                        buffer += flotante + ";";
+                    }
+                }
+                FileWriter fw = null;
+                BufferedWriter bw = null;
+                if (false) {
+
+                } else {
+                    try {
+                        fw = new FileWriter(file, true);
+                        bw = new BufferedWriter(fw);
+                        bw.write(buffer);
+                        bw.flush();
+                        bw.close();
+                        fw.close();
+                    } catch (Exception e) {
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
     }//GEN-LAST:event_jmi_introducir2ActionPerformed
 
     /**

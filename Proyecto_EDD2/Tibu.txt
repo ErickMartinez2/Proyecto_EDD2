@@ -1,1 +1,1 @@
-0;Nombre;String;10;0;Cuenta;String;12;1;Edad;Int;3;0;&;-1&;
+0;Nombre;String;10;0;Cuenta;String;12;1;Edad;Int;3;0;&;-1&;Marta     ;11641069    ;19 ;Pedro     ;11641122    ;18 ;Carlos    ;11641435    ;32 ;

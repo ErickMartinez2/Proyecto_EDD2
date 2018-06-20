@@ -7,10 +7,13 @@ package proyecto_edd2;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
@@ -90,7 +93,6 @@ public class Principal extends javax.swing.JFrame {
         jmi_abrir = new javax.swing.JMenuItem();
         jm_campo = new javax.swing.JMenu();
         jmi_crear1 = new javax.swing.JMenuItem();
-        jmi_listar1 = new javax.swing.JMenuItem();
         jmi_modificar1 = new javax.swing.JMenuItem();
         jmi_borrar1 = new javax.swing.JMenuItem();
         jm_registro = new javax.swing.JMenu();
@@ -100,6 +102,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jm_indice = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
@@ -576,14 +579,6 @@ public class Principal extends javax.swing.JFrame {
         });
         jm_campo.add(jmi_crear1);
 
-        jmi_listar1.setText("Listar");
-        jmi_listar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmi_listar1ActionPerformed(evt);
-            }
-        });
-        jm_campo.add(jmi_listar1);
-
         jmi_modificar1.setText("Modificar");
         jmi_modificar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -627,6 +622,14 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem12.setText("Listar");
         jm_registro.add(jMenuItem12);
+
+        jMenuItem1.setText("Cruzar Archivos");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jm_registro.add(jMenuItem1);
 
         jMenuBar1.add(jm_registro);
 
@@ -1320,151 +1323,225 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmi_modificar1ActionPerformed
 
-    private void jmi_listar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_listar1ActionPerformed
-        DefaultTableModel modelo = (DefaultTableModel) jt_Campo.getModel();
-        //Border border = new Border();
-        //jt_Campo.setBorder(border);
-    }//GEN-LAST:event_jmi_listar1ActionPerformed
-
     private void jmi_introducir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_introducir2ActionPerformed
+        //String opcion = JOptionPane.showConfirmDialog(this, "Si le da aceptar no podra realizar ninguna operacion para los campos") + "";
+        //if (opcion.equals("0")) {
+            jm_campo.setEnabled(false);
+            try {
+                if (tipo_archivo) {//longitud fija
+                    String buffer = "";
+                    for (int i = 0; i < campos.size(); i++) {
+                        boolean salir;
+                        do {
+                            salir = false;
+                            int longitud = campos.get(i).getLongitud();
+                            if (campos.get(i).getTipo().equals("String")) {
+                                String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud);
 
-        try {
-            if (tipo_archivo) {//longitud fija
-                String buffer = "";
-                for (int i = 0; i < campos.size(); i++) {
-                    boolean salir;
-                    do {
-                        salir = false;
-                        int longitud = campos.get(i).getLongitud();
-                        if (campos.get(i).getTipo().equals("String")) {
-                            String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud);
-                            if (cadena.length() > longitud) {
-                                salir = true;
-                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
-                            } else {
-                                buffer += cadena + ";";
+                                if (cadena.length() > longitud) {
+                                    salir = true;
+                                    JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                                } else {
+                                    String nueva_cadena = cadena;
+                                    for (int j = cadena.length(); j < longitud; j++) {
+                                        nueva_cadena += " ";
+                                    }
+                                    buffer += nueva_cadena + ";";
+                                }
+                            } else if (campos.get(i).getTipo().equals("Char")) {
+                                String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud);
+                                if (caracter.length() > longitud) {
+                                    salir = true;
+                                    JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                                } else {
+                                    buffer += caracter + ";";
+                                }
+                            } else if (campos.get(i).getTipo().equals("Int")) {
+                                int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
+                                String num = numero + "";
+                                if (num.length() > longitud) {
+                                    salir = true;
+                                    JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                                } else {
+                                    String nueva_cadena = num;
+                                    for (int j = num.length(); j < longitud; j++) {
+                                        nueva_cadena += " ";
+                                    }
+                                    buffer += nueva_cadena + ";";
+                                }
+                            } else if (campos.get(i).getTipo().equals("Double")) {
+                                double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
+                                String num = numero + "";
+                                if (num.length() > longitud) {
+                                    salir = true;
+                                    JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                                } else {
+                                    String nueva_cadena = num;
+                                    for (int j = num.length(); j < longitud; j++) {
+                                        nueva_cadena += " ";
+                                    }
+                                    buffer += nueva_cadena + ";";
+                                }
+                            } else if (campos.get(i).getTipo().equals("Short")) {
+                                short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
+                                String num = peque + "";
+                                if (num.length() > longitud) {
+                                    salir = true;
+                                    JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                                } else {
+                                    String nueva_cadena = num;
+                                    for (int j = num.length(); j < longitud; j++) {
+                                        nueva_cadena += " ";
+                                    }
+                                    buffer += nueva_cadena + ";";
+                                }
+                            } else if (campos.get(i).getTipo().equals("Long")) {
+                                long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
+                                String num = largo + "";
+                                if (num.length() > longitud) {
+                                    salir = true;
+                                    JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                                } else {
+                                    String nueva_cadena = num;
+                                    for (int j = num.length(); j < longitud; j++) {
+                                        nueva_cadena += " ";
+                                    }
+                                    buffer += nueva_cadena + ";";
+                                }
+                            } else {//float
+                                float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
+                                String num = flotante + "";
+                                if (num.length() > longitud) {
+                                    salir = true;
+                                    JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                                } else {
+                                    String nueva_cadena = num;
+                                    for (int j = num.length(); j < longitud; j++) {
+                                        nueva_cadena += " ";
+                                    }
+                                    buffer += nueva_cadena + ";";
+                                }
                             }
-                        } else if (campos.get(i).getTipo().equals("Char")) {
-                            String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud);
-                            if (caracter.length() > longitud) {
-                                salir = true;
-                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
-                            } else {
-                                buffer += caracter + ";";
-                            }
-                        } else if (campos.get(i).getTipo().equals("Int")) {
-                            int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
-                            String num = numero + "";
-                            if (num.length() > longitud) {
-                                salir = true;
-                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
-                            } else {
-                                buffer += numero + ";";
-                            }
-                        } else if (campos.get(i).getTipo().equals("Double")) {
-                            double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
-                            String num = numero + "";
-                            if (num.length() > longitud) {
-                                salir = true;
-                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
-                            } else {
-                                buffer += numero + ";";
-                            }
-                        } else if (campos.get(i).getTipo().equals("Short")) {
-                            short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
-                            String num = peque + "";
-                            if (num.length() > longitud) {
-                                salir = true;
-                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
-                            } else {
-                                buffer += peque + ";";
-                            }
-                        } else if (campos.get(i).getTipo().equals("Long")) {
-                            long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
-                            String num = largo + "";
-                            if (num.length() > longitud) {
-                                salir = true;
-                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
-                            } else {
-                                buffer += largo + ";";
-                            }
-                        } else {//float
-                            float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
-                            String num = flotante + "";
-                            if (num.length() > longitud) {
-                                salir = true;
-                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
-                            } else {
-                                buffer += flotante + ";";
-                            }
+                        } while (salir);
+                    }
+                    //escribir
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
+                    if (false) {
+
+                    } else {
+                        try {
+                            fw = new FileWriter(file, true);
+                            bw = new BufferedWriter(fw);
+                            bw.write(buffer);
+                            bw.flush();
+                            bw.close();
+                            fw.close();
+                        } catch (Exception e) {
                         }
-                    } while (salir);
-                }
-                //escribir
-                FileWriter fw = null;
-                BufferedWriter bw = null;
-                if (false) {
-
-                } else {
-                    try {
-                        fw = new FileWriter(file, true);
-                        bw = new BufferedWriter(fw);
-                        bw.write(buffer);
-                        bw.flush();
-                        bw.close();
-                        fw.close();
-                    } catch (Exception e) {
                     }
-                }
 
-                JOptionPane.showMessageDialog(this, "!Registro Agregado exitosamente¡");
-            } else {//longitud variable
-                String buffer = "";
-                for (int i = 0; i < campos.size(); i++) {
-                    if (campos.get(i).getTipo().equals("String")) {
-                        String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre());
-                        buffer += cadena + ";";
-                    } else if (campos.get(i).getTipo().equals("Char")) {
-                        String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre());
-                        buffer += caracter + ";";
-                    } else if (campos.get(i).getTipo().equals("Int")) {
-                        int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
-                        buffer += numero + ";";
-                    } else if (campos.get(i).getTipo().equals("Double")) {
-                        double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
-                        buffer += numero + ";";
-                    } else if (campos.get(i).getTipo().equals("Short")) {
-                        short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
-                        buffer += peque + ";";
-                    } else if (campos.get(i).getTipo().equals("Long")) {
-                        long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
-                        buffer += largo + ";";
-                    } else {//float
-                        float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
-                        buffer += flotante + ";";
+                    JOptionPane.showMessageDialog(this, "¡Registro Agregado exitosamente!");
+                } else {//longitud variable
+                    String buffer = "";
+                    for (int i = 0; i < campos.size(); i++) {
+                        if (campos.get(i).getTipo().equals("String")) {
+                            String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre());
+                            buffer += cadena + ";";
+                        } else if (campos.get(i).getTipo().equals("Char")) {
+                            String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre());
+                            buffer += caracter + ";";
+                        } else if (campos.get(i).getTipo().equals("Int")) {
+                            int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                            buffer += numero + ";";
+                        } else if (campos.get(i).getTipo().equals("Double")) {
+                            double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                            buffer += numero + ";";
+                        } else if (campos.get(i).getTipo().equals("Short")) {
+                            short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                            buffer += peque + ";";
+                        } else if (campos.get(i).getTipo().equals("Long")) {
+                            long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                            buffer += largo + ";";
+                        } else {//float
+                            float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                            buffer += flotante + ";";
+                        }
                     }
-                }
-                FileWriter fw = null;
-                BufferedWriter bw = null;
-                if (false) {
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
+                    if (false) {
 
-                } else {
-                    try {
-                        fw = new FileWriter(file, true);
-                        bw = new BufferedWriter(fw);
-                        bw.write(buffer);
-                        bw.flush();
-                        bw.close();
-                        fw.close();
-                    } catch (Exception e) {
+                    } else {
+                        try {
+                            fw = new FileWriter(file, true);
+                            bw = new BufferedWriter(fw);
+                            bw.write(buffer);
+                            bw.flush();
+                            bw.close();
+                            fw.close();
+                        } catch (Exception e) {
+                        }
                     }
+
                 }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Ocurrio un error");
+
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        //}
 
-        }
     }//GEN-LAST:event_jmi_introducir2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        String archivo = JOptionPane.showInputDialog(this, "Ingrese el nombre del segundo archivo: ");
+        File file1 = new File("./" + archivo + ".txt");
+        if (file1.exists()) {
+            try {
+                Scanner sc = new Scanner(file1);
+                sc.useDelimiter("&");
+                String cadena1 = sc.next();
+                String availlist1 = sc.next();//esto hay que cambiarlo
+                String acum_registros = "";
+                sc.useDelimiter(";");
+                while (sc.hasNext()) {                    
+                    acum_registros += sc.next()+";";
+                }
+
+                sc = new Scanner(file);
+                sc.useDelimiter("&");
+                String cadena2 = sc.next();
+                sc.next();//para saltarme al availlist
+                sc.useDelimiter(";");
+                while (sc.hasNext()) {                    
+                    acum_registros += sc.next()+";";
+                }
+
+                if (cadena2.equals(cadena1)) {
+                    JOptionPane.showMessageDialog(this, "¡Los archivos se pueden cruzar!");
+                    String nuevo_nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del nuevo archivo: ");
+                    File file3 = new File("./" + nuevo_nombre + ".txt");
+                    FileWriter fw = new FileWriter("./" + nuevo_nombre + ".txt", true);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    bw.write(cadena1 + "&");
+                    bw.write(availlist1);
+                    bw.write(acum_registros);
+                    bw.flush();
+                    bw.close();
+                    fw.close();
+                } else {
+                    JOptionPane.showMessageDialog(this, "¡Los archivos no se pueden cruzar!");
+                }
+                sc.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "¡El archivo no existe!");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1517,6 +1594,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
@@ -1545,7 +1623,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmi_crear;
     private javax.swing.JMenuItem jmi_crear1;
     private javax.swing.JMenuItem jmi_introducir2;
-    private javax.swing.JMenuItem jmi_listar1;
     private javax.swing.JMenuItem jmi_modificar1;
     private javax.swing.JPanel jp_fija;
     private javax.swing.JSpinner js_longitud;

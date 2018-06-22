@@ -20,8 +20,10 @@ public class Principal extends javax.swing.JFrame {
 
     //Variables
     ArrayList<Campo> campos = new ArrayList();
-    File file;
+    ArrayList<Posicion> availList = new ArrayList();
+    File file, indice;
     boolean tipo_archivo;
+    ArbolB arbol = new ArbolB(4);
 
     public Principal() {
         initComponents();
@@ -88,7 +90,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jmi_introducir2 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        jmi_buscar2 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jmi_cruzar = new javax.swing.JMenuItem();
@@ -603,13 +605,13 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem9.setText("Modificar ");
         jm_registro.add(jMenuItem9);
 
-        jMenuItem10.setText("Buscar");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+        jmi_buscar2.setText("Buscar");
+        jmi_buscar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+                jmi_buscar2ActionPerformed(evt);
             }
         });
-        jm_registro.add(jMenuItem10);
+        jm_registro.add(jmi_buscar2);
 
         jMenuItem11.setText("Borrar ");
         jm_registro.add(jMenuItem11);
@@ -723,7 +725,7 @@ public class Principal extends javax.swing.JFrame {
                 }
             }
             boolean llave = false;
-            if (entrar) {
+            if (entrar && tipo.equals("Int")) {
                 int respuesta = JOptionPane.showConfirmDialog(Crear_Fij, "¿Desea que el campo " + nombre + " sea la llave principal?");
                 if (respuesta == 0) {
                     llave = true;
@@ -741,37 +743,28 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_agregar_fijMouseClicked
 
     private void jb_salir_fijMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salir_fijMouseClicked
-        if (!campos.isEmpty()) {
-            boolean llave_principal = false;
-            for (int i = 0; i < campos.size(); i++) {
-                if (campos.get(i).isLlave()) {
-                    llave_principal = true;
-                }
+        int contador_enteros = 0;
+        for (int i = 0; i < campos.size(); i++) {
+            if (campos.get(i).getTipo().equals("Int")) {
+                contador_enteros++;
             }
-            if (!llave_principal) {
-                String opciones = "-> Campos del Archivo \n";
-                for (int i = 0; i < campos.size(); i++) {
-                    opciones += (i + 1) + ". " + campos.get(i).getNombre() + "\n";
-                }
-                opciones += "Seleccione la llave principal: ";
-                boolean seguir;
-                int opcion = 0;
-                do {
-                    seguir = true;
-                    try {
-                        opcion = Integer.parseInt(JOptionPane.showInputDialog(this, opciones));
-                    } catch (Exception e) {
-                        seguir = false;
-                        JOptionPane.showMessageDialog(Crear_Fij, "¡Datos incorrectos!");
-                    }
-                    if (seguir) {
-                        if (opcion <= 0 || opcion > campos.size()) {
-                            seguir = false;
-                            JOptionPane.showMessageDialog(Crear_Fij, "¡Numero incorrecto!");
-                        }
-                    }
-                } while (!seguir);
-                campos.get(opcion - 1).setLlave(true);
+        }
+        if (contador_enteros == 0) {
+            if (tipo_archivo) {
+                campos.add(new Campo("Llave", "Int", 10, true));
+                JOptionPane.showMessageDialog(this, "-> OBSERVACIÓN\n"
+                        + "Ninguno de sus campos creados cumple con los requisitos para ser una llave primaria.\n"
+                        + "Por lo que el programa ha creado un nuevo campo,que será su llave primaria, con las siguientes caracteristicas:\n"
+                        + "- Nombre: Llave\n"
+                        + "- Tipo: Int\n"
+                        + "- Longitud: 10\n");
+            } else {
+                campos.add(new Campo("Llave", "Int", 0, true));
+                JOptionPane.showMessageDialog(this, "-> OBSERVACIÓN\n"
+                        + "Ninguno de sus campos creados cumple con los requisitos para ser una llave primaria.\n"
+                        + "Por lo que el programa ha creado un nuevo campo, que será su llave primaria, con las siguientes caracteristicas:\n"
+                        + "- Nombre: Llave\n"
+                        + "- Tipo: Int\n");
             }
             File archivo;
             FileWriter fw = null;
@@ -784,7 +777,7 @@ public class Principal extends javax.swing.JFrame {
                 for (int i = 0; i < campos.size(); i++) {
                     bw.write(campos.get(i).toString());
                 }
-                bw.write("&;-1&;");
+                bw.write("&;");
                 bw.flush();
             } catch (Exception e) {
                 // e.printStackTrace();
@@ -794,7 +787,128 @@ public class Principal extends javax.swing.JFrame {
                 fw.close();
             } catch (IOException ex) {
             }
-            //JOptionPane.showMessageDialog(Crear_Fij, "¡Archivo " + file.getName() + " agregado exitosamente!");
+            indice = new File("./indice" + file.getName());
+            FileWriter fw2 = null;
+            BufferedWriter bw2 = null;
+            try {
+                archivo = indice;
+                fw2 = new FileWriter(archivo, false);
+                bw2 = new BufferedWriter(fw2);
+                bw2.write("");
+                bw2.flush();
+            } catch (Exception e) {
+            }
+            try {
+                bw2.close();
+                fw2.close();
+            } catch (IOException ex) {
+            }
+
+        } else {
+            if (!campos.isEmpty()) {
+                boolean llave_principal = false;
+                for (int i = 0; i < campos.size(); i++) {
+                    if (campos.get(i).isLlave()) {
+                        llave_principal = true;
+                    }
+                }
+                if (!llave_principal) {
+                    String opciones_verificar = "-> Campos del Archivo \n";
+                    for (int i = 0; i < campos.size(); i++) {
+                        if (campos.get(i).getTipo().equals("Int")) {
+                            opciones_verificar += "- " + campos.get(i).getNombre() + "\n";
+                        }
+                    }
+                    opciones_verificar += "¿Desea que alguno de estos campos sea la llave principal?";
+                    int respuesta = JOptionPane.showConfirmDialog(this, opciones_verificar);
+                    switch (respuesta) {
+                        case 1:
+                            String opciones = "-> Campos del Archivo \n";
+                            for (int i = 0; i < campos.size(); i++) {
+                                opciones += (i + 1) + ". " + campos.get(i).getNombre() + "\n";
+                            }
+                            opciones += "Seleccione la llave principal: ";
+                            boolean seguir;
+                            int opcion = 0;
+                            do {
+                                seguir = true;
+                                try {
+                                    opcion = Integer.parseInt(JOptionPane.showInputDialog(this, opciones));
+                                } catch (Exception e) {
+                                    seguir = false;
+                                    JOptionPane.showMessageDialog(Crear_Fij, "¡Datos incorrectos!");
+                                }
+                                if (seguir) {
+                                    if (opcion <= 0 || opcion > campos.size()) {
+                                        seguir = false;
+                                        JOptionPane.showMessageDialog(Crear_Fij, "¡Numero incorrecto!");
+                                    } else {
+                                        if (!campos.get(opcion - 1).getTipo().equals("Int")) {
+                                            seguir = false;
+                                            JOptionPane.showMessageDialog(Crear_Fij, "¡La llave principal debe ser Int!");
+                                        }
+                                    }
+                                }
+                            } while (!seguir);
+                            campos.get(opcion - 1).setLlave(true);
+                            break;
+                        default:
+                            if (tipo_archivo) {
+                                campos.add(new Campo("Llave", "Int", 10, true));
+                                JOptionPane.showMessageDialog(this, "-> OBSERVACIÓN\n"
+                                        + "El programa ha creado un nuevo campo, que será su llave primaria, el cual tendrá las siguientes caracteristicas:\n"
+                                        + "- Nombre: Llave\n"
+                                        + "- Tipo: Int\n"
+                                        + "- Longitud: 10\n");
+                            } else {
+                                campos.add(new Campo("Llave", "Int", 0, true));
+                                JOptionPane.showMessageDialog(this, "-> OBSERVACIÓN\n"
+                                        + "El programa ha creado un nuevo campo, que será su llave primaria, el cual tendrá las siguientes caracteristicas:\n"
+                                        + "- Nombre: Llave\n"
+                                        + "- Tipo: Int\n");
+                            }
+                            break;
+                    }
+                }
+                File archivo;
+                FileWriter fw = null;
+                BufferedWriter bw = null;
+                try {
+                    archivo = file;
+                    fw = new FileWriter(archivo, false);
+                    bw = new BufferedWriter(fw);
+                    bw.write("0;");
+                    for (int i = 0; i < campos.size(); i++) {
+                        bw.write(campos.get(i).toString());
+                    }
+                    bw.write("&;");
+                    bw.flush();
+                } catch (Exception e) {
+                    // e.printStackTrace();
+                }
+                try {
+                    bw.close();
+                    fw.close();
+                } catch (IOException ex) {
+                }
+                indice = new File("./indice" + file.getName());
+                FileWriter fw2 = null;
+                BufferedWriter bw2 = null;
+                try {
+                    archivo = indice;
+                    fw2 = new FileWriter(archivo, false);
+                    bw2 = new BufferedWriter(fw2);
+                    bw2.write("");
+                    bw2.flush();
+                } catch (Exception e) {
+                }
+                try {
+                    bw2.close();
+                    fw2.close();
+                } catch (IOException ex) {
+                }
+                //JOptionPane.showMessageDialog(Crear_Fij, "¡Archivo " + file.getName() + " agregado exitosamente!");
+            }
         }
         Crear_Fij.dispose();
     }//GEN-LAST:event_jb_salir_fijMouseClicked
@@ -825,7 +939,7 @@ public class Principal extends javax.swing.JFrame {
                 }
             }
             boolean llave = false;
-            if (entrar) {
+            if (entrar && tipo.equals("Int")) {
                 int respuesta = JOptionPane.showConfirmDialog(Crear_Var, "¿Desea que el campo " + nombre + " sea la llave principal?");
                 if (respuesta == 0) {
                     llave = true;
@@ -842,37 +956,28 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_agregar_varMouseClicked
 
     private void jb_salir_varMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salir_varMouseClicked
-        if (!campos.isEmpty()) {
-            boolean llave_principal = false;
-            for (int i = 0; i < campos.size(); i++) {
-                if (campos.get(i).isLlave()) {
-                    llave_principal = true;
-                }
+        int contador_enteros = 0;
+        for (int i = 0; i < campos.size(); i++) {
+            if (campos.get(i).getTipo().equals("Int")) {
+                contador_enteros++;
             }
-            if (!llave_principal) {
-                String opciones = "-> Campos del Archivo \n";
-                for (int i = 0; i < campos.size(); i++) {
-                    opciones += (i + 1) + ". " + campos.get(i).getNombre() + "\n";
-                }
-                opciones += "Seleccione la llave principal: ";
-                boolean seguir;
-                int opcion = 0;
-                do {
-                    seguir = true;
-                    try {
-                        opcion = Integer.parseInt(JOptionPane.showInputDialog(this, opciones));
-                    } catch (Exception e) {
-                        seguir = false;
-                        JOptionPane.showMessageDialog(Crear_Var, "¡Datos incorrectos!");
-                    }
-                    if (seguir) {
-                        if (opcion <= 0 || opcion > campos.size()) {
-                            seguir = false;
-                            JOptionPane.showMessageDialog(Crear_Var, "¡Numero incorrecto!");
-                        }
-                    }
-                } while (!seguir);
-                campos.get(opcion - 1).setLlave(true);
+        }
+        if (contador_enteros == 0) {
+            if (tipo_archivo) {
+                campos.add(new Campo("Llave", "Int", 10, true));
+                JOptionPane.showMessageDialog(this, "-> OBSERVACIÓN\n"
+                        + "Ninguno de sus campos creados cumple con los requisitos para ser una llave primaria.\n"
+                        + "Por lo que el programa ha creado un nuevo campo,que será su llave primaria, con las siguientes caracteristicas:\n"
+                        + "- Nombre: Llave\n"
+                        + "- Tipo: Int\n"
+                        + "- Longitud: 10\n");
+            } else {
+                campos.add(new Campo("Llave", "Int", 0, true));
+                JOptionPane.showMessageDialog(this, "-> OBSERVACIÓN\n"
+                        + "Ninguno de sus campos creados cumple con los requisitos para ser una llave primaria.\n"
+                        + "Por lo que el programa ha creado un nuevo campo, que será su llave primaria, con las siguientes caracteristicas:\n"
+                        + "- Nombre: Llave\n"
+                        + "- Tipo: Int\n");
             }
             File archivo;
             FileWriter fw = null;
@@ -883,27 +988,146 @@ public class Principal extends javax.swing.JFrame {
                 bw = new BufferedWriter(fw);
                 bw.write("1;");
                 for (int i = 0; i < campos.size(); i++) {
-                    bw.write(campos.get(i).toString2());
+                    bw.write(campos.get(i).toString());
                 }
-                bw.write("&;-1&;");
+                bw.write("&;");
                 bw.flush();
             } catch (Exception e) {
-                e.printStackTrace();
+                // e.printStackTrace();
             }
             try {
                 bw.close();
                 fw.close();
             } catch (IOException ex) {
             }
-            //JOptionPane.showMessageDialog(Crear_Var, "¡Archivo " + file.getName() + " agregado exitosamente!");
+            indice = new File("./indice" + file.getName());
+            FileWriter fw2 = null;
+            BufferedWriter bw2 = null;
+            try {
+                archivo = indice;
+                fw2 = new FileWriter(archivo, false);
+                bw2 = new BufferedWriter(fw2);
+                bw2.write("");
+                bw2.flush();
+            } catch (Exception e) {
+            }
+            try {
+                bw2.close();
+                fw2.close();
+            } catch (IOException ex) {
+            }
+        } else {
+            if (!campos.isEmpty()) {
+                boolean llave_principal = false;
+                for (int i = 0; i < campos.size(); i++) {
+                    if (campos.get(i).isLlave()) {
+                        llave_principal = true;
+                    }
+                }
+                if (!llave_principal) {
+                    String opciones_verificar = "-> Campos del Archivo \n";
+                    for (int i = 0; i < campos.size(); i++) {
+                        if (campos.get(i).getTipo().equals("Int")) {
+                            opciones_verificar += "- " + campos.get(i).getNombre() + "\n";
+                        }
+                    }
+                    opciones_verificar += "¿Desea que alguno de estos campos sea la llave principal?";
+                    int respuesta = JOptionPane.showConfirmDialog(this, opciones_verificar);
+                    switch (respuesta) {
+                        case 1:
+                            String opciones = "-> Campos del Archivo \n";
+                            for (int i = 0; i < campos.size(); i++) {
+                                opciones += (i + 1) + ". " + campos.get(i).getNombre() + "\n";
+                            }
+                            opciones += "Seleccione la llave principal: ";
+                            boolean seguir;
+                            int opcion = 0;
+                            do {
+                                seguir = true;
+                                try {
+                                    opcion = Integer.parseInt(JOptionPane.showInputDialog(this, opciones));
+                                } catch (Exception e) {
+                                    seguir = false;
+                                    JOptionPane.showMessageDialog(Crear_Var, "¡Datos incorrectos!");
+                                }
+                                if (seguir) {
+                                    if (opcion <= 0 || opcion > campos.size()) {
+                                        seguir = false;
+                                        JOptionPane.showMessageDialog(Crear_Var, "¡Numero incorrecto!");
+                                    }
+                                }
+                            } while (!seguir);
+                            campos.get(opcion - 1).setLlave(true);
+                            break;
+                        default:
+                            if (tipo_archivo) {
+                                campos.add(new Campo("Llave", "Int", 10, true));
+                                JOptionPane.showMessageDialog(this, "-> OBSERVACIÓN\n"
+                                        + "El programa ha creado un nuevo campo, que será su llave primaria, el cual tendrá las siguientes caracteristicas:\n"
+                                        + "- Nombre: Llave\n"
+                                        + "- Tipo: Int\n"
+                                        + "- Longitud: 10\n");
+                            } else {
+                                campos.add(new Campo("Llave", "Int", 0, true));
+                                JOptionPane.showMessageDialog(this, "-> OBSERVACIÓN\n"
+                                        + "El programa ha creado un nuevo campo, que será su llave primaria, el cual tendrá las siguientes caracteristicas:\n"
+                                        + "- Nombre: Llave\n"
+                                        + "- Tipo: Int\n");
+                            }
+                            break;
+                    }
+                }
+                File archivo;
+                FileWriter fw = null;
+                BufferedWriter bw = null;
+                try {
+                    archivo = file;
+                    fw = new FileWriter(archivo, false);
+                    bw = new BufferedWriter(fw);
+                    bw.write("1;");
+                    for (int i = 0; i < campos.size(); i++) {
+                        bw.write(campos.get(i).toString2());
+                    }
+                    bw.write("&;");
+                    bw.flush();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    bw.close();
+                    fw.close();
+                } catch (IOException ex) {
+                }
+                indice = new File("./indice" + file.getName());
+                FileWriter fw2 = null;
+                BufferedWriter bw2 = null;
+                try {
+                    archivo = indice;
+                    fw2 = new FileWriter(archivo, false);
+                    bw2 = new BufferedWriter(fw2);
+                    bw2.write("");
+                    bw2.flush();
+                } catch (Exception e) {
+                }
+                try {
+                    bw2.close();
+                    fw2.close();
+                } catch (IOException ex) {
+                }
+                //JOptionPane.showMessageDialog(Crear_Var, "¡Archivo " + file.getName() + " agregado exitosamente!");
+            }
         }
         Crear_Var.dispose();
     }//GEN-LAST:event_jb_salir_varMouseClicked
 
     private void jmi_crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_crearActionPerformed
         String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del nuevo archivo: ");
+        String verificar = "";
+        if (nombre.length() > 5) {
+            verificar = nombre.substring(0, 6);
+        }
         campos = new ArrayList();
-        if (nombre != null && !"".equals(nombre)) {
+        if (nombre != null && (!"".equals(nombre)) && (!verificar.equalsIgnoreCase("indice"))) {
             file = new File("./" + nombre + ".txt");
             if (file.exists()) {
                 JOptionPane.showMessageDialog(this, "El archivo ya existe");
@@ -921,6 +1145,8 @@ public class Principal extends javax.swing.JFrame {
                     Crear_Fij.setVisible(true);
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "El nombre ingresado es invalido");
         }
     }//GEN-LAST:event_jmi_crearActionPerformed
 
@@ -958,8 +1184,19 @@ public class Principal extends javax.swing.JFrame {
                             }
                         }
                     }
-
+                    sc.close();
                 } catch (Exception e) {
+                    //e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "¡Error!");
+                }
+                availList = new ArrayList();
+                try {
+                    File archivito = new File("./indice" + file.getName());
+                    sc = new Scanner(archivito);
+                    sc.close();
+                } catch (Exception e) {
+                    //
+                    e.printStackTrace();
                     JOptionPane.showMessageDialog(this, "¡Error!");
                 }
                 jl_archivoactual.setText(archivo + ".txt");
@@ -981,12 +1218,28 @@ public class Principal extends javax.swing.JFrame {
                 jm_registro.setEnabled(true);
                 jm_indice.setEnabled(true);
                 jm_estandarizacion.setEnabled(true);
+                arbol = new ArbolB(4);
+                indice = new File("./indice" + file.getName());
+                try {
+                    sc = new Scanner(indice);
+                    sc.useDelimiter(";");
+                    while (sc.hasNext()) {
+                        Registro registro = new Registro(sc.nextInt(), sc.nextInt(), sc.nextInt());
+                        arbol.insert(registro);
+                    }
+                    sc.close();
+                    //System.out.println(arbol);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "¡Error!");
+                }
                 JOptionPane.showMessageDialog(this, "¡Archivo " + file.getName() + " cargado exitosamente!");
             } else {
                 JOptionPane.showMessageDialog(this, "¡El archivo solicitado no existe!");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "¡Error!");
+            e.printStackTrace();
         }
     }//GEN-LAST:event_jmi_abrirActionPerformed
 
@@ -995,7 +1248,7 @@ public class Principal extends javax.swing.JFrame {
             Scanner sc = new Scanner(file);
             sc.useDelimiter("&");
             sc.next();
-            sc.next();
+
             sc.useDelimiter(";");
             sc.next();
             if (!sc.hasNext()) {
@@ -1323,6 +1576,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jmi_introducir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_introducir2ActionPerformed
         jm_campo.setEnabled(false);
+        int key = 0;
         try {
             if (tipo_archivo) {//longitud fija
                 String buffer = "";
@@ -1333,7 +1587,6 @@ public class Principal extends javax.swing.JFrame {
                         int longitud = campos.get(i).getLongitud();
                         if (campos.get(i).getTipo().equals("String")) {
                             String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud);
-
                             if (cadena.length() > longitud) {
                                 salir = true;
                                 JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
@@ -1354,6 +1607,9 @@ public class Principal extends javax.swing.JFrame {
                             }
                         } else if (campos.get(i).getTipo().equals("Int")) {
                             int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud));
+                            if (campos.get(i).isLlave()) {
+                                key = numero;
+                            }
                             String num = numero + "";
                             if (num.length() > longitud) {
                                 salir = true;
@@ -1435,8 +1691,25 @@ public class Principal extends javax.swing.JFrame {
                         fw.close();
                     } catch (Exception e) {
                     }
+                    //File archivo;
+                    FileWriter fw2 = null;
+                    BufferedWriter bw2 = null;
+                    indice = new File("./indice" + file.getName());
+                    try {
+                        // archivo = indice;
+                        fw2 = new FileWriter(indice, true);
+                        bw2 = new BufferedWriter(fw2);
+                        bw2.write(key + ";" + file.length() + ";" + buffer.length() + ";");
+                        bw2.flush();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        bw2.close();
+                        fw2.close();
+                    } catch (IOException ex) {
+                    }
                 }
-                JOptionPane.showMessageDialog(this, "¡Registro Agregado exitosamente!");
             } else {//longitud variable
                 String buffer = "";
                 for (int i = 0; i < campos.size(); i++) {
@@ -1448,6 +1721,9 @@ public class Principal extends javax.swing.JFrame {
                         buffer += caracter + ";";
                     } else if (campos.get(i).getTipo().equals("Int")) {
                         int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                        if (campos.get(i).isLlave()) {
+                            key = numero;
+                        }
                         buffer += numero + ";";
                     } else if (campos.get(i).getTipo().equals("Double")) {
                         double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
@@ -1478,44 +1754,63 @@ public class Principal extends javax.swing.JFrame {
                     } catch (Exception e) {
                     }
                 }
+                FileWriter fw2 = null;
+                BufferedWriter bw2 = null;
+                indice = new File("./indice" + file.getName());
+                try {
+                    fw2 = new FileWriter(indice, true);
+                    bw2 = new BufferedWriter(fw2);
+                    bw2.write(key + ";" + file.length() + ";" + buffer.length() + ";");
+                    bw2.flush();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    bw2.close();
+                    fw2.close();
+                } catch (IOException ex) {
+                }
             }
+            JOptionPane.showMessageDialog(this, "¡Registro Agregado exitosamente!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Ocurrio un error");
+            JOptionPane.showMessageDialog(this, "¡Ocurrio un error!");
         }
     }//GEN-LAST:event_jmi_introducir2ActionPerformed
 
     private void jmi_cruzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_cruzarActionPerformed
         String archivo = JOptionPane.showInputDialog(this, "Ingrese el nombre del segundo archivo: ");
+        String verificar = "";
+        if (archivo.length() > 5) {
+            verificar = archivo.substring(0, 6);
+        }
         File file1 = new File("./" + archivo + ".txt");
-        if (file1.exists() && (!file.getName().equals(file1.getName()))) {
+        if (file1.exists() && (!file.getName().equals(file1.getName())) && (!verificar.equalsIgnoreCase("indice"))) {
             try {
                 Scanner sc = new Scanner(file1);
                 sc.useDelimiter("&");
                 String cadena1 = sc.next();
-                String availlist1 = sc.next();//esto hay que cambiarlo
                 String acum_registros = "";
                 sc.useDelimiter(";");
+                sc.next();
                 while (sc.hasNext()) {
                     acum_registros += sc.next() + ";";
                 }
-
                 sc = new Scanner(file);
                 sc.useDelimiter("&");
                 String cadena2 = sc.next();
-                sc.next();//para saltarme al availlist
                 sc.useDelimiter(";");
+                sc.next();
                 while (sc.hasNext()) {
                     acum_registros += sc.next() + ";";
                 }
-
                 if (cadena2.equals(cadena1)) {
                     JOptionPane.showMessageDialog(this, "¡Los archivos se pueden cruzar!");
                     String nuevo_nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del nuevo archivo: ");
                     File file3 = new File("./" + nuevo_nombre + ".txt");
                     FileWriter fw = new FileWriter("./" + nuevo_nombre + ".txt", true);
                     BufferedWriter bw = new BufferedWriter(fw);
-                    bw.write(cadena1 + "&");
-                    bw.write(availlist1);
+                    bw.write(cadena1 + "&;");
                     bw.write(acum_registros);
                     bw.flush();
                     bw.close();
@@ -1525,51 +1820,35 @@ public class Principal extends javax.swing.JFrame {
                 }
                 sc.close();
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
+            JOptionPane.showMessageDialog(this, "¡Archivo cruzado creado exitosamente!");
         } else {
             if (file.getName().equals(file1.getName())) {
                 JOptionPane.showMessageDialog(this, "¡Selecciono el mismo archivo!");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "¡El archivo no existe!");
             }
-            
         }
     }//GEN-LAST:event_jmi_cruzarActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        ArbolB arbol = new ArbolB(3);
-        /*arbol.insert(new Registro(20, 0));
-        arbol.insert(new Registro(30, 0));
-        arbol.insert(new Registro(10, 0));
-        arbol.insert(new Registro(50, 0));
-        arbol.insert(new Registro(70, 0));
-        arbol.insert(new Registro(200, 0));
-        arbol.insert(new Registro(0, 0));
-        arbol.insert(new Registro(210, 0));
-        arbol.insert(new Registro(220, 0));
-        arbol.insert(new Registro(230, 0));
-        arbol.insert(new Registro(240, 0));
-        arbol.insert(new Registro(80, 0));
-        arbol.insert(new Registro(90, 0));
-        arbol.insert(new Registro(100, 0));
-        arbol.insert(new Registro(300, 0));
-        arbol.insert(new Registro(400, 0));
-        arbol.insert(new Registro(150, 0));
-        arbol.insert(new Registro(160, 0));
-        arbol.insert(new Registro(170, 0));
-        arbol.insert(new Registro(180, 0));
-        arbol.insert(new Registro(190, 0));
-        arbol.insert(new Registro(195, 0));
-        arbol.insert(new Registro(350, 0));
-        arbol.insert(new Registro(250, 0));
-        arbol.insert(new Registro(370, 0));
-        arbol.insert(new Registro(380, 0));*/
-
-        
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+    private void jmi_buscar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_buscar2ActionPerformed
+        try {
+            String nombre = "";
+            for (int i = 0; i < campos.size(); i++) {
+                if (campos.get(i).isLlave()) {
+                    nombre = campos.get(i).getNombre();
+                }
+            }
+            int key = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese la llave principal " + nombre));
+            Registro registro = arbol.getRaiz().searchOff(new Registro(key));
+            System.out.println(registro.toString2());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "¡Error!");
+        }
+    }//GEN-LAST:event_jmi_buscar2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1622,7 +1901,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
@@ -1647,6 +1925,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jm_registro;
     private javax.swing.JMenuItem jmi_abrir;
     private javax.swing.JMenuItem jmi_borrar1;
+    private javax.swing.JMenuItem jmi_buscar2;
     private javax.swing.JMenuItem jmi_crear;
     private javax.swing.JMenuItem jmi_crear1;
     private javax.swing.JMenuItem jmi_cruzar;

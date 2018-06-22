@@ -12,6 +12,10 @@ public class Registro {
         this.size = size;
     }
 
+    public Registro(int llave) {
+        this.llave = llave;
+    }
+    
     public int getSize() {
         return size;
     }
@@ -41,4 +45,7 @@ public class Registro {
         return llave + "";
     }
     
+    public String toString2() {
+        return llave + ";" + offset + ";" + size + ";";
+    }
 }

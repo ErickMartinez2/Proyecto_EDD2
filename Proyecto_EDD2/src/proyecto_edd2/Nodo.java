@@ -1,7 +1,6 @@
 package proyecto_edd2;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Nodo {
 
@@ -26,7 +25,6 @@ public class Nodo {
 
     private void forceInsert(Registro registro, int orden) {
         this.llaves.add(registro);
-        //Collections.sort(this.llaves);
         Registro temp;
         for (int i = 0; i < this.llaves.size(); i++) {
             for (int j = 1; j < this.llaves.size() - i; j++) {
@@ -112,7 +110,7 @@ public class Nodo {
         return hijos.get(index).search(registro);
     }
     
-    private Registro searchOff(Registro registro){
+    public Registro searchOff(Registro registro){
         Nodo buscado = search(registro);
         for (int i = 0; i < buscado.llaves.size(); i++) {
             if(buscado.llaves.get(i).llave == registro.llave){

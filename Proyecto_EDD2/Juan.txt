@@ -1,0 +1,1 @@
+0;Nombre;String;10;0;Apellido;String;10;0;Direccion;String;50;0;Llave;Int;10;1;&;

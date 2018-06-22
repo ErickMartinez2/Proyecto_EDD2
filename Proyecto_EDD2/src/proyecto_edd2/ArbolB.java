@@ -14,6 +14,10 @@ public class ArbolB {
         this.raiz = this.raiz.insert(registro, orden);
     }
 
+    public Nodo getRaiz() {
+        return raiz;
+    }
+    
     @Override
     public String toString() {
         return "{" + "orden:" + orden + ", raiz:" + raiz + '}';

@@ -1,1 +1,0 @@
-0;Nombre;String;10;0;Cuenta;String;12;1;Edad;Int;3;0;&;-1&;Tiffany   ;11642233    ;22 ;Brittany  ;11641234    ;20 ;

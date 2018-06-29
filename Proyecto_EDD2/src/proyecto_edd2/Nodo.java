@@ -120,7 +120,7 @@ public class Nodo {
             return this;
         }
         int index = searchNodeIndex(registro);
-        return hijos.get(index).search(registro);
+        return hijos.get(index).search2(registro);
     }
     
     public Registro searchOff(Registro registro){

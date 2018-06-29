@@ -1281,8 +1281,14 @@ public class Principal extends javax.swing.JFrame {
                     sc = new Scanner(indice);
                     sc.useDelimiter(";");
                     while (sc.hasNext()) {
-                        Registro registro = new Registro(sc.nextInt(), sc.nextInt(), sc.nextInt());
-                        arbol.insert(registro);
+                        String temporal = sc.next();
+                        if (temporal.charAt(0) != '*') {
+                            Registro registro = new Registro(Integer.parseInt(temporal), sc.nextInt(), sc.nextInt());
+                            arbol.insert(registro);
+                        } else {
+                            sc.next();
+                            sc.next();
+                        }
                     }
                     System.out.println(arbol);//aqui
                     sc.close();
@@ -1319,19 +1325,45 @@ public class Principal extends javax.swing.JFrame {
                             for (int j = 0; j < nuevo_registro.size(); j++) {
                                 nuevo_registro1 += (char) nuevo_registro.get(j).byteValue();
                             }
-                            String temporal = "";
-                            Object[] row = new Object[campos.size()];
-                            int contador2 = 0;
-                            for (int k = 0; k < nuevo_registro1.length(); k++) {
-                                if (nuevo_registro1.charAt(k) != ';') {
-                                    temporal += nuevo_registro1.charAt(k);
-                                } else {
-                                    row[contador2] = temporal;
-                                    contador2++;
-                                    temporal = "";
+                            int posicion = 0;
+                            for (int j = 0; j < campos.size(); j++) {
+                                if (campos.get(j).isLlave()) {
+                                    posicion = j;
                                 }
                             }
-                            model.addRow(row);
+                            String temp = "";
+                            int cont_temp = 0;
+                            for (int j = 0; j < nuevo_registro1.length(); j++) {
+                                if (nuevo_registro1.charAt(j) != ';') {
+                                    temp += nuevo_registro1.charAt(j);
+                                } else {
+                                    if (cont_temp == posicion) {
+                                        break;
+                                    } else {
+                                        cont_temp++;
+                                        temp = "";
+                                    }
+                                }
+                            }
+                            Registro registro_temp = new Registro(Integer.parseInt(temp));
+                            Registro registro = arbol.getRaiz().searchOff(registro_temp);
+                            if (registro != null) {
+                                String temporal = "";
+                                Object[] row = new Object[campos.size()];
+                                int contador2 = 0;
+                                for (int k = 0; k < nuevo_registro1.length(); k++) {
+                                    if (nuevo_registro1.charAt(k) != ';') {
+                                        temporal += nuevo_registro1.charAt(k);
+                                    } else {
+                                        row[contador2] = temporal;
+                                        contador2++;
+                                        temporal = "";
+                                    }
+                                }
+                                model.addRow(row);
+                            } else {
+                                i--;
+                            }
                         }
                         raf.close();
                         jb_atras.setEnabled(false);
@@ -1911,8 +1943,14 @@ public class Principal extends javax.swing.JFrame {
                 sc = new Scanner(indice);
                 sc.useDelimiter(";");
                 while (sc.hasNext()) {
-                    Registro registro = new Registro(sc.nextInt(), sc.nextInt(), sc.nextInt());
-                    arbol.insert(registro);
+                    String temporal = sc.next();
+                    if (temporal.charAt(0) != '*') {
+                        Registro registro = new Registro(Integer.parseInt(temporal), sc.nextInt(), sc.nextInt());
+                        arbol.insert(registro);
+                    } else {
+                        sc.next();
+                        sc.next();
+                    }
                 }
                 System.out.println(arbol);//aqui
                 sc.close();
@@ -2194,22 +2232,47 @@ public class Principal extends javax.swing.JFrame {
                     for (int j = 0; j < nuevo_registro.size(); j++) {
                         nuevo_registro1 += (char) nuevo_registro.get(j).byteValue();
                     }
-                    String temporal = "";
-                    Object[] row = new Object[campos.size()];
-                    int contador2 = 0;
-                    for (int k = 0; k < nuevo_registro1.length(); k++) {
-                        if (nuevo_registro1.charAt(k) != ';') {
-                            temporal += nuevo_registro1.charAt(k);
-                        } else {
-                            row[contador2] = temporal;
-                            contador2++;
-                            temporal = "";
+                    int posicion = 0;
+                    for (int j = 0; j < campos.size(); j++) {
+                        if (campos.get(j).isLlave()) {
+                            posicion = j;
                         }
                     }
-                    model.addRow(row);
+                    String temp = "";
+                    int cont_temp = 0;
+                    for (int j = 0; j < nuevo_registro1.length(); j++) {
+                        if (nuevo_registro1.charAt(j) != ';') {
+                            temp += nuevo_registro1.charAt(j);
+                        } else {
+                            if (cont_temp == posicion) {
+                                break;
+                            } else {
+                                cont_temp++;
+                                temp = "";
+                            }
+                        }
+                    }
+                    Registro registro_temp = new Registro(Integer.parseInt(temp));
+                    Registro registro = arbol.getRaiz().searchOff(registro_temp);
+                    if (registro != null) {
+                        String temporal = "";
+                        Object[] row = new Object[campos.size()];
+                        int contador2 = 0;
+                        for (int k = 0; k < nuevo_registro1.length(); k++) {
+                            if (nuevo_registro1.charAt(k) != ';') {
+                                temporal += nuevo_registro1.charAt(k);
+                            } else {
+                                row[contador2] = temporal;
+                                contador2++;
+                                temporal = "";
+                            }
+                        }
+                        model.addRow(row);
+                    } else {
+                        i--;
+                    }
                 }
                 raf.close();
-
             } catch (Exception e) {
                 jb_siguiente.setEnabled(false);
             }
@@ -2243,22 +2306,47 @@ public class Principal extends javax.swing.JFrame {
                     for (int j = 0; j < nuevo_registro.size(); j++) {
                         nuevo_registro1 += (char) nuevo_registro.get(j).byteValue();
                     }
-                    String temporal = "";
-                    Object[] row = new Object[campos.size()];
-                    int contador2 = 0;
-                    for (int k = 0; k < nuevo_registro1.length(); k++) {
-                        if (nuevo_registro1.charAt(k) != ';') {
-                            temporal += nuevo_registro1.charAt(k);
-                        } else {
-                            row[contador2] = temporal;
-                            contador2++;
-                            temporal = "";
+                    int posicion = 0;
+                    for (int j = 0; j < campos.size(); j++) {
+                        if (campos.get(j).isLlave()) {
+                            posicion = j;
                         }
                     }
-                    model.addRow(row);
+                    String temp = "";
+                    int cont_temp = 0;
+                    for (int j = 0; j < nuevo_registro1.length(); j++) {
+                        if (nuevo_registro1.charAt(j) != ';') {
+                            temp += nuevo_registro1.charAt(j);
+                        } else {
+                            if (cont_temp == posicion) {
+                                break;
+                            } else {
+                                cont_temp++;
+                                temp = "";
+                            }
+                        }
+                    }
+                    Registro registro_temp = new Registro(Integer.parseInt(temp));
+                    Registro registro = arbol.getRaiz().searchOff(registro_temp);
+                    if (registro != null) {
+                        String temporal = "";
+                        Object[] row = new Object[campos.size()];
+                        int contador2 = 0;
+                        for (int k = 0; k < nuevo_registro1.length(); k++) {
+                            if (nuevo_registro1.charAt(k) != ';') {
+                                temporal += nuevo_registro1.charAt(k);
+                            } else {
+                                row[contador2] = temporal;
+                                contador2++;
+                                temporal = "";
+                            }
+                        }
+                        model.addRow(row);
+                    } else {
+                        i--;
+                    }
                 }
                 raf.close();
-
             } catch (Exception e) {
                 jb_siguiente.setEnabled(false);
             }
@@ -2285,11 +2373,9 @@ public class Principal extends javax.swing.JFrame {
     private void jmi_eliminar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_eliminar2ActionPerformed
         try {
             String nombre = "";
-            int posicion = 0;
             for (int i = 0; i < campos.size(); i++) {
                 if (campos.get(i).isLlave()) {
                     nombre = campos.get(i).getNombre();
-                    posicion = i;
                 }
             }
             int key = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese la llave principal " + nombre + " del registro que desea eliminar:"));
@@ -2306,9 +2392,33 @@ public class Principal extends javax.swing.JFrame {
                     } else {
                         acumulador += temporal.length() + 1;
                     }
+                }//AVAIL_LIST
+                RandomAccessFile raf = new RandomAccessFile(indice, "rw");
+                raf.seek(acumulador);
+                raf.writeByte(42);
+                raf.close();
+                arbol = new ArbolB(6);
+                indice = new File("./indice" + file.getName());
+                try {
+                    sc = new Scanner(indice);
+                    sc.useDelimiter(";");
+                    while (sc.hasNext()) {
+                        String temporal = sc.next();
+                        if (temporal.charAt(0) != '*') {
+                            Registro registro_temp = new Registro(Integer.parseInt(temporal), sc.nextInt(), sc.nextInt());
+                            arbol.insert(registro_temp);
+                        } else {
+                            sc.next();
+                            sc.next();
+                        }
+                    }
+                    System.out.println(arbol);//aqui
+                    sc.close();
+                } catch (Exception e) {
+                    //e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "¡Error!");
                 }
-                System.out.println(acumulador);
-                //RandomAccessFile raf = new RandomAccessFile(indice, "rw");
+                JOptionPane.showMessageDialog(this, "¡Registro borrado exitosamente!");
             } else {
                 JOptionPane.showMessageDialog(this, "¡El registro que desea eliminar no se encontró!");
             }

@@ -18,6 +18,10 @@ public class ArbolB {
         return raiz;
     }
     
+    public boolean isEmpty(){
+        return raiz == null;
+    }
+    
     @Override
     public String toString() {
         return "{" + "orden:" + orden + ", raiz:" + raiz + '}';

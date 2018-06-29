@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -20,7 +20,7 @@ public class Principal extends javax.swing.JFrame {
 
     //Variables
     ArrayList<Campo> campos = new ArrayList();
-    ArrayList<Posicion> availList = new ArrayList();
+    LinkedList<Posicion> availList = new LinkedList<>();
     File file, indice;
     boolean tipo_archivo;
     ArbolB arbol = new ArbolB(4);
@@ -97,11 +97,8 @@ public class Principal extends javax.swing.JFrame {
         jmi_introducir2 = new javax.swing.JMenuItem();
         jmi_modificar = new javax.swing.JMenuItem();
         jmi_buscar2 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        jmi_eliminar2 = new javax.swing.JMenuItem();
         jmi_cruzar = new javax.swing.JMenuItem();
-        jm_indice = new javax.swing.JMenu();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
         jm_estandarizacion = new javax.swing.JMenu();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
@@ -680,8 +677,13 @@ public class Principal extends javax.swing.JFrame {
         });
         jm_registro.add(jmi_buscar2);
 
-        jMenuItem11.setText("Borrar ");
-        jm_registro.add(jMenuItem11);
+        jmi_eliminar2.setText("Borrar ");
+        jmi_eliminar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_eliminar2ActionPerformed(evt);
+            }
+        });
+        jm_registro.add(jmi_eliminar2);
 
         jmi_cruzar.setText("Cruzar Archivos");
         jmi_cruzar.addActionListener(new java.awt.event.ActionListener() {
@@ -692,17 +694,6 @@ public class Principal extends javax.swing.JFrame {
         jm_registro.add(jmi_cruzar);
 
         jMenuBar1.add(jm_registro);
-
-        jm_indice.setText("Indice");
-        jm_indice.setEnabled(false);
-
-        jMenuItem13.setText("Crear");
-        jm_indice.add(jMenuItem13);
-
-        jMenuItem14.setText("Re_Indexar");
-        jm_indice.add(jMenuItem14);
-
-        jMenuBar1.add(jm_indice);
 
         jm_estandarizacion.setText("Estandarización");
         jm_estandarizacion.setEnabled(false);
@@ -1256,7 +1247,7 @@ public class Principal extends javax.swing.JFrame {
                     //e.printStackTrace();
                     JOptionPane.showMessageDialog(this, "¡Error!");
                 }
-                availList = new ArrayList();
+                availList = new LinkedList();
                 try {
                     File archivito = new File("./indice" + file.getName());
                     sc = new Scanner(archivito);
@@ -1283,7 +1274,6 @@ public class Principal extends javax.swing.JFrame {
                 }
                 jm_campo.setEnabled(true);
                 jm_registro.setEnabled(true);
-                jm_indice.setEnabled(true);
                 jm_estandarizacion.setEnabled(true);
                 arbol = new ArbolB(6);
                 indice = new File("./indice" + file.getName());
@@ -2000,7 +1990,7 @@ public class Principal extends javax.swing.JFrame {
                     nombre = campos.get(i).getNombre();
                 }
             }
-            int key = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese la llave principal " + nombre));
+            int key = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese la llave principal " + nombre + " del registro que desea buscar:"));
             Registro registro = arbol.getRaiz().searchOff(new Registro(key));
             if (registro != null) {
                 RandomAccessFile raf = new RandomAccessFile(file, "rw");
@@ -2029,7 +2019,6 @@ public class Principal extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "¡El registro que está buscando no se encontró!");
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "¡Error!");
@@ -2286,12 +2275,47 @@ public class Principal extends javax.swing.JFrame {
         campos = new ArrayList();
         posiciones = new ArrayStack();
         jl_archivoactual.setText("");
-        DefaultTableModel model = (DefaultTableModel)jt_Campo.getModel();
+        DefaultTableModel model = (DefaultTableModel) jt_Campo.getModel();
         model.setRowCount(0);
-        model = (DefaultTableModel)jt_registros.getModel();
+        model = (DefaultTableModel) jt_registros.getModel();
         model.setRowCount(0);
         JOptionPane.showMessageDialog(this, "¡Archivo cerrado exitosamente!");
     }//GEN-LAST:event_jmi_cerrarActionPerformed
+
+    private void jmi_eliminar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_eliminar2ActionPerformed
+        try {
+            String nombre = "";
+            int posicion = 0;
+            for (int i = 0; i < campos.size(); i++) {
+                if (campos.get(i).isLlave()) {
+                    nombre = campos.get(i).getNombre();
+                    posicion = i;
+                }
+            }
+            int key = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese la llave principal " + nombre + " del registro que desea eliminar:"));
+            Registro registro = arbol.getRaiz().searchOff(new Registro(key));
+            if (registro != null) {
+                indice = new File("./indice" + file.getName());
+                int acumulador = 0;
+                Scanner sc = new Scanner(indice);
+                sc.useDelimiter(";");
+                while (sc.hasNext()) {
+                    String temporal = sc.next();
+                    if (temporal.equals(key + "")) {
+                        break;
+                    } else {
+                        acumulador += temporal.length() + 1;
+                    }
+                }
+                System.out.println(acumulador);
+                //RandomAccessFile raf = new RandomAccessFile(indice, "rw");
+            } else {
+                JOptionPane.showMessageDialog(this, "¡El registro que desea eliminar no se encontró!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "¡Error!");
+        }
+    }//GEN-LAST:event_jmi_eliminar2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2344,9 +2368,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem7;
@@ -2365,7 +2386,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jm_archivo;
     private javax.swing.JMenu jm_campo;
     private javax.swing.JMenu jm_estandarizacion;
-    private javax.swing.JMenu jm_indice;
     private javax.swing.JMenu jm_registro;
     private javax.swing.JMenuItem jmi_abrir;
     private javax.swing.JMenuItem jmi_borrar1;
@@ -2374,6 +2394,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmi_crear;
     private javax.swing.JMenuItem jmi_crear1;
     private javax.swing.JMenuItem jmi_cruzar;
+    private javax.swing.JMenuItem jmi_eliminar2;
     private javax.swing.JMenuItem jmi_introducir2;
     private javax.swing.JMenuItem jmi_modificar;
     private javax.swing.JMenuItem jmi_modificar1;

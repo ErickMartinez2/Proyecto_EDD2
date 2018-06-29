@@ -9,6 +9,8 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -700,6 +702,11 @@ public class Principal extends javax.swing.JFrame {
         jm_estandarizacion.setEnabled(false);
 
         jMenuItem15.setText("Exportar Excel");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
         jm_estandarizacion.add(jMenuItem15);
 
         jMenuItem16.setText("Exportar XML con Schema");
@@ -2469,6 +2476,15 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "¡Error!");
         }
     }//GEN-LAST:event_jmi_eliminar2ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        Excel e = new Excel();
+        try {
+            e.exportarExcel(file, campos.size(), campos);
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     /**
      * @param args the command line arguments

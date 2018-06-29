@@ -102,7 +102,7 @@ public class Principal extends javax.swing.JFrame {
         jmi_eliminar2 = new javax.swing.JMenuItem();
         jmi_cruzar = new javax.swing.JMenuItem();
         jm_estandarizacion = new javax.swing.JMenu();
-        jMenuItem15 = new javax.swing.JMenuItem();
+        jmi_excel = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
 
         jp_fija.setBackground(new java.awt.Color(0, 153, 153));
@@ -701,13 +701,13 @@ public class Principal extends javax.swing.JFrame {
         jm_estandarizacion.setText("Estandarización");
         jm_estandarizacion.setEnabled(false);
 
-        jMenuItem15.setText("Exportar Excel");
-        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+        jmi_excel.setText("Exportar Excel");
+        jmi_excel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem15ActionPerformed(evt);
+                jmi_excelActionPerformed(evt);
             }
         });
-        jm_estandarizacion.add(jMenuItem15);
+        jm_estandarizacion.add(jmi_excel);
 
         jMenuItem16.setText("Exportar XML con Schema");
         jm_estandarizacion.add(jMenuItem16);
@@ -2477,14 +2477,14 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmi_eliminar2ActionPerformed
 
-    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+    private void jmi_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_excelActionPerformed
         Excel e = new Excel();
         try {
             e.exportarExcel(file, campos.size(), campos);
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem15ActionPerformed
+    }//GEN-LAST:event_jmi_excelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2537,7 +2537,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
@@ -2564,6 +2563,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmi_crear1;
     private javax.swing.JMenuItem jmi_cruzar;
     private javax.swing.JMenuItem jmi_eliminar2;
+    private javax.swing.JMenuItem jmi_excel;
     private javax.swing.JMenuItem jmi_introducir2;
     private javax.swing.JMenuItem jmi_modificar1;
     private javax.swing.JMenuItem jmi_modificar2;

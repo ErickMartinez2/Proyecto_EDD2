@@ -1,1 +1,0 @@
-1;Nombre;String;0;Cuenta;Int;1;Edad;Int;0;&;Tiffany;11641122;23;

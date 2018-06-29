@@ -25,6 +25,11 @@ public class Posicion {
     public void setSize(int size) {
         this.size = size;
     }
+
+    @Override
+    public String toString() {
+        return "Posicion{" + "offset=" + offset + ", size=" + size + '}';
+    }
     
     
 }

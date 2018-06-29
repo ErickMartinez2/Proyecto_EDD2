@@ -95,7 +95,7 @@ public class Principal extends javax.swing.JFrame {
         jm_registro = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jmi_introducir2 = new javax.swing.JMenuItem();
-        jmi_modificar = new javax.swing.JMenuItem();
+        jmi_modificar2 = new javax.swing.JMenuItem();
         jmi_buscar2 = new javax.swing.JMenuItem();
         jmi_eliminar2 = new javax.swing.JMenuItem();
         jmi_cruzar = new javax.swing.JMenuItem();
@@ -662,13 +662,13 @@ public class Principal extends javax.swing.JFrame {
         });
         jm_registro.add(jmi_introducir2);
 
-        jmi_modificar.setText("Modificar ");
-        jmi_modificar.addActionListener(new java.awt.event.ActionListener() {
+        jmi_modificar2.setText("Modificar ");
+        jmi_modificar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmi_modificarActionPerformed(evt);
+                jmi_modificar2ActionPerformed(evt);
             }
         });
-        jm_registro.add(jmi_modificar);
+        jm_registro.add(jmi_modificar2);
 
         jmi_buscar2.setText("Buscar");
         jmi_buscar2.addActionListener(new java.awt.event.ActionListener() {
@@ -1246,7 +1246,6 @@ public class Principal extends javax.swing.JFrame {
                         }
                         sc.close();
                     } catch (Exception e) {
-                        //e.printStackTrace();
                         JOptionPane.showMessageDialog(this, "¡Error!");
                     }
                     availList = new LinkedList();
@@ -1255,7 +1254,6 @@ public class Principal extends javax.swing.JFrame {
                         sc = new Scanner(archivito);
                         sc.close();
                     } catch (Exception e) {
-                        //
                         e.printStackTrace();
                         JOptionPane.showMessageDialog(this, "¡Error!");
                     }
@@ -1295,7 +1293,6 @@ public class Principal extends javax.swing.JFrame {
                         System.out.println(arbol);//aqui
                         sc.close();
                     } catch (Exception e) {
-                        //e.printStackTrace();
                         JOptionPane.showMessageDialog(this, "¡Error!");
                     }
                     DefaultTableModel model = (DefaultTableModel) jt_registros.getModel();
@@ -1377,6 +1374,21 @@ public class Principal extends javax.swing.JFrame {
                     }
                     jmi_abrir.setEnabled(false);
                     jmi_cerrar.setEnabled(true);
+                    sc = new Scanner(indice);
+                    sc.useDelimiter(";");
+                    while (sc.hasNext()) {
+                        String temporal = sc.next();
+                        if (temporal.charAt(0) == '*') {
+                            availList.add(new Posicion(sc.nextInt(), sc.nextInt()));
+                        } else {
+                            sc.next();
+                            sc.next();
+                        }
+                    }
+                    sc.close();
+                    for (int i = 0; i < availList.size(); i++) {
+                        System.out.println(availList.get(i));
+                    }
                     JOptionPane.showMessageDialog(this, "¡Archivo " + file.getName() + " cargado exitosamente!");
                 } else {
                     JOptionPane.showMessageDialog(this, "¡El archivo solicitado no existe!");
@@ -2065,7 +2077,7 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmi_buscar2ActionPerformed
 
-    private void jmi_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_modificarActionPerformed
+    private void jmi_modificar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_modificar2ActionPerformed
         try {
             String nombre = "", pregunta = "-> Campos del Registro\n";
             for (int i = 0; i < campos.size(); i++) {
@@ -2209,7 +2221,7 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "¡Error!");
         }
-    }//GEN-LAST:event_jmi_modificarActionPerformed
+    }//GEN-LAST:event_jmi_modificar2ActionPerformed
 
     private void jb_siguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_siguienteMouseClicked
         if (jb_siguiente.isEnabled()) {
@@ -2368,7 +2380,6 @@ public class Principal extends javax.swing.JFrame {
             jl_archivoactual.setText("");
             DefaultTableModel model = (DefaultTableModel) jt_Campo.getModel();
             model.setRowCount(0);
-            model.setColumnCount(0);
             model = (DefaultTableModel) jt_registros.getModel();
             model.setRowCount(0);
             model.setColumnCount(0);
@@ -2401,10 +2412,35 @@ public class Principal extends javax.swing.JFrame {
                         acumulador += temporal.length() + 1;
                     }
                 }
+                int cont_raf = 0;
+                String temp_raf = "";
                 RandomAccessFile raf = new RandomAccessFile(indice, "rw");
+                raf.seek(acumulador);
+                while (cont_raf != 2) {
+                    byte Byte = raf.readByte();
+                    if (Byte != 59 && cont_raf == 1) {
+                        temp_raf += (char) Byte;
+                    } else {
+                        if (Byte == 59) {
+                            cont_raf++;
+                        }
+                    }
+                }
                 raf.seek(acumulador);
                 raf.writeByte(42);
                 raf.close();
+                RandomAccessFile raf2 = new RandomAccessFile(file, "rw");
+                raf2.seek(Integer.parseInt(temp_raf));
+                int cont_raf2 = 0, acum_raf2 = 0;
+                while (cont_raf2 != campos.size()) {
+                    if (raf2.readByte() == 59) {
+                        cont_raf2++;
+                    }
+                    acum_raf2++;
+                }
+                raf2.close();
+                Posicion posicion = new Posicion(Integer.parseInt(temp_raf), acum_raf2);
+                availList.add(posicion);
                 arbol = new ArbolB(6);
                 indice = new File("./indice" + file.getName());
                 try {
@@ -2423,7 +2459,6 @@ public class Principal extends javax.swing.JFrame {
                     System.out.println(arbol);//aqui
                     sc.close();
                 } catch (Exception e) {
-                    //e.printStackTrace();
                     JOptionPane.showMessageDialog(this, "¡Error!");
                 }
                 JOptionPane.showMessageDialog(this, "¡Registro borrado exitosamente!");
@@ -2514,8 +2549,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmi_cruzar;
     private javax.swing.JMenuItem jmi_eliminar2;
     private javax.swing.JMenuItem jmi_introducir2;
-    private javax.swing.JMenuItem jmi_modificar;
     private javax.swing.JMenuItem jmi_modificar1;
+    private javax.swing.JMenuItem jmi_modificar2;
     private javax.swing.JPanel jp_fija;
     private javax.swing.JSpinner js_longitud;
     private javax.swing.JTable jt_Campo;

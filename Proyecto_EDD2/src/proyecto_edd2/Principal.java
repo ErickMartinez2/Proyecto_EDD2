@@ -609,6 +609,7 @@ public class Principal extends javax.swing.JFrame {
         jm_archivo.add(jmi_abrir);
 
         jmi_cerrar.setText("Cerrar");
+        jmi_cerrar.setEnabled(false);
         jmi_cerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmi_cerrarActionPerformed(evt);
@@ -1209,177 +1210,181 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_crearActionPerformed
 
     private void jmi_abrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_abrirActionPerformed
-        try {
-            String archivo = JOptionPane.showInputDialog(this, "Ingrese el nombre del archivo: ");
-            File archivo1 = new File("./" + archivo + ".txt");
-            if (archivo1.exists()) {
-                file = archivo1;
-                Scanner sc;
-                campos = new ArrayList();
-                try {
-                    sc = new Scanner(file);
-                    sc.useDelimiter(";");
-                    Campo campo;
-                    tipo_archivo = sc.next().equals("0");
-                    if (tipo_archivo) {
-                        while (sc.hasNext()) {
-                            String nombre = sc.next();
-                            if (!nombre.equals("&")) {
-                                campo = new Campo(nombre, sc.next(), sc.nextInt(), sc.nextInt() != 0);
-                                campos.add(campo);
-                            } else {
-                                break;
-                            }
-                        }
-                    } else {
-                        while (sc.hasNext()) {
-                            String nombre = sc.next();
-                            if (!nombre.equals("&")) {
-                                campo = new Campo(nombre, sc.next(), 0, sc.nextInt() != 0);
-                                campos.add(campo);
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-                    sc.close();
-                } catch (Exception e) {
-                    //e.printStackTrace();
-                    JOptionPane.showMessageDialog(this, "¡Error!");
-                }
-                availList = new LinkedList();
-                try {
-                    File archivito = new File("./indice" + file.getName());
-                    sc = new Scanner(archivito);
-                    sc.close();
-                } catch (Exception e) {
-                    //
-                    e.printStackTrace();
-                    JOptionPane.showMessageDialog(this, "¡Error!");
-                }
-                jl_archivoactual.setText(archivo + ".txt");
-                DefaultTableModel modelo = (DefaultTableModel) jt_Campo.getModel();
-                modelo.setRowCount(0);
-                int cont = 0;
-                for (int i = 0; i < campos.size(); i++) {
-                    cont++;
-                    String bool;
-                    if (campos.get(i).isLlave()) {
-                        bool = "Verdadero";
-                    } else {
-                        bool = "Falso";
-                    }
-                    Object[] row = {"Campo #" + cont, campos.get(i).getNombre(), campos.get(i).getTipo(), campos.get(i).getLongitud(), bool};
-                    modelo.addRow(row);
-                }
-                jm_campo.setEnabled(true);
-                jm_registro.setEnabled(true);
-                jm_estandarizacion.setEnabled(true);
-                arbol = new ArbolB(6);
-                indice = new File("./indice" + file.getName());
-                try {
-                    sc = new Scanner(indice);
-                    sc.useDelimiter(";");
-                    while (sc.hasNext()) {
-                        String temporal = sc.next();
-                        if (temporal.charAt(0) != '*') {
-                            Registro registro = new Registro(Integer.parseInt(temporal), sc.nextInt(), sc.nextInt());
-                            arbol.insert(registro);
-                        } else {
-                            sc.next();
-                            sc.next();
-                        }
-                    }
-                    System.out.println(arbol);//aqui
-                    sc.close();
-                } catch (Exception e) {
-                    //e.printStackTrace();
-                    JOptionPane.showMessageDialog(this, "¡Error!");
-                }
-                DefaultTableModel model = (DefaultTableModel) jt_registros.getModel();
-                for (int i = 0; i < campos.size(); i++) {
-                    model.addColumn(campos.get(i).getNombre());
-                }
-                if (!arbol.isEmpty()) {
-                    posiciones = new ArrayStack();
-                    sc = new Scanner(file);
-                    sc.useDelimiter("&");
-                    int tam = sc.next().length() + 2;
-                    posiciones.push(tam);
-                    int acumulador = tam;
+        if (jmi_abrir.isEnabled()) {
+            try {
+                String archivo = JOptionPane.showInputDialog(this, "Ingrese el nombre del archivo: ");
+                File archivo1 = new File("./" + archivo + ".txt");
+                if (archivo1.exists()) {
+                    file = archivo1;
+                    Scanner sc;
+                    campos = new ArrayList();
                     try {
-                        RandomAccessFile raf = new RandomAccessFile(file, "rw");
-                        raf.seek(tam);
-                        for (int i = 0; i < 10; i++) {
-                            ArrayList<Byte> nuevo_registro = new ArrayList();
-                            int contador = 0;
-                            do {
-                                byte Byte = raf.readByte();
-                                if (Byte == 59) {
-                                    contador++;
-                                }
-                                nuevo_registro.add(Byte);
-                                acumulador++;
-                            } while (contador < campos.size());
-                            String nuevo_registro1 = "";
-                            for (int j = 0; j < nuevo_registro.size(); j++) {
-                                nuevo_registro1 += (char) nuevo_registro.get(j).byteValue();
-                            }
-                            int posicion = 0;
-                            for (int j = 0; j < campos.size(); j++) {
-                                if (campos.get(j).isLlave()) {
-                                    posicion = j;
-                                }
-                            }
-                            String temp = "";
-                            int cont_temp = 0;
-                            for (int j = 0; j < nuevo_registro1.length(); j++) {
-                                if (nuevo_registro1.charAt(j) != ';') {
-                                    temp += nuevo_registro1.charAt(j);
+                        sc = new Scanner(file);
+                        sc.useDelimiter(";");
+                        Campo campo;
+                        tipo_archivo = sc.next().equals("0");
+                        if (tipo_archivo) {
+                            while (sc.hasNext()) {
+                                String nombre = sc.next();
+                                if (!nombre.equals("&")) {
+                                    campo = new Campo(nombre, sc.next(), sc.nextInt(), sc.nextInt() != 0);
+                                    campos.add(campo);
                                 } else {
-                                    if (cont_temp == posicion) {
-                                        break;
-                                    } else {
-                                        cont_temp++;
-                                        temp = "";
-                                    }
+                                    break;
                                 }
                             }
-                            Registro registro_temp = new Registro(Integer.parseInt(temp));
-                            Registro registro = arbol.getRaiz().searchOff(registro_temp);
-                            if (registro != null) {
-                                String temporal = "";
-                                Object[] row = new Object[campos.size()];
-                                int contador2 = 0;
-                                for (int k = 0; k < nuevo_registro1.length(); k++) {
-                                    if (nuevo_registro1.charAt(k) != ';') {
-                                        temporal += nuevo_registro1.charAt(k);
-                                    } else {
-                                        row[contador2] = temporal;
-                                        contador2++;
-                                        temporal = "";
-                                    }
+                        } else {
+                            while (sc.hasNext()) {
+                                String nombre = sc.next();
+                                if (!nombre.equals("&")) {
+                                    campo = new Campo(nombre, sc.next(), 0, sc.nextInt() != 0);
+                                    campos.add(campo);
+                                } else {
+                                    break;
                                 }
-                                model.addRow(row);
-                            } else {
-                                i--;
                             }
                         }
-                        raf.close();
-                        jb_atras.setEnabled(false);
-                        jb_siguiente.setEnabled(true);
+                        sc.close();
                     } catch (Exception e) {
-                        jb_siguiente.setEnabled(false);
+                        //e.printStackTrace();
+                        JOptionPane.showMessageDialog(this, "¡Error!");
                     }
-                    posiciones.push(acumulador);
+                    availList = new LinkedList();
+                    try {
+                        File archivito = new File("./indice" + file.getName());
+                        sc = new Scanner(archivito);
+                        sc.close();
+                    } catch (Exception e) {
+                        //
+                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(this, "¡Error!");
+                    }
+                    jl_archivoactual.setText(archivo + ".txt");
+                    DefaultTableModel modelo = (DefaultTableModel) jt_Campo.getModel();
+                    modelo.setRowCount(0);
+                    int cont = 0;
+                    for (int i = 0; i < campos.size(); i++) {
+                        cont++;
+                        String bool;
+                        if (campos.get(i).isLlave()) {
+                            bool = "Verdadero";
+                        } else {
+                            bool = "Falso";
+                        }
+                        Object[] row = {"Campo #" + cont, campos.get(i).getNombre(), campos.get(i).getTipo(), campos.get(i).getLongitud(), bool};
+                        modelo.addRow(row);
+                    }
+                    jm_campo.setEnabled(true);
+                    jm_registro.setEnabled(true);
+                    jm_estandarizacion.setEnabled(true);
+                    arbol = new ArbolB(6);
+                    indice = new File("./indice" + file.getName());
+                    try {
+                        sc = new Scanner(indice);
+                        sc.useDelimiter(";");
+                        while (sc.hasNext()) {
+                            String temporal = sc.next();
+                            if (temporal.charAt(0) != '*') {
+                                Registro registro = new Registro(Integer.parseInt(temporal), sc.nextInt(), sc.nextInt());
+                                arbol.insert(registro);
+                            } else {
+                                sc.next();
+                                sc.next();
+                            }
+                        }
+                        System.out.println(arbol);//aqui
+                        sc.close();
+                    } catch (Exception e) {
+                        //e.printStackTrace();
+                        JOptionPane.showMessageDialog(this, "¡Error!");
+                    }
+                    DefaultTableModel model = (DefaultTableModel) jt_registros.getModel();
+                    for (int i = 0; i < campos.size(); i++) {
+                        model.addColumn(campos.get(i).getNombre());
+                    }
+                    if (!arbol.isEmpty()) {
+                        posiciones = new ArrayStack();
+                        sc = new Scanner(file);
+                        sc.useDelimiter("&");
+                        int tam = sc.next().length() + 2;
+                        posiciones.push(tam);
+                        int acumulador = tam;
+                        try {
+                            RandomAccessFile raf = new RandomAccessFile(file, "rw");
+                            raf.seek(tam);
+                            for (int i = 0; i < 10; i++) {
+                                ArrayList<Byte> nuevo_registro = new ArrayList();
+                                int contador = 0;
+                                do {
+                                    byte Byte = raf.readByte();
+                                    if (Byte == 59) {
+                                        contador++;
+                                    }
+                                    nuevo_registro.add(Byte);
+                                    acumulador++;
+                                } while (contador < campos.size());
+                                String nuevo_registro1 = "";
+                                for (int j = 0; j < nuevo_registro.size(); j++) {
+                                    nuevo_registro1 += (char) nuevo_registro.get(j).byteValue();
+                                }
+                                int posicion = 0;
+                                for (int j = 0; j < campos.size(); j++) {
+                                    if (campos.get(j).isLlave()) {
+                                        posicion = j;
+                                    }
+                                }
+                                String temp = "";
+                                int cont_temp = 0;
+                                for (int j = 0; j < nuevo_registro1.length(); j++) {
+                                    if (nuevo_registro1.charAt(j) != ';') {
+                                        temp += nuevo_registro1.charAt(j);
+                                    } else {
+                                        if (cont_temp == posicion) {
+                                            break;
+                                        } else {
+                                            cont_temp++;
+                                            temp = "";
+                                        }
+                                    }
+                                }
+                                Registro registro_temp = new Registro(Integer.parseInt(temp));
+                                Registro registro = arbol.getRaiz().searchOff(registro_temp);
+                                if (registro != null) {
+                                    String temporal = "";
+                                    Object[] row = new Object[campos.size()];
+                                    int contador2 = 0;
+                                    for (int k = 0; k < nuevo_registro1.length(); k++) {
+                                        if (nuevo_registro1.charAt(k) != ';') {
+                                            temporal += nuevo_registro1.charAt(k);
+                                        } else {
+                                            row[contador2] = temporal;
+                                            contador2++;
+                                            temporal = "";
+                                        }
+                                    }
+                                    model.addRow(row);
+                                } else {
+                                    i--;
+                                }
+                            }
+                            raf.close();
+                            jb_atras.setEnabled(false);
+                            jb_siguiente.setEnabled(true);
+                        } catch (Exception e) {
+                            jb_siguiente.setEnabled(false);
+                        }
+                        posiciones.push(acumulador);
+                    }
+                    jmi_abrir.setEnabled(false);
+                    jmi_cerrar.setEnabled(true);
+                    JOptionPane.showMessageDialog(this, "¡Archivo " + file.getName() + " cargado exitosamente!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "¡El archivo solicitado no existe!");
                 }
-                JOptionPane.showMessageDialog(this, "¡Archivo " + file.getName() + " cargado exitosamente!");
-            } else {
-                JOptionPane.showMessageDialog(this, "¡El archivo solicitado no existe!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "¡Error!");
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "¡Error!");
-            e.printStackTrace();
         }
     }//GEN-LAST:event_jmi_abrirActionPerformed
 
@@ -1388,7 +1393,6 @@ public class Principal extends javax.swing.JFrame {
             Scanner sc = new Scanner(file);
             sc.useDelimiter("&");
             sc.next();
-
             sc.useDelimiter(";");
             sc.next();
             if (!sc.hasNext()) {
@@ -1433,7 +1437,6 @@ public class Principal extends javax.swing.JFrame {
         try {
             Scanner sc = new Scanner(file);
             sc.useDelimiter("&");
-            sc.next();
             sc.next();
             sc.useDelimiter(";");
             sc.next();
@@ -1495,7 +1498,6 @@ public class Principal extends javax.swing.JFrame {
         try {
             Scanner sc = new Scanner(file);
             sc.useDelimiter("&");
-            sc.next();
             sc.next();
             sc.useDelimiter(";");
             sc.next();
@@ -1707,7 +1709,7 @@ public class Principal extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "¡El campo no existe!");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "¡El campo no existe!");
+                JOptionPane.showMessageDialog(this, "¡El archivo ya contiene registros, no es posible modificar campos!");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "¡Error!");
@@ -2359,15 +2361,21 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_atrasMouseClicked
 
     private void jmi_cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_cerrarActionPerformed
-        file = null;
-        campos = new ArrayList();
-        posiciones = new ArrayStack();
-        jl_archivoactual.setText("");
-        DefaultTableModel model = (DefaultTableModel) jt_Campo.getModel();
-        model.setRowCount(0);
-        model = (DefaultTableModel) jt_registros.getModel();
-        model.setRowCount(0);
-        JOptionPane.showMessageDialog(this, "¡Archivo cerrado exitosamente!");
+        if (jmi_cerrar.isEnabled()) {
+            file = null;
+            campos = new ArrayList();
+            posiciones = new ArrayStack();
+            jl_archivoactual.setText("");
+            DefaultTableModel model = (DefaultTableModel) jt_Campo.getModel();
+            model.setRowCount(0);
+            model.setColumnCount(0);
+            model = (DefaultTableModel) jt_registros.getModel();
+            model.setRowCount(0);
+            model.setColumnCount(0);
+            jmi_abrir.setEnabled(true);
+            jmi_cerrar.setEnabled(false);
+            JOptionPane.showMessageDialog(this, "¡Archivo cerrado exitosamente!");
+        }
     }//GEN-LAST:event_jmi_cerrarActionPerformed
 
     private void jmi_eliminar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_eliminar2ActionPerformed
@@ -2392,7 +2400,7 @@ public class Principal extends javax.swing.JFrame {
                     } else {
                         acumulador += temporal.length() + 1;
                     }
-                }//AVAIL_LIST
+                }
                 RandomAccessFile raf = new RandomAccessFile(indice, "rw");
                 raf.seek(acumulador);
                 raf.writeByte(42);

@@ -12,8 +12,6 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.DocumentBuilder;
@@ -1265,14 +1263,6 @@ public class Principal extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "¡Error!");
                     }
                     availList = new LinkedList();
-                    try {
-                        File archivito = new File("./indice" + file.getName());
-                        sc = new Scanner(archivito);
-                        sc.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        JOptionPane.showMessageDialog(this, "¡Error!");
-                    }
                     jl_archivoactual.setText(archivo + ".txt");
                     DefaultTableModel modelo = (DefaultTableModel) jt_Campo.getModel();
                     modelo.setRowCount(0);
@@ -1291,14 +1281,14 @@ public class Principal extends javax.swing.JFrame {
                     jm_campo.setEnabled(true);
                     jm_registro.setEnabled(true);
                     jm_estandarizacion.setEnabled(true);
-                    arbol = new ArbolB(6);
+                    arbol = new ArbolB(4);
                     indice = new File("./indice" + file.getName());
                     try {
                         sc = new Scanner(indice);
                         sc.useDelimiter(";");
                         while (sc.hasNext()) {
                             String temporal = sc.next();
-                            if (temporal.charAt(0) != '*') {
+                            if (temporal.charAt(0) != '*' || temporal.charAt(0) != '#') {
                                 Registro registro = new Registro(Integer.parseInt(temporal), sc.nextInt(), sc.nextInt());
                                 arbol.insert(registro);
                             } else {
@@ -1309,7 +1299,7 @@ public class Principal extends javax.swing.JFrame {
                         System.out.println(arbol);//aqui
                         sc.close();
                     } catch (Exception e) {
-                        //e.printStackTrace();
+                        e.printStackTrace();
                         JOptionPane.showMessageDialog(this, "¡Error!");
                     }
                     DefaultTableModel model = (DefaultTableModel) jt_registros.getModel();
@@ -1792,7 +1782,6 @@ public class Principal extends javax.swing.JFrame {
                                     JOptionPane.showMessageDialog(this, "¡La llave ingresada ya existe!\nIngrese una nueva");
                                 }
                             } while (is);
-
                             String num = numero + "";
                             if (num.length() > longitud) {
                                 salir = true;
@@ -1859,12 +1848,61 @@ public class Principal extends javax.swing.JFrame {
                         }
                     } while (salir);
                 }
-                //escribir
-                FileWriter fw = null;
-                BufferedWriter bw = null;
-                if (false) {
-
-                } else {
+                boolean seguir = true;
+                for (int i = 0; i < availList.size(); i++) {
+                    if (buffer.length() <= availList.get(i).getSize()) {
+                        String new_buffer = "";
+                        for (int j = 0; j < buffer.length() - 1; j++) {
+                            new_buffer += buffer.charAt(j);
+                        }
+                        for (int j = 0; j < availList.get(i).getSize() - buffer.length(); j++) {
+                            new_buffer += " ";
+                        }
+                        new_buffer += ";";
+                        RandomAccessFile raf = new RandomAccessFile(file, "rw");
+                        raf.seek(availList.get(i).getOffset());
+                        raf.writeBytes(new_buffer);
+                        raf.close();
+                        FileWriter fw2 = null;
+                        BufferedWriter bw2 = null;
+                        indice = new File("./indice" + file.getName());
+                        try {
+                            fw2 = new FileWriter(indice, true);
+                            bw2 = new BufferedWriter(fw2);
+                            bw2.write(key + ";" + availList.get(i).getOffset() + ";" + new_buffer.length() + ";");
+                            bw2.flush();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            bw2.close();
+                            fw2.close();
+                        } catch (IOException ex) {
+                        }
+                        availList.remove(i);
+                        seguir = false;
+                        int acumulador = 0;
+                        Scanner sc = new Scanner(indice);
+                        sc.useDelimiter(";");
+                        while (sc.hasNext()) {
+                            String temporal = sc.next();
+                            if (temporal.equals(key + "")) {
+                                break;
+                            } else {
+                                acumulador += temporal.length() + 1;
+                            }
+                        }
+                        RandomAccessFile raf2 = new RandomAccessFile(indice, "rw");
+                        raf2.seek(acumulador);
+                        raf2.writeByte(35); //numeral
+                        raf2.close();
+                        break;
+                    }
+                }
+                if (seguir) {
+                    //escribir
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
                     try {
                         fw = new FileWriter(file, true);
                         bw = new BufferedWriter(fw);
@@ -1874,12 +1912,10 @@ public class Principal extends javax.swing.JFrame {
                         fw.close();
                     } catch (Exception e) {
                     }
-                    //File archivo;
                     FileWriter fw2 = null;
                     BufferedWriter bw2 = null;
                     indice = new File("./indice" + file.getName());
                     try {
-                        // archivo = indice;
                         fw2 = new FileWriter(indice, true);
                         bw2 = new BufferedWriter(fw2);
                         bw2.write(key + ";" + (file.length() - buffer.length()) + ";" + buffer.length() + ";");
@@ -1918,7 +1954,6 @@ public class Principal extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(this, "¡La llave ingresada ya existe!\nIngrese una nueva");
                             }
                         } while (is);
-
                         buffer += numero + ";";
                     } else if (campos.get(i).getTipo().equals("Double")) {
                         double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
@@ -1934,11 +1969,60 @@ public class Principal extends javax.swing.JFrame {
                         buffer += flotante + ";";
                     }
                 }
-                FileWriter fw = null;
-                BufferedWriter bw = null;
-                if (false) {
-
-                } else {
+                boolean seguir = true;
+                for (int i = 0; i < availList.size(); i++) {
+                    if (buffer.length() <= availList.get(i).getSize()) {
+                        String new_buffer = "";
+                        for (int j = 0; j < buffer.length() - 1; j++) {
+                            new_buffer += buffer.charAt(j);
+                        }
+                        for (int j = 0; j < availList.get(i).getSize() - buffer.length(); j++) {
+                            new_buffer += " ";
+                        }
+                        new_buffer += ";";
+                        RandomAccessFile raf = new RandomAccessFile(file, "rw");
+                        raf.seek(availList.get(i).getOffset());
+                        raf.writeBytes(new_buffer);
+                        raf.close();
+                        FileWriter fw2 = null;
+                        BufferedWriter bw2 = null;
+                        indice = new File("./indice" + file.getName());
+                        try {
+                            fw2 = new FileWriter(indice, true);
+                            bw2 = new BufferedWriter(fw2);
+                            bw2.write(key + ";" + availList.get(i).getOffset() + ";" + new_buffer.length() + ";");
+                            bw2.flush();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            bw2.close();
+                            fw2.close();
+                        } catch (IOException ex) {
+                        }
+                        availList.remove(i);
+                        seguir = false;
+                        int acumulador = 0;
+                        Scanner sc = new Scanner(indice);
+                        sc.useDelimiter(";");
+                        while (sc.hasNext()) {
+                            String temporal = sc.next();
+                            if (temporal.equals(key + "")) {
+                                break;
+                            } else {
+                                acumulador += temporal.length() + 1;
+                            }
+                        }
+                        RandomAccessFile raf2 = new RandomAccessFile(indice, "rw");
+                        raf2.seek(acumulador);
+                        raf2.writeByte(35); //numeral
+                        raf2.close();
+                        break;
+                    }
+                }
+                if (seguir) {
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
                     try {
                         fw = new FileWriter(file, true);
                         bw = new BufferedWriter(fw);
@@ -1948,34 +2032,33 @@ public class Principal extends javax.swing.JFrame {
                         fw.close();
                     } catch (Exception e) {
                     }
-                }
-                FileWriter fw2 = null;
-                BufferedWriter bw2 = null;
-                indice = new File("./indice" + file.getName());
-                try {
-                    fw2 = new FileWriter(indice, true);
-                    bw2 = new BufferedWriter(fw2);
-                    bw2.write(key + ";" + (file.length() - buffer.length()) + ";" + buffer.length() + ";");
-                    bw2.flush();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    bw2.close();
-                    fw2.close();
-                } catch (IOException ex) {
+                    FileWriter fw2 = null;
+                    BufferedWriter bw2 = null;
+                    indice = new File("./indice" + file.getName());
+                    try {
+                        fw2 = new FileWriter(indice, true);
+                        bw2 = new BufferedWriter(fw2);
+                        bw2.write(key + ";" + (file.length() - buffer.length()) + ";" + buffer.length() + ";");
+                        bw2.flush();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        bw2.close();
+                        fw2.close();
+                    } catch (IOException ex) {
+                    }
                 }
             }
             Scanner sc;
-            arbol = new ArbolB(6);
+            arbol = new ArbolB(4);
             indice = new File("./indice" + file.getName());
             try {
                 sc = new Scanner(indice);
                 sc.useDelimiter(";");
                 while (sc.hasNext()) {
                     String temporal = sc.next();
-                    if (temporal.charAt(0) != '*') {
+                    if (temporal.charAt(0) != '*' || temporal.charAt(0) != '#') {
                         Registro registro = new Registro(Integer.parseInt(temporal), sc.nextInt(), sc.nextInt());
                         arbol.insert(registro);
                     } else {
@@ -2234,7 +2317,6 @@ public class Principal extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "El numero ingresado es incorrecto");
             }
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "¡Error!");
         }
@@ -2458,14 +2540,14 @@ public class Principal extends javax.swing.JFrame {
                 raf2.close();
                 Posicion posicion = new Posicion(Integer.parseInt(temp_raf), acum_raf2);
                 availList.add(posicion);
-                arbol = new ArbolB(6);
+                arbol = new ArbolB(4);
                 indice = new File("./indice" + file.getName());
                 try {
                     sc = new Scanner(indice);
                     sc.useDelimiter(";");
                     while (sc.hasNext()) {
                         String temporal = sc.next();
-                        if (temporal.charAt(0) != '*') {
+                        if (temporal.charAt(0) != '*' || temporal.charAt(0) != '#') {
                             Registro registro_temp = new Registro(Integer.parseInt(temporal), sc.nextInt(), sc.nextInt());
                             arbol.insert(registro_temp);
                         } else {
@@ -2488,7 +2570,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_eliminar2ActionPerformed
 
     private void jmi_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_excelActionPerformed
-       /* Excel e = new Excel();
+        /* Excel e = new Excel();
         try {
             e.exportarExcel(file, campos.size(), campos);
         } catch (IOException ex) {
@@ -2545,7 +2627,7 @@ public class Principal extends javax.swing.JFrame {
             }
             //REGISTROS
             Element segundo = xmlDoc.createElement("Registros");
-            while(sc.hasNext()){
+            while (sc.hasNext()) {
                 Element registro = xmlDoc.createElement("Registro");
                 for (int i = 0; i < campos.size(); i++) {
                     Text contenido = xmlDoc.createTextNode(sc.next());//Contenido del campo
@@ -2558,7 +2640,6 @@ public class Principal extends javax.swing.JFrame {
             //
             rootElement.appendChild(segundo);
             xmlDoc.appendChild(rootElement);
-            
 
             //Set output
             OutputFormat outF = new OutputFormat(xmlDoc);
@@ -2573,7 +2654,7 @@ public class Principal extends javax.swing.JFrame {
                     break;
                 }
             }
-            File xmlFile = new File("./"+ "xml" + n2 + ".xml");
+            File xmlFile = new File("./" + "xml" + n2 + ".xml");
             //Declare the fileOutputStream
             FileOutputStream outStream = new FileOutputStream(xmlFile);
             //XMLSERIALIZER

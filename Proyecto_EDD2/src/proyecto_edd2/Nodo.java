@@ -109,10 +109,10 @@ public class Nodo {
         int index = searchNodeIndex(registro);
         return hijos.get(index).search(registro);
     }
-    
-    private Nodo search2(Registro registro){
+
+    private Nodo search2(Registro registro) {
         for (int i = 0; i < this.llaves.size(); i++) {
-            if(this.llaves.get(i).llave == registro.llave){
+            if (this.llaves.get(i).llave == registro.llave) {
                 return this;
             }
         }
@@ -122,16 +122,16 @@ public class Nodo {
         int index = searchNodeIndex(registro);
         return hijos.get(index).search2(registro);
     }
-    
-    public Registro searchOff(Registro registro){
+
+    public Registro searchOff(Registro registro) {
         Nodo buscado = search2(registro);
         for (int i = 0; i < buscado.llaves.size(); i++) {
-            if(buscado.llaves.get(i).llave == registro.llave){
+            if (buscado.llaves.get(i).llave == registro.llave) {
                 return buscado.llaves.get(i);
             }
         }
         return null;
-        
+
     }
 
     private int searchNodeIndex(Registro registro) {

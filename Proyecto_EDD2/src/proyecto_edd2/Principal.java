@@ -1288,7 +1288,7 @@ public class Principal extends javax.swing.JFrame {
                         sc.useDelimiter(";");
                         while (sc.hasNext()) {
                             String temporal = sc.next();
-                            if (temporal.charAt(0) != '*' || temporal.charAt(0) != '#') {
+                            if (temporal.charAt(0) != '*' && temporal.charAt(0) != '#') {
                                 Registro registro = new Registro(Integer.parseInt(temporal), sc.nextInt(), sc.nextInt());
                                 arbol.insert(registro);
                             } else {
@@ -1525,7 +1525,7 @@ public class Principal extends javax.swing.JFrame {
                 int numero_lista = numero - 1;
                 if (numero_lista >= 0 && numero_lista < campos.size()) {
                     if (!campos.get(numero_lista).isLlave()) {
-                        if (tipo_archivo) {
+                        if (tipo_archivo) {//fija
                             boolean salir;
                             String respuesta;
                             do {
@@ -2058,7 +2058,7 @@ public class Principal extends javax.swing.JFrame {
                 sc.useDelimiter(";");
                 while (sc.hasNext()) {
                     String temporal = sc.next();
-                    if (temporal.charAt(0) != '*' || temporal.charAt(0) != '#') {
+                    if (temporal.charAt(0) != '*' && temporal.charAt(0) != '#') {
                         Registro registro = new Registro(Integer.parseInt(temporal), sc.nextInt(), sc.nextInt());
                         arbol.insert(registro);
                     } else {
@@ -2188,135 +2188,251 @@ public class Principal extends javax.swing.JFrame {
             }
             pregunta += "Ingrese el numero del campo que desea modificar: ";
             int key = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese la llave principal " + nombre + " del registro que desea modificar:"));
-            int respuesta = Integer.parseInt(JOptionPane.showInputDialog(this, pregunta)) - 1;
-            if (respuesta >= 0 && respuesta < campos.size()) {
-                if (tipo_archivo) {//fijo
-                    boolean salir;
-                    String buffer = "";
-                    do {
-                        salir = false;
-                        int longitud = campos.get(respuesta).getLongitud();
-                        if (campos.get(respuesta).getTipo().equals("String")) {
-                            String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud);
-                            if (cadena.length() > longitud) {
-                                salir = true;
-                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
-                            } else {
-                                String nueva_cadena = cadena;
-                                for (int j = cadena.length(); j < longitud; j++) {
-                                    nueva_cadena += " ";
+
+            Registro buscar = new Registro(key);
+            Registro buscado = arbol.getRaiz().searchOff(buscar);
+            if (buscado != null) {//revisa si existe
+                int respuesta = Integer.parseInt(JOptionPane.showInputDialog(this, pregunta)) - 1;
+                if (respuesta >= 0 && respuesta < campos.size()) {//revisa que la respuesta sea valida
+                    if (tipo_archivo) {//fijo
+                        boolean salir;
+                        String buffer = "";
+                        do {
+                            salir = false;
+                            int longitud = campos.get(respuesta).getLongitud();
+                            System.out.println(campos.get(respuesta).isLlave());
+                            if (!campos.get(respuesta).isLlave()) {//revisa que no se pueda modificar la llave principal
+                                if (campos.get(respuesta).getTipo().equals("String")) {
+                                    String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud);
+                                    if (cadena.length() > longitud) {
+                                        salir = true;
+                                        JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                                    } else {
+                                        String nueva_cadena = cadena;
+                                        for (int j = cadena.length(); j < longitud; j++) {
+                                            nueva_cadena += " ";
+                                        }
+                                        buffer += nueva_cadena + ";";
+                                    }
+                                } else if (campos.get(respuesta).getTipo().equals("Char")) {
+                                    String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud);
+                                    if (caracter.length() > longitud) {
+                                        salir = true;
+                                        JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                                    } else {
+                                        buffer += caracter + ";";
+                                    }
+                                } else if (campos.get(respuesta).getTipo().equals("Int")) {
+                                    int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
+                                    if (campos.get(respuesta).isLlave()) {
+                                        key = numero;
+                                    }
+                                    String num = numero + "";
+                                    if (num.length() > longitud) {
+                                        salir = true;
+                                        JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                                    } else {
+                                        String nueva_cadena = num;
+                                        for (int j = num.length(); j < longitud; j++) {
+                                            nueva_cadena += " ";
+                                        }
+                                        buffer += nueva_cadena + ";";
+                                    }
+                                } else if (campos.get(respuesta).getTipo().equals("Double")) {
+                                    double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
+                                    String num = numero + "";
+                                    if (num.length() > longitud) {
+                                        salir = true;
+                                        JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                                    } else {
+                                        String nueva_cadena = num;
+                                        for (int j = num.length(); j < longitud; j++) {
+                                            nueva_cadena += " ";
+                                        }
+                                        buffer += nueva_cadena + ";";
+                                    }
+                                } else if (campos.get(respuesta).getTipo().equals("Short")) {
+                                    short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
+                                    String num = peque + "";
+                                    if (num.length() > longitud) {
+                                        salir = true;
+                                        JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                                    } else {
+                                        String nueva_cadena = num;
+                                        for (int j = num.length(); j < longitud; j++) {
+                                            nueva_cadena += " ";
+                                        }
+                                        buffer += nueva_cadena + ";";
+                                    }
+                                } else if (campos.get(respuesta).getTipo().equals("Long")) {
+                                    long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
+                                    String num = largo + "";
+                                    if (num.length() > longitud) {
+                                        salir = true;
+                                        JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                                    } else {
+                                        String nueva_cadena = num;
+                                        for (int j = num.length(); j < longitud; j++) {
+                                            nueva_cadena += " ";
+                                        }
+                                        buffer += nueva_cadena + ";";
+                                    }
+                                } else {//float
+                                    float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
+                                    String num = flotante + "";
+                                    if (num.length() > longitud) {
+                                        salir = true;
+                                        JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
+                                    } else {
+                                        String nueva_cadena = num;
+                                        for (int j = num.length(); j < longitud; j++) {
+                                            nueva_cadena += " ";
+                                        }
+                                        buffer += nueva_cadena + ";";
+                                    }
                                 }
-                                buffer += nueva_cadena + ";";
-                            }
-                        } else if (campos.get(respuesta).getTipo().equals("Char")) {
-                            String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud);
-                            if (caracter.length() > longitud) {
-                                salir = true;
-                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
-                            } else {
-                                buffer += caracter + ";";
-                            }
-                        } else if (campos.get(respuesta).getTipo().equals("Int")) {
-                            int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
-                            if (campos.get(respuesta).isLlave()) {
-                                key = numero;
-                            }
-                            String num = numero + "";
-                            if (num.length() > longitud) {
-                                salir = true;
-                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
-                            } else {
-                                String nueva_cadena = num;
-                                for (int j = num.length(); j < longitud; j++) {
-                                    nueva_cadena += " ";
+                                //Modificar el registro
+                                RandomAccessFile raf = new RandomAccessFile(file, "rw");
+                                raf.seek(buscado.offset);
+                                byte[] nuevo_registro = new byte[buscado.size];
+                                for (int i = 0; i < buscado.size; i++) {
+                                    nuevo_registro[i] = raf.readByte();
                                 }
-                                buffer += nueva_cadena + ";";
-                            }
-                        } else if (campos.get(respuesta).getTipo().equals("Double")) {
-                            double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
-                            String num = numero + "";
-                            if (num.length() > longitud) {
-                                salir = true;
-                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
-                            } else {
-                                String nueva_cadena = num;
-                                for (int j = num.length(); j < longitud; j++) {
-                                    nueva_cadena += " ";
+                                String nuevo_registro1 = "";
+                                for (int i = 0; i < nuevo_registro.length; i++) {
+                                    nuevo_registro1 += ((char) nuevo_registro[i]);
                                 }
-                                buffer += nueva_cadena + ";";
-                            }
-                        } else if (campos.get(respuesta).getTipo().equals("Short")) {
-                            short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
-                            String num = peque + "";
-                            if (num.length() > longitud) {
-                                salir = true;
-                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
-                            } else {
-                                String nueva_cadena = num;
-                                for (int j = num.length(); j < longitud; j++) {
-                                    nueva_cadena += " ";
+                                raf.close();
+                                String modificado = "";
+                                String acumulador = "";
+                                int contador_campo = 0;
+                                for (int i = 0; i < nuevo_registro1.length(); i++) {
+                                    if (nuevo_registro1.charAt(i) != ';') {
+                                        acumulador += nuevo_registro1.charAt(i);
+                                    } else {
+                                        if (contador_campo != respuesta) {
+                                            if (i != nuevo_registro.length - 1) {
+                                                modificado += acumulador + ";";
+                                            } else {
+                                                modificado += acumulador;
+                                            }
+                                        } else {
+                                            if (i != nuevo_registro.length - 1) {
+                                                modificado += buffer + ";";
+                                            } else {
+                                                modificado += buffer;
+                                            }
+                                        }
+                                        contador_campo++;
+                                        acumulador = "";
+                                    }
                                 }
-                                buffer += nueva_cadena + ";";
-                            }
-                        } else if (campos.get(respuesta).getTipo().equals("Long")) {
-                            long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
-                            String num = largo + "";
-                            if (num.length() > longitud) {
-                                salir = true;
-                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
-                            } else {
-                                String nueva_cadena = num;
-                                for (int j = num.length(); j < longitud; j++) {
-                                    nueva_cadena += " ";
+                                if (modificado.length() <= buscado.getSize()) {
+                                    RandomAccessFile rf = new RandomAccessFile(file, "rw");
+                                    for (int i = 0; i < buscado.getSize() - modificado.length()-1; i++) {
+                                        modificado += " ";
+                                    }
+                                    modificado += ";";
+                                    rf.seek(buscado.getOffset());
+                                    rf.writeBytes(modificado);
+                                    rf.close();
+                                    JOptionPane.showMessageDialog(this, "¡Registro modificado exitosamente!");
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "¡El nuevo registro no cumple con los requisitos!");
                                 }
-                                buffer += nueva_cadena + ";";
-                            }
-                        } else {//float
-                            float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
-                            String num = flotante + "";
-                            if (num.length() > longitud) {
-                                salir = true;
-                                JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
                             } else {
-                                String nueva_cadena = num;
-                                for (int j = num.length(); j < longitud; j++) {
-                                    nueva_cadena += " ";
-                                }
-                                buffer += nueva_cadena + ";";
+                                JOptionPane.showMessageDialog(this, "¡No se puede modificar la llave principal!");
+                                salir = false;
                             }
+                        } while (salir);
+                    } else {//variable
+                        String buffer = "";
+                        if (!campos.get(respuesta).isLlave()) {
+                            if (campos.get(respuesta).getTipo().equals("String")) {
+                                String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre());
+                                buffer += cadena;
+                            } else if (campos.get(respuesta).getTipo().equals("Char")) {
+                                String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre());
+                                buffer += caracter;
+                            } else if (campos.get(respuesta).getTipo().equals("Int")) {
+                                int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
+                                if (campos.get(respuesta).isLlave()) {
+                                    key = numero;
+                                }
+                                buffer += numero;
+                            } else if (campos.get(respuesta).getTipo().equals("Double")) {
+                                double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
+                                buffer += numero;
+                            } else if (campos.get(respuesta).getTipo().equals("Short")) {
+                                short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
+                                buffer += peque;
+                            } else if (campos.get(respuesta).getTipo().equals("Long")) {
+                                long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
+                                buffer += largo;
+                            } else {//float
+                                float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
+                                buffer += flotante;
+                            }
+                            //Modificar el registro
+                            RandomAccessFile raf = new RandomAccessFile(file, "rw");
+                            raf.seek(buscado.offset);
+                            byte[] nuevo_registro = new byte[buscado.size];
+                            for (int i = 0; i < buscado.size; i++) {
+                                nuevo_registro[i] = raf.readByte();
+                            }
+                            String nuevo_registro1 = "";
+                            for (int i = 0; i < nuevo_registro.length; i++) {
+                                nuevo_registro1 += ((char) nuevo_registro[i]);
+                            }
+                            raf.close();
+                            String modificado = "";
+                            String acumulador = "";
+                            int contador_campo = 0;
+                            for (int i = 0; i < nuevo_registro1.length(); i++) {
+                                if (nuevo_registro1.charAt(i) != ';') {
+                                    acumulador += nuevo_registro1.charAt(i);
+                                } else {
+                                    if (contador_campo != respuesta) {
+                                        if (i != nuevo_registro.length - 1) {
+                                            modificado += acumulador + ";";
+                                        } else {
+                                            modificado += acumulador;
+                                        }
+                                    } else {
+                                        if (i != nuevo_registro.length - 1) {
+                                            modificado += buffer + ";";
+                                        } else {
+                                            modificado += buffer;
+                                        }
+                                    }
+                                    contador_campo++;
+                                    acumulador = "";
+                                }
+                            }
+                            if (modificado.length() <= buscado.getSize()) {
+                                RandomAccessFile rf = new RandomAccessFile(file, "rw");
+                                for (int i = 0; i < buscado.getSize() - modificado.length()-1; i++) {
+                                    modificado += " ";
+                                }
+                                modificado += ";";
+                                rf.seek(buscado.getOffset());
+                                rf.writeBytes(modificado);
+                                rf.close();
+                                JOptionPane.showMessageDialog(this, "¡Registro modificado exitosamente!");
+                            } else {
+                                JOptionPane.showMessageDialog(this, "¡El nuevo registro no cumple con los requisitos!");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "¡No se puede modificar la llave principal!");
                         }
-                    } while (salir);
-                } else {//variable
-                    String buffer = "";
-                    if (campos.get(respuesta).getTipo().equals("String")) {
-                        String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre());
-                        buffer += cadena + ";";
-                    } else if (campos.get(respuesta).getTipo().equals("Char")) {
-                        String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre());
-                        buffer += caracter + ";";
-                    } else if (campos.get(respuesta).getTipo().equals("Int")) {
-                        int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
-                        if (campos.get(respuesta).isLlave()) {
-                            key = numero;
-                        }
-                        buffer += numero + ";";
-                    } else if (campos.get(respuesta).getTipo().equals("Double")) {
-                        double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
-                        buffer += numero + ";";
-                    } else if (campos.get(respuesta).getTipo().equals("Short")) {
-                        short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
-                        buffer += peque + ";";
-                    } else if (campos.get(respuesta).getTipo().equals("Long")) {
-                        long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
-                        buffer += largo + ";";
-                    } else {//float
-                        float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
-                        buffer += flotante + ";";
                     }
+                } else {
+                    JOptionPane.showMessageDialog(this, "¡El numero ingresado es incorrecto!");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "El numero ingresado es incorrecto");
+                JOptionPane.showMessageDialog(this, "¡El registro solicitado no existe!");
             }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "¡Error!");
         }
@@ -2547,7 +2663,7 @@ public class Principal extends javax.swing.JFrame {
                     sc.useDelimiter(";");
                     while (sc.hasNext()) {
                         String temporal = sc.next();
-                        if (temporal.charAt(0) != '*' || temporal.charAt(0) != '#') {
+                        if (temporal.charAt(0) != '*' && temporal.charAt(0) != '#') {
                             Registro registro_temp = new Registro(Integer.parseInt(temporal), sc.nextInt(), sc.nextInt());
                             arbol.insert(registro_temp);
                         } else {
@@ -2570,11 +2686,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_eliminar2ActionPerformed
 
     private void jmi_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_excelActionPerformed
-        /* Excel e = new Excel();
+        /*Excel e = new Excel();
         try {
             e.exportarExcel(file, campos.size(), campos);
         } catch (IOException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }*/
     }//GEN-LAST:event_jmi_excelActionPerformed
 

@@ -1,8 +1,11 @@
 package proyecto_edd2;
 
+import com.sun.org.apache.xml.internal.serialize.OutputFormat;
+import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -13,6 +16,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 
 /**
  *
@@ -95,7 +103,6 @@ public class Principal extends javax.swing.JFrame {
         jmi_modificar1 = new javax.swing.JMenuItem();
         jmi_borrar1 = new javax.swing.JMenuItem();
         jm_registro = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
         jmi_introducir2 = new javax.swing.JMenuItem();
         jmi_modificar2 = new javax.swing.JMenuItem();
         jmi_buscar2 = new javax.swing.JMenuItem();
@@ -103,7 +110,7 @@ public class Principal extends javax.swing.JFrame {
         jmi_cruzar = new javax.swing.JMenuItem();
         jm_estandarizacion = new javax.swing.JMenu();
         jmi_excel = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
+        jmi_xml = new javax.swing.JMenuItem();
 
         jp_fija.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -653,9 +660,6 @@ public class Principal extends javax.swing.JFrame {
         jm_registro.setText("Registro");
         jm_registro.setEnabled(false);
 
-        jMenuItem7.setText("Cargar ");
-        jm_registro.add(jMenuItem7);
-
         jmi_introducir2.setText("Introducir");
         jmi_introducir2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -709,8 +713,13 @@ public class Principal extends javax.swing.JFrame {
         });
         jm_estandarizacion.add(jmi_excel);
 
-        jMenuItem16.setText("Exportar XML con Schema");
-        jm_estandarizacion.add(jMenuItem16);
+        jmi_xml.setText("Exportar XML con Schema");
+        jmi_xml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_xmlActionPerformed(evt);
+            }
+        });
+        jm_estandarizacion.add(jmi_xml);
 
         jMenuBar1.add(jm_estandarizacion);
 
@@ -1300,6 +1309,7 @@ public class Principal extends javax.swing.JFrame {
                         System.out.println(arbol);//aqui
                         sc.close();
                     } catch (Exception e) {
+                        //e.printStackTrace();
                         JOptionPane.showMessageDialog(this, "¡Error!");
                     }
                     DefaultTableModel model = (DefaultTableModel) jt_registros.getModel();
@@ -2478,13 +2488,104 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_eliminar2ActionPerformed
 
     private void jmi_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_excelActionPerformed
-        Excel e = new Excel();
+       /* Excel e = new Excel();
         try {
             e.exportarExcel(file, campos.size(), campos);
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }//GEN-LAST:event_jmi_excelActionPerformed
+
+    private void jmi_xmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_xmlActionPerformed
+        try {
+            Scanner sc = new Scanner(file);
+            sc.useDelimiter(";");
+            sc.next();
+            //DocumentBuilderFactory
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            //DocumentBuilder
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            //Document
+            Document xmlDoc = docBuilder.newDocument();
+            //Build XML elements
+            //<Campos>
+            //  <Campo>
+            //      <Nombre> tal </Nombre>
+            //      <Tipo> tal </Tipo>
+            //      <Longitud> tal </Longitud>
+            //  </Campo>
+            //</Campos>
+            Element rootElement = xmlDoc.createElement("Campos");
+            while (sc.hasNext()) {
+                String actual = sc.next();
+                if (!actual.equals("&")) {
+                    Element campo = xmlDoc.createElement("Campo");
+                    //nombre
+                    Text nombre = xmlDoc.createTextNode(actual);
+                    Element Enombre = xmlDoc.createElement("Nombre");
+                    //tipo
+                    Text tipo = xmlDoc.createTextNode(sc.next());
+                    Element Etipo = xmlDoc.createElement("Tipo");
+                    //longitud
+                    Text longitud = xmlDoc.createTextNode(sc.next());
+                    Element Elongitud = xmlDoc.createElement("Longitud");
+                    //Append interno
+                    Enombre.appendChild(nombre);
+                    Etipo.appendChild(tipo);
+                    Elongitud.appendChild(longitud);
+                    //Append externo
+                    campo.appendChild(Enombre);
+                    campo.appendChild(Etipo);
+                    campo.appendChild(Elongitud);
+                    //append a los campos
+                    rootElement.appendChild(campo);
+                } else {
+                    break;
+                }
+            }
+            //REGISTROS
+            Element segundo = xmlDoc.createElement("Registros");
+            while(sc.hasNext()){
+                Element registro = xmlDoc.createElement("Registro");
+                for (int i = 0; i < campos.size(); i++) {
+                    Text contenido = xmlDoc.createTextNode(sc.next());//Contenido del campo
+                    Element name = xmlDoc.createElement(campos.get(i).getNombre());//nombre del campo
+                    name.appendChild(contenido);//se le pone el contenido al campo
+                    registro.appendChild(name);//se le agrega el campo al registro
+                    segundo.appendChild(registro);//se agrega el registro al final del xml
+                }
+            }
+            //
+            rootElement.appendChild(segundo);
+            xmlDoc.appendChild(rootElement);
+            
+
+            //Set output
+            OutputFormat outF = new OutputFormat(xmlDoc);
+            outF.setIndenting(true);
+            //Declare the file
+            String n = file.getName();
+            String n2 = "";
+            for (int i = 0; i < n.length(); i++) {
+                if (n.charAt(i) != '.') {
+                    n2 += n.charAt(i);
+                } else {
+                    break;
+                }
+            }
+            File xmlFile = new File("./"+ "xml" + n2 + ".xml");
+            //Declare the fileOutputStream
+            FileOutputStream outStream = new FileOutputStream(xmlFile);
+            //XMLSERIALIZER
+            XMLSerializer serial = new XMLSerializer(outStream, outF);
+            //serialize
+            serial.serialize(xmlDoc);
+            JOptionPane.showMessageDialog(this, "¡Exportado a XML exitosamente!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "NOP");
+        }
+    }//GEN-LAST:event_jmi_xmlActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2537,8 +2638,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane2;
@@ -2567,6 +2666,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmi_introducir2;
     private javax.swing.JMenuItem jmi_modificar1;
     private javax.swing.JMenuItem jmi_modificar2;
+    private javax.swing.JMenuItem jmi_xml;
     private javax.swing.JPanel jp_fija;
     private javax.swing.JSpinner js_longitud;
     private javax.swing.JTable jt_Campo;

@@ -1209,11 +1209,13 @@ public class Principal extends javax.swing.JFrame {
                         Crear_Var.pack();
                         Crear_Var.setLocationRelativeTo(this);
                         Crear_Var.setVisible(true);
+                        tipo_archivo = false;
                     } else if (num == 1) {
                         Crear_Fij.setModal(true);
                         Crear_Fij.pack();
                         Crear_Fij.setLocationRelativeTo(this);
                         Crear_Fij.setVisible(true);
+                        tipo_archivo = true;
                     }
                 }
             } else {
@@ -1324,12 +1326,17 @@ public class Principal extends javax.swing.JFrame {
                                     if (Byte == 59) {
                                         contador++;
                                     }
-                                    nuevo_registro.add(Byte);
+                                    if (Byte != 32) {
+                                        nuevo_registro.add(Byte);
+                                    }
                                     acumulador++;
                                 } while (contador < campos.size());
                                 String nuevo_registro1 = "";
                                 for (int j = 0; j < nuevo_registro.size(); j++) {
-                                    nuevo_registro1 += (char) nuevo_registro.get(j).byteValue();
+                                    char caracter = (char) nuevo_registro.get(j).byteValue();
+                                    if (caracter != ' ') {
+                                        nuevo_registro1 += caracter;
+                                    }
                                 }
                                 int posicion = 0;
                                 for (int j = 0; j < campos.size(); j++) {
@@ -2327,9 +2334,11 @@ public class Principal extends javax.swing.JFrame {
                                         acumulador = "";
                                     }
                                 }
+                                System.out.println(modificado);
                                 if (modificado.length() <= buscado.getSize()) {
                                     RandomAccessFile rf = new RandomAccessFile(file, "rw");
-                                    for (int i = 0; i < buscado.getSize() - modificado.length()-1; i++) {
+                                    int tam = modificado.length();
+                                    for (int i = 0; i < (buscado.getSize() - tam - 1); i++) {
                                         modificado += " ";
                                     }
                                     modificado += ";";
@@ -2411,13 +2420,16 @@ public class Principal extends javax.swing.JFrame {
                             }
                             if (modificado.length() <= buscado.getSize()) {
                                 RandomAccessFile rf = new RandomAccessFile(file, "rw");
-                                for (int i = 0; i < buscado.getSize() - modificado.length()-1; i++) {
+                                System.out.println(nuevo_registro1+ " "+buscado.getSize()+" "+modificado + " "+modificado.length());
+                                int tam = modificado.length();
+                                for (int i = 0; i < (nuevo_registro1.length() - tam-1); i++) {
                                     modificado += " ";
                                 }
                                 modificado += ";";
                                 rf.seek(buscado.getOffset());
                                 rf.writeBytes(modificado);
                                 rf.close();
+                                System.out.println(modificado);
                                 JOptionPane.showMessageDialog(this, "¡Registro modificado exitosamente!");
                             } else {
                                 JOptionPane.showMessageDialog(this, "¡El nuevo registro no cumple con los requisitos!");
@@ -2454,12 +2466,17 @@ public class Principal extends javax.swing.JFrame {
                         if (Byte == 59) {
                             contador++;
                         }
-                        nuevo_registro.add(Byte);
+                        if (Byte != 32) {
+                            nuevo_registro.add(Byte);
+                        }
                         nuevo_acumulador++;
                     } while (contador < campos.size());
                     String nuevo_registro1 = "";
                     for (int j = 0; j < nuevo_registro.size(); j++) {
-                        nuevo_registro1 += (char) nuevo_registro.get(j).byteValue();
+                        char caracter = (char) nuevo_registro.get(j).byteValue();
+                        if (caracter != ' ') {
+                            nuevo_registro1 += caracter;
+                        }
                     }
                     int posicion = 0;
                     for (int j = 0; j < campos.size(); j++) {
@@ -2528,12 +2545,17 @@ public class Principal extends javax.swing.JFrame {
                         if (Byte == 59) {
                             contador++;
                         }
-                        nuevo_registro.add(Byte);
+                        if (Byte != 32) {
+                            nuevo_registro.add(Byte);
+                        }
                         nuevo_acumulador++;
                     } while (contador < campos.size());
                     String nuevo_registro1 = "";
                     for (int j = 0; j < nuevo_registro.size(); j++) {
-                        nuevo_registro1 += (char) nuevo_registro.get(j).byteValue();
+                        char caracter = (char) nuevo_registro.get(j).byteValue();
+                        if (caracter != ' ') {
+                            nuevo_registro1 += caracter;
+                        }
                     }
                     int posicion = 0;
                     for (int j = 0; j < campos.size(); j++) {

@@ -2948,7 +2948,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_eliminar2ActionPerformed
 
     private void jmi_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_excelActionPerformed
-        Excel e = new Excel();
+        Excel e = new Excel();//agregar a excel
         try {
             e.exportarExcel(file, campos.size(), campos);
         } catch (IOException ex) {

@@ -94,7 +94,7 @@ public class Nodo {
 
     @Override
     public String toString() {
-        return "{" + "llaves:" + llaves + ", hijos:" + hijos + '}';
+        return "{" + "Llaves: " + llaves + ", Hijos:" + hijos + '}';
     }
 
     void addChild(Nodo hijo) {

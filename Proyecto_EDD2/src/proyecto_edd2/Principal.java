@@ -2334,7 +2334,7 @@ public class Principal extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     //Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, "¡Archivo cruzado creado exitosamente!");
+                JOptionPane.showMessageDialog(this, "¡Archivo cruzado  exitosamente!");
             } else {
                 if (file.getName().equals(file1.getName())) {
                     JOptionPane.showMessageDialog(this, "¡Selecciono el mismo archivo!");

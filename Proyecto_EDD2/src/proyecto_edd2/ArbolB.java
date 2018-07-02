@@ -24,6 +24,6 @@ public class ArbolB {
     
     @Override
     public String toString() {
-        return "{" + "orden:" + orden + ", raiz:" + raiz + '}';
+        return "Arbol de indices\n{Raíz: " + raiz + '}';
     }
 }

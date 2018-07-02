@@ -2573,7 +2573,7 @@ public class Principal extends javax.swing.JFrame {
                                     String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre());
                                     if (cadena.contains(";") || cadena.contains("#") || cadena.contains("*") || cadena.contains("&")) {
                                         verificar = true;
-                                        JOptionPane.showMessageDialog(this, "La cadena ingresada contien un caracte invalido");
+                                        JOptionPane.showMessageDialog(this, "La cadena ingresada contiene un caracter invalido");
                                     } else {
                                         buffer += cadena;
                                     }

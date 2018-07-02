@@ -33,12 +33,14 @@ public class Principal extends javax.swing.JFrame {
     boolean tipo_archivo;
     ArbolB arbol = new ArbolB(4);
     ArrayStack posiciones = new ArrayStack();
+    int cont_registros = 0;
 
     public Principal() {
         initComponents();
         this.setLocationRelativeTo(this);
         Crear_Fij.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         Crear_Var.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        jl_registros.setText(cont_registros + "");
     }
 
     @SuppressWarnings("unchecked")
@@ -91,6 +93,11 @@ public class Principal extends javax.swing.JFrame {
         jt_registros = new javax.swing.JTable();
         jb_atras = new javax.swing.JButton();
         jb_siguiente = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jl_registros = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jm_archivo = new javax.swing.JMenu();
         jmi_crear = new javax.swing.JMenuItem();
@@ -456,22 +463,23 @@ public class Principal extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Proyecto EDD2");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 204, 204));
         jPanel1.setForeground(new java.awt.Color(0, 102, 102));
 
         jLabel9.setFont(new java.awt.Font("Corbel", 1, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setForeground(new java.awt.Color(0, 0, 51));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Proyecto EDD2");
 
         jLabel10.setFont(new java.awt.Font("Berlin Sans FB Demi", 2, 16)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setForeground(new java.awt.Color(0, 0, 51));
         jLabel10.setText("Archivo Actual:");
 
         jl_archivoactual.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jl_archivoactual.setForeground(new java.awt.Color(255, 255, 255));
+        jl_archivoactual.setForeground(new java.awt.Color(0, 0, 51));
 
         jt_Campo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -499,6 +507,7 @@ public class Principal extends javax.swing.JFrame {
         jt_Campo.setToolTipText("");
         jScrollPane2.setViewportView(jt_Campo);
 
+        jb_cargartabla.setBackground(new java.awt.Color(0, 0, 51));
         jb_cargartabla.setText("Cargar Tabla");
         jb_cargartabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -517,6 +526,7 @@ public class Principal extends javax.swing.JFrame {
         jt_registros.setToolTipText("");
         jScrollPane3.setViewportView(jt_registros);
 
+        jb_atras.setBackground(new java.awt.Color(0, 0, 51));
         jb_atras.setText("Atras");
         jb_atras.setEnabled(false);
         jb_atras.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -525,6 +535,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jb_siguiente.setBackground(new java.awt.Color(0, 0, 51));
         jb_siguiente.setText("Siguiente");
         jb_siguiente.setEnabled(false);
         jb_siguiente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -533,6 +544,27 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setFont(new java.awt.Font("Corbel", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 0, 51));
+        jLabel11.setText("Registros:");
+
+        jl_registros.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        jl_registros.setForeground(new java.awt.Color(0, 0, 51));
+        jl_registros.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+
+        jLabel12.setFont(new java.awt.Font("Corbel", 1, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 0, 51));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("Tabla de Campos");
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Corbel", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 0, 51));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Tabla de Registros");
+
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_edd2/nuevafoto.jpg"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -540,31 +572,42 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 864, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(8, 8, 8)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jl_archivoactual, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(22, Short.MAX_VALUE)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jl_archivoactual, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(412, 412, 412))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(168, 168, 168)
-                                .addComponent(jb_cargartabla)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jb_atras)
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(222, 222, 222)
+                                .addComponent(jLabel14))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(164, 164, 164)
+                                        .addComponent(jb_cargartabla)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jb_siguiente))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jb_atras)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jb_siguiente)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jl_registros, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
 
@@ -574,25 +617,31 @@ public class Principal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel9)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jl_archivoactual, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jb_cargartabla)
-                    .addComponent(jb_atras)
-                    .addComponent(jb_siguiente))
-                .addContainerGap())
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jb_cargartabla)
+                        .addComponent(jb_atras)
+                        .addComponent(jb_siguiente)
+                        .addComponent(jLabel11))
+                    .addComponent(jl_registros, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jm_archivo.setText("Archivo");
@@ -731,9 +780,7 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -772,43 +819,48 @@ public class Principal extends javax.swing.JFrame {
         try {
             String nombre = tf_nombre.getText();
             String tipo;
-            if (rb_string.isSelected()) {
-                tipo = "String";
-            } else if (rb_int.isSelected()) {
-                tipo = "Int";
-            } else if (rb_long.isSelected()) {
-                tipo = "Long";
-            } else if (rb_char.isSelected()) {
-                tipo = "Char";
-            } else if (rb_double.isSelected()) {
-                tipo = "Double";
-            } else if (rb_short.isSelected()) {
-                tipo = "Short";
+            if (nombre.contains(";") || nombre.contains("*") || nombre.contains("#") || nombre.contains("&")) {
+                JOptionPane.showMessageDialog(Crear_Fij, "¡La cadena ingresada contine un caracter invalido!");
             } else {
-                tipo = "Float";
-            }
-            int longitud = (int) js_longitud.getValue();
-            boolean entrar = true;
-            for (int i = 0; i < campos.size(); i++) {
-                if (campos.get(i).isLlave()) {
-                    entrar = false;
+                if (rb_string.isSelected()) {
+                    tipo = "String";
+                } else if (rb_int.isSelected()) {
+                    tipo = "Int";
+                } else if (rb_long.isSelected()) {
+                    tipo = "Long";
+                } else if (rb_char.isSelected()) {
+                    tipo = "Char";
+                } else if (rb_double.isSelected()) {
+                    tipo = "Double";
+                } else if (rb_short.isSelected()) {
+                    tipo = "Short";
+                } else {
+                    tipo = "Float";
                 }
-            }
-            boolean llave = false;
-            if (entrar && tipo.equals("Int")) {
-                int respuesta = JOptionPane.showConfirmDialog(Crear_Fij, "¿Desea que el campo " + nombre + " sea la llave principal?");
-                if (respuesta == 0) {
-                    llave = true;
+                int longitud = (int) js_longitud.getValue();
+                boolean entrar = true;
+                for (int i = 0; i < campos.size(); i++) {
+                    if (campos.get(i).isLlave()) {
+                        entrar = false;
+                    }
                 }
+                boolean llave = false;
+                if (entrar && tipo.equals("Int")) {
+                    int respuesta = JOptionPane.showConfirmDialog(Crear_Fij, "¿Desea que el campo " + nombre + " sea la llave principal?");
+                    if (respuesta == 0) {
+                        llave = true;
+                    }
+                }
+                Campo campo = new Campo(nombre, tipo, longitud, llave);
+                campos.add(campo);
+                JOptionPane.showMessageDialog(Crear_Fij, "¡Campo " + nombre + " agregado exitosamente!");
+                tf_nombre.setText("");
+                js_longitud.setValue(1);
+                rb_string.setSelected(true);
+
             }
-            Campo campo = new Campo(nombre, tipo, longitud, llave);
-            campos.add(campo);
-            JOptionPane.showMessageDialog(Crear_Fij, "¡Campo " + nombre + " agregado exitosamente!");
-            tf_nombre.setText("");
-            js_longitud.setValue(1);
-            rb_string.setSelected(true);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(Crear_Fij, "¡Error!");
+            //JOptionPane.showMessageDialog(Crear_Fij, "¡Error!");
         }
     }//GEN-LAST:event_jb_agregar_fijMouseClicked
 
@@ -892,7 +944,7 @@ public class Principal extends javax.swing.JFrame {
                     opciones_verificar += "¿Desea que alguno de estos campos sea la llave principal?";
                     int respuesta = JOptionPane.showConfirmDialog(this, opciones_verificar);
                     switch (respuesta) {
-                        case 1:
+                        case 0:
                             String opciones = "-> Campos del Archivo \n";
                             for (int i = 0; i < campos.size(); i++) {
                                 opciones += (i + 1) + ". " + campos.get(i).getNombre() + "\n";
@@ -987,41 +1039,47 @@ public class Principal extends javax.swing.JFrame {
         try {
             String nombre = tf_nombre1.getText();
             String tipo;
-            if (rb_string1.isSelected()) {
-                tipo = "String";
-            } else if (rb_int1.isSelected()) {
-                tipo = "Int";
-            } else if (rb_long1.isSelected()) {
-                tipo = "Long";
-            } else if (rb_char1.isSelected()) {
-                tipo = "Char";
-            } else if (rb_double1.isSelected()) {
-                tipo = "Double";
-            } else if (rb_short1.isSelected()) {
-                tipo = "Short";
+            if (nombre.contains(";") || nombre.contains("*") || nombre.contains("#") || nombre.contains("&")) {
+                JOptionPane.showMessageDialog(Crear_Var, "¡La cadena ingresada contiene caracteres invalidos!");
             } else {
-                tipo = "Float";
-            }
-            boolean entrar = true;
-            for (int i = 0; i < campos.size(); i++) {
-                if (campos.get(i).isLlave()) {
-                    entrar = false;
+                if (rb_string1.isSelected()) {
+                    tipo = "String";
+                } else if (rb_int1.isSelected()) {
+                    tipo = "Int";
+                } else if (rb_long1.isSelected()) {
+                    tipo = "Long";
+                } else if (rb_char1.isSelected()) {
+                    tipo = "Char";
+                } else if (rb_double1.isSelected()) {
+                    tipo = "Double";
+                } else if (rb_short1.isSelected()) {
+                    tipo = "Short";
+                } else {
+                    tipo = "Float";
                 }
-            }
-            boolean llave = false;
-            if (entrar && tipo.equals("Int")) {
-                int respuesta = JOptionPane.showConfirmDialog(Crear_Var, "¿Desea que el campo " + nombre + " sea la llave principal?");
-                if (respuesta == 0) {
-                    llave = true;
+                boolean entrar = true;
+                for (int i = 0; i < campos.size(); i++) {
+                    if (campos.get(i).isLlave()) {
+                        entrar = false;
+                    }
                 }
+                boolean llave = false;
+                if (entrar && tipo.equals("Int")) {
+                    int respuesta = JOptionPane.showConfirmDialog(Crear_Var, "¿Desea que el campo " + nombre + " sea la llave principal?");
+                    if (respuesta == 0) {
+                        llave = true;
+                    }
+                }
+                Campo campo = new Campo(nombre, tipo, 0, llave);
+                campos.add(campo);
+                JOptionPane.showMessageDialog(Crear_Var, "¡Campo " + nombre + " agregado exitosamente!");
+                tf_nombre1.setText("");
+                rb_string1.setSelected(true);
+
             }
-            Campo campo = new Campo(nombre, tipo, 0, llave);
-            campos.add(campo);
-            JOptionPane.showMessageDialog(Crear_Var, "¡Campo " + nombre + " agregado exitosamente!");
-            tf_nombre1.setText("");
-            rb_string1.setSelected(true);
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(Crear_Var, "¡Error!");
+            //JOptionPane.showMessageDialog(Crear_Var, "¡Error!");
         }
     }//GEN-LAST:event_jb_agregar_varMouseClicked
 
@@ -1104,7 +1162,7 @@ public class Principal extends javax.swing.JFrame {
                     opciones_verificar += "¿Desea que alguno de estos campos sea la llave principal?";
                     int respuesta = JOptionPane.showConfirmDialog(this, opciones_verificar);
                     switch (respuesta) {
-                        case 1:
+                        case 0:
                             String opciones = "-> Campos del Archivo \n";
                             for (int i = 0; i < campos.size(); i++) {
                                 opciones += (i + 1) + ". " + campos.get(i).getNombre() + "\n";
@@ -1262,7 +1320,7 @@ public class Principal extends javax.swing.JFrame {
                         }
                         sc.close();
                     } catch (Exception e) {
-                        JOptionPane.showMessageDialog(this, "¡Error!");
+                        //JOptionPane.showMessageDialog(this, "¡Error!");
                     }
                     availList = new LinkedList();
                     jl_archivoactual.setText(archivo + ".txt");
@@ -1301,8 +1359,8 @@ public class Principal extends javax.swing.JFrame {
                         System.out.println(arbol);//aqui
                         sc.close();
                     } catch (Exception e) {
-                        e.printStackTrace();
-                        JOptionPane.showMessageDialog(this, "¡Error!");
+                        //e.printStackTrace();
+                        //JOptionPane.showMessageDialog(this, "¡Error!");
                     }
                     DefaultTableModel model = (DefaultTableModel) jt_registros.getModel();
                     for (int i = 0; i < campos.size(); i++) {
@@ -1400,16 +1458,20 @@ public class Principal extends javax.swing.JFrame {
                         }
                     }
                     sc.close();
-                    for (int i = 0; i < availList.size(); i++) {
-                        System.out.println(availList.get(i));
+                    DefaultTableModel model2 = (DefaultTableModel) jt_registros.getModel();
+                    if (model2.getRowCount() > 0) {
+                        jl_registros.setText((cont_registros + 1) + " - " + (cont_registros + model2.getRowCount()));
+                        cont_registros += model2.getRowCount();
+                    } else {
+                        jl_registros.setText("0");
                     }
                     JOptionPane.showMessageDialog(this, "¡Archivo " + file.getName() + " cargado exitosamente!");
                 } else {
                     JOptionPane.showMessageDialog(this, "¡El archivo solicitado no existe!");
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "¡Error!");
-                e.printStackTrace();
+                //JOptionPane.showMessageDialog(this, "¡Error!");
+                // e.printStackTrace();
             }
         }
     }//GEN-LAST:event_jmi_abrirActionPerformed
@@ -1437,14 +1499,14 @@ public class Principal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "¡El archivo ya contiene registros, no es posible agregar campos!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "¡Error!");
+            // JOptionPane.showMessageDialog(this, "¡Error!");
         }
     }//GEN-LAST:event_jmi_crear1ActionPerformed
 
     private void jb_cargartablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_cargartablaMouseClicked
         DefaultTableModel modelo = (DefaultTableModel) jt_Campo.getModel();
         modelo.setRowCount(0);
-        System.out.println(campos);
+        //System.out.println(campos);
         int cont = 0;
         for (int i = 0; i < campos.size(); i++) {
             cont++;
@@ -1516,7 +1578,7 @@ public class Principal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "¡El archivo ya contiene registros, no es posible eliminar campos!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "¡Error!");
+            //JOptionPane.showMessageDialog(this, "¡Error!");
         }
     }//GEN-LAST:event_jmi_borrar1ActionPerformed
 
@@ -1549,7 +1611,11 @@ public class Principal extends javax.swing.JFrame {
                             switch (respuesta) {
                                 case "1":
                                     String nombre = JOptionPane.showInputDialog(this, "Ingrese el nuevo nombre del campo " + campos.get(numero_lista).getNombre());
-                                    campos.get(numero_lista).setNombre(nombre);
+                                    if (nombre.contains(";") || nombre.contains("#") || nombre.contains("*")) {
+                                        JOptionPane.showMessageDialog(this, "La cadena ingresada contiene caracteres invalidos");
+                                    } else {
+                                        campos.get(numero_lista).setNombre(nombre);
+                                    }
                                     break;
                                 case "2":
                                     boolean salir2;
@@ -1612,14 +1678,14 @@ public class Principal extends javax.swing.JFrame {
                                     for (int i = 0; i < campos.size(); i++) {
                                         bw.write(campos.get(i).toString());
                                     }
-                                    bw.write("&;-1&;");
+                                    bw.write("&;");
                                     bw.flush();
                                 } else {
                                     bw.write("1;");
                                     for (int i = 0; i < campos.size(); i++) {
                                         bw.write(campos.get(i).toString2());
                                     }
-                                    bw.write("&;-1&;");
+                                    bw.write("&;");
                                     bw.flush();
                                 }
                                 bw.close();
@@ -1648,7 +1714,11 @@ public class Principal extends javax.swing.JFrame {
                             switch (respuesta) {
                                 case "1":
                                     String nombre = JOptionPane.showInputDialog(this, "Ingrese el nuevo nombre del campo " + campos.get(numero_lista).getNombre());
-                                    campos.get(numero_lista).setNombre(nombre);
+                                    if (nombre.contains(";") || nombre.contains("#") || nombre.contains("*")) {
+                                        JOptionPane.showMessageDialog(this, "La cadena ingresada contiene caracteres invalidos");
+                                    } else {
+                                        campos.get(numero_lista).setNombre(nombre);
+                                    }
                                     break;
                                 case "2":
                                     boolean salir2;
@@ -1707,14 +1777,14 @@ public class Principal extends javax.swing.JFrame {
                                     for (int i = 0; i < campos.size(); i++) {
                                         bw.write(campos.get(i).toString());
                                     }
-                                    bw.write("&;-1&;");
+                                    bw.write("&;");
                                     bw.flush();
                                 } else {
                                     bw.write("1;");
                                     for (int i = 0; i < campos.size(); i++) {
                                         bw.write(campos.get(i).toString2());
                                     }
-                                    bw.write("&;-1&;");
+                                    bw.write("&;");
                                     bw.flush();
                                 }
                                 bw.close();
@@ -1738,7 +1808,7 @@ public class Principal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "¡El archivo ya contiene registros, no es posible modificar campos!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "¡Error!");
+            //JOptionPane.showMessageDialog(this, "¡Error!");
         }
     }//GEN-LAST:event_jmi_modificar1ActionPerformed
 
@@ -1755,7 +1825,10 @@ public class Principal extends javax.swing.JFrame {
                         int longitud = campos.get(i).getLongitud();
                         if (campos.get(i).getTipo().equals("String")) {
                             String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud);
-                            if (cadena.length() > longitud) {
+                            if (cadena.contains(";") || cadena.contains("*") || cadena.contains("#") || cadena.contains("&")) {
+                                salir = true;
+                                JOptionPane.showMessageDialog(this, "La cadena ingresada contiene caracteres invalidos");
+                            } else if (cadena.length() > longitud) {
                                 salir = true;
                                 JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
                             } else {
@@ -1767,7 +1840,10 @@ public class Principal extends javax.swing.JFrame {
                             }
                         } else if (campos.get(i).getTipo().equals("Char")) {
                             String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre() + "\nLongitud: " + longitud);
-                            if (caracter.length() > longitud) {
+                            if (caracter.contains("#") || caracter.contains("&") || caracter.contains("*") || caracter.contains(";")) {
+                                salir = true;
+                                JOptionPane.showMessageDialog(this, "Lo ingresado contiene un caracter invalido");
+                            } else if (caracter.length() > longitud) {
                                 salir = true;
                                 JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
                             } else {
@@ -1870,6 +1946,33 @@ public class Principal extends javax.swing.JFrame {
                         raf.seek(availList.get(i).getOffset());
                         raf.writeBytes(new_buffer);
                         raf.close();
+                        String llave = "";
+                        Scanner sc = new Scanner(indice);
+                        sc.useDelimiter(";");
+                        while (sc.hasNext()) {
+                            llave = sc.next();
+                            int temporal = sc.nextInt();
+                            if (temporal == availList.get(i).getOffset()) {
+                                break;
+                            }
+                            sc.next();
+                        }
+                        int acumulador = 0;
+                        sc = new Scanner(indice);
+                        sc.useDelimiter(";");
+                        while (sc.hasNext()) {
+                            String temporal = sc.next();
+                            if (temporal.equals(llave)) {
+                                break;
+                            } else {
+                                acumulador += temporal.length() + 1;
+                            }
+                        }
+                        sc.close();
+                        RandomAccessFile raf2 = new RandomAccessFile(indice, "rw");
+                        raf2.seek(acumulador);
+                        raf2.writeByte(35); //numeral
+                        raf2.close();
                         FileWriter fw2 = null;
                         BufferedWriter bw2 = null;
                         indice = new File("./indice" + file.getName());
@@ -1879,30 +1982,15 @@ public class Principal extends javax.swing.JFrame {
                             bw2.write(key + ";" + availList.get(i).getOffset() + ";" + new_buffer.length() + ";");
                             bw2.flush();
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            //e.printStackTrace();
                         }
                         try {
                             bw2.close();
                             fw2.close();
                         } catch (IOException ex) {
                         }
-                        availList.remove(i);
                         seguir = false;
-                        int acumulador = 0;
-                        Scanner sc = new Scanner(indice);
-                        sc.useDelimiter(";");
-                        while (sc.hasNext()) {
-                            String temporal = sc.next();
-                            if (temporal.equals(key + "")) {
-                                break;
-                            } else {
-                                acumulador += temporal.length() + 1;
-                            }
-                        }
-                        RandomAccessFile raf2 = new RandomAccessFile(indice, "rw");
-                        raf2.seek(acumulador);
-                        raf2.writeByte(35); //numeral
-                        raf2.close();
+                        availList.remove(i);
                         break;
                     }
                 }
@@ -1928,7 +2016,7 @@ public class Principal extends javax.swing.JFrame {
                         bw2.write(key + ";" + (file.length() - buffer.length()) + ";" + buffer.length() + ";");
                         bw2.flush();
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
                     }
                     try {
                         bw2.close();
@@ -1938,43 +2026,58 @@ public class Principal extends javax.swing.JFrame {
                 }
             } else {//longitud variable
                 String buffer = "";
+                boolean verificar1 = false;
                 for (int i = 0; i < campos.size(); i++) {
-                    if (campos.get(i).getTipo().equals("String")) {
-                        String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre());
-                        buffer += cadena + ";";
-                    } else if (campos.get(i).getTipo().equals("Char")) {
-                        String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre());
-                        buffer += caracter + ";";
-                    } else if (campos.get(i).getTipo().equals("Int")) {
-                        boolean is = true;
-                        int numero = 0;
-                        do {
-                            numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
-                            if (campos.get(i).isLlave()) {
-                                key = numero;
-                            }
-                            Registro registro = new Registro(key);
-                            Registro verificar = arbol.getRaiz().searchOff(registro);
-                            if (verificar == null) {
-                                is = false;
+                    do {
+                        verificar1 = false;
+                        if (campos.get(i).getTipo().equals("String")) {
+                            String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre());
+                            if (cadena.contains(";") || cadena.contains("*") || cadena.contains("#") || cadena.contains("&")) {
+                                JOptionPane.showMessageDialog(this, "La cadena ingresada contiene caracteres invalidos");
+                                verificar1 = true;
                             } else {
-                                JOptionPane.showMessageDialog(this, "¡La llave ingresada ya existe!\nIngrese una nueva");
+                                buffer += cadena + ";";
                             }
-                        } while (is);
-                        buffer += numero + ";";
-                    } else if (campos.get(i).getTipo().equals("Double")) {
-                        double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
-                        buffer += numero + ";";
-                    } else if (campos.get(i).getTipo().equals("Short")) {
-                        short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
-                        buffer += peque + ";";
-                    } else if (campos.get(i).getTipo().equals("Long")) {
-                        long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
-                        buffer += largo + ";";
-                    } else {//float
-                        float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
-                        buffer += flotante + ";";
-                    }
+
+                        } else if (campos.get(i).getTipo().equals("Char")) {
+                            String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre());
+                            if (caracter.contains(";") || caracter.contains("*") || caracter.contains("#") || caracter.contains("&")) {
+                                JOptionPane.showMessageDialog(this, "La cadena ingresada contiene caracteres invalidos");
+                                verificar1 = true;
+                            } else {
+                                buffer += caracter + ";";
+                            }
+                        } else if (campos.get(i).getTipo().equals("Int")) {
+                            boolean is = true;
+                            int numero = 0;
+                            do {
+                                numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                                if (campos.get(i).isLlave()) {
+                                    key = numero;
+                                }
+                                Registro registro = new Registro(key);
+                                Registro verificar = arbol.getRaiz().searchOff(registro);
+                                if (verificar == null) {
+                                    is = false;
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "¡La llave ingresada ya existe!\nIngrese una nueva");
+                                }
+                            } while (is);
+                            buffer += numero + ";";
+                        } else if (campos.get(i).getTipo().equals("Double")) {
+                            double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                            buffer += numero + ";";
+                        } else if (campos.get(i).getTipo().equals("Short")) {
+                            short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                            buffer += peque + ";";
+                        } else if (campos.get(i).getTipo().equals("Long")) {
+                            long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                            buffer += largo + ";";
+                        } else {//float
+                            float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(i).getNombre()));
+                            buffer += flotante + ";";
+                        }
+                    } while (verificar1);
                 }
                 boolean seguir = true;
                 for (int i = 0; i < availList.size(); i++) {
@@ -1991,30 +2094,23 @@ public class Principal extends javax.swing.JFrame {
                         raf.seek(availList.get(i).getOffset());
                         raf.writeBytes(new_buffer);
                         raf.close();
-                        FileWriter fw2 = null;
-                        BufferedWriter bw2 = null;
-                        indice = new File("./indice" + file.getName());
-                        try {
-                            fw2 = new FileWriter(indice, true);
-                            bw2 = new BufferedWriter(fw2);
-                            bw2.write(key + ";" + availList.get(i).getOffset() + ";" + new_buffer.length() + ";");
-                            bw2.flush();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            bw2.close();
-                            fw2.close();
-                        } catch (IOException ex) {
-                        }
-                        availList.remove(i);
-                        seguir = false;
-                        int acumulador = 0;
+                        String llave = "";
                         Scanner sc = new Scanner(indice);
                         sc.useDelimiter(";");
                         while (sc.hasNext()) {
+                            llave = sc.next();
+                            int temporal = sc.nextInt();
+                            if (temporal == availList.get(i).getOffset()) {
+                                break;
+                            }
+                            sc.next();
+                        }
+                        int acumulador = 0;
+                        sc = new Scanner(indice);
+                        sc.useDelimiter(";");
+                        while (sc.hasNext()) {
                             String temporal = sc.next();
-                            if (temporal.equals(key + "")) {
+                            if (temporal.equals(llave)) {
                                 break;
                             } else {
                                 acumulador += temporal.length() + 1;
@@ -2024,6 +2120,24 @@ public class Principal extends javax.swing.JFrame {
                         raf2.seek(acumulador);
                         raf2.writeByte(35); //numeral
                         raf2.close();
+                        FileWriter fw2 = null;
+                        BufferedWriter bw2 = null;
+                        indice = new File("./indice" + file.getName());
+                        try {
+                            fw2 = new FileWriter(indice, true);
+                            bw2 = new BufferedWriter(fw2);
+                            bw2.write(key + ";" + availList.get(i).getOffset() + ";" + new_buffer.length() + ";");
+                            bw2.flush();
+                        } catch (Exception e) {
+                            //e.printStackTrace();
+                        }
+                        try {
+                            bw2.close();
+                            fw2.close();
+                        } catch (IOException ex) {
+                        }
+                        seguir = false;
+                        availList.remove(i);
                         break;
                     }
                 }
@@ -2048,7 +2162,7 @@ public class Principal extends javax.swing.JFrame {
                         bw2.write(key + ";" + (file.length() - buffer.length()) + ";" + buffer.length() + ";");
                         bw2.flush();
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
                     }
                     try {
                         bw2.close();
@@ -2077,67 +2191,158 @@ public class Principal extends javax.swing.JFrame {
                 sc.close();
             } catch (Exception e) {
                 //e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "¡Error!");
+                //JOptionPane.showMessageDialog(this, "¡Error!");
             }
-            JOptionPane.showMessageDialog(this, "¡Registro Agregado exitosamente!");
+            JOptionPane.showMessageDialog(this, "¡Registro agregado exitosamente!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "¡Ocurrio un error!");
+            //JOptionPane.showMessageDialog(this, "¡Ocurrio un error!");
         }
     }//GEN-LAST:event_jmi_introducir2ActionPerformed
 
     private void jmi_cruzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_cruzarActionPerformed
-        String archivo = JOptionPane.showInputDialog(this, "Ingrese el nombre del segundo archivo: ");
-        String verificar = "";
-        if (archivo.length() > 5) {
-            verificar = archivo.substring(0, 6);
-        }
-        File file1 = new File("./" + archivo + ".txt");
-        if (file1.exists() && (!file.getName().equals(file1.getName())) && (!verificar.equalsIgnoreCase("indice"))) {
-            try {
-                Scanner sc = new Scanner(file1);
-                sc.useDelimiter("&");
-                String cadena1 = sc.next();
-                String acum_registros = "";
-                sc.useDelimiter(";");
-                sc.next();
-                while (sc.hasNext()) {
-                    acum_registros += sc.next() + ";";
-                }
-                sc = new Scanner(file);
-                sc.useDelimiter("&");
-                String cadena2 = sc.next();
-                sc.useDelimiter(";");
-                sc.next();
-                while (sc.hasNext()) {
-                    acum_registros += sc.next() + ";";
-                }
-                if (cadena2.equals(cadena1)) {
-                    JOptionPane.showMessageDialog(this, "¡Los archivos se pueden cruzar!");
-                    String nuevo_nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del nuevo archivo: ");
-                    File file3 = new File("./" + nuevo_nombre + ".txt");
-                    FileWriter fw = new FileWriter("./" + nuevo_nombre + ".txt", true);
-                    BufferedWriter bw = new BufferedWriter(fw);
-                    bw.write(cadena1 + "&;");
-                    bw.write(acum_registros);
-                    bw.flush();
-                    bw.close();
-                    fw.close();
-                } else {
-                    JOptionPane.showMessageDialog(this, "¡Los archivos no se pueden cruzar!");
-                }
-                sc.close();
-            } catch (FileNotFoundException ex) {
-                //Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                //Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            String archivo = JOptionPane.showInputDialog(this, "Ingrese el nombre del segundo archivo: ");
+            String verificar = "";
+            if (archivo.length() > 5) {
+                verificar = archivo.substring(0, 6);
             }
-            JOptionPane.showMessageDialog(this, "¡Archivo cruzado creado exitosamente!");
-        } else {
-            if (file.getName().equals(file1.getName())) {
-                JOptionPane.showMessageDialog(this, "¡Selecciono el mismo archivo!");
+            File file1 = new File("./" + archivo + ".txt");
+            if (file1.exists() && (!file.getName().equals(file1.getName())) && (!verificar.equalsIgnoreCase("indice"))) {
+                try {
+                    Scanner sc = new Scanner(file1);
+                    sc.useDelimiter("&");
+                    String cadena1 = sc.next();
+                    String acum_registros = "";
+                    sc.useDelimiter(";");
+                    sc.next();
+                    int cont = 0;
+                    sc = new Scanner(file);
+                    sc.useDelimiter("&");
+                    String cadena2 = sc.next();
+                    sc.useDelimiter(";");
+                    sc.next();
+                    if (cadena2.equals(cadena1)) {
+                        JOptionPane.showMessageDialog(this, "¡Los archivos se pueden cruzar!");
+                        String nuevo_nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del nuevo archivo: ");
+                        File file3 = new File("./" + nuevo_nombre + ".txt");
+                        FileWriter fw = new FileWriter(file3, true);
+                        BufferedWriter bw = new BufferedWriter(fw);
+                        bw.write(cadena1 + "&;");
+                        bw.flush();
+                        Scanner sc2 = new Scanner(file1);
+                        sc2.useDelimiter("&");
+                        sc2.next();
+                        sc2.useDelimiter(";");
+                        sc2.next();
+                        FileWriter fw2 = new FileWriter("./indice" + nuevo_nombre + ".txt", true);
+                        BufferedWriter bw2 = new BufferedWriter(fw2);
+                        int num = 0;
+                        for (int i = 0; i < campos.size(); i++) {
+                            if (campos.get(i).isLlave()) {
+                                num = i;
+                            }
+                        }
+                        String acum_temp = "";
+                        int nuestro_cont = 0;
+                        while (sc2.hasNext()) {
+                            acum_registros += sc2.next() + ";";
+                            acum_temp += acum_registros;
+                            if (cont == 10) {
+                                bw.write(acum_registros);
+                                bw.flush();
+                                acum_registros = "";
+                                cont = 0;
+                            }
+                            if (!sc2.hasNext()) {
+                                bw.write(acum_registros);
+                                bw.flush();
+                                acum_registros = "";
+                                cont = 0;
+                            }
+                            cont++;
+                            nuestro_cont++;
+                            if (nuestro_cont == campos.size()) {
+                                int cont_campos = 0;
+                                String temp = "";
+                                for (int i = 0; i < acum_temp.length(); i++) {
+                                    if (acum_temp.charAt(i) != ';' && cont_campos == num) {
+                                        temp += acum_temp.charAt(i);
+                                    } else {
+                                        if (acum_temp.charAt(i) == ';') {
+                                            cont_campos++;
+                                        }
+                                    }
+                                }
+                                bw2.write(temp + ";" + file3.length() + ";" + acum_temp.length() + ";");
+                                bw2.flush();
+                                acum_temp = "";
+                                nuestro_cont = 0;
+                            }
+                        }
+                        Scanner sc3 = new Scanner(file);
+                        sc3.useDelimiter("&");
+                        sc3.next();
+                        sc3.useDelimiter(";");
+                        sc3.next();
+                        nuestro_cont = 0;
+                        while (sc3.hasNext()) {
+                            acum_registros += sc3.next() + ";";
+                            acum_temp = acum_registros;
+                            if (cont == 10) {
+                                bw.write(acum_registros);
+                                bw.flush();
+                                acum_registros = "";
+                                cont = 0;
+                            }
+                            if (!sc3.hasNext()) {
+                                bw.write(acum_registros);
+                                bw.flush();
+                                acum_registros = "";
+                                cont = 0;
+                            }
+                            cont++;
+                            nuestro_cont++;
+                            if (nuestro_cont == campos.size()) {
+                                int cont_campos = 0;
+                                String temp = "";
+                                for (int i = 0; i < acum_temp.length(); i++) {
+                                    if (acum_temp.charAt(i) != ';' && cont_campos == num) {
+                                        temp += acum_temp.charAt(i);
+                                    } else {
+                                        if (acum_temp.charAt(i) == ';') {
+                                            cont_campos++;
+                                        }
+                                    }
+                                }
+                                bw2.write(temp + ";" + file3.length() + ";" + acum_temp.length() + ";");
+                                bw2.flush();
+                                acum_temp = "";
+                                nuestro_cont = 0;
+                            }
+                        }
+                        bw.flush();
+                        bw.close();
+                        fw.close();
+                        bw2.close();
+                        fw2.close();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "¡Los archivos no se pueden cruzar!");
+                    }
+                    sc.close();
+                } catch (FileNotFoundException ex) {
+                    //Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    //Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                JOptionPane.showMessageDialog(this, "¡Archivo cruzado creado exitosamente!");
             } else {
-                JOptionPane.showMessageDialog(this, "¡El archivo no existe!");
+                if (file.getName().equals(file1.getName())) {
+                    JOptionPane.showMessageDialog(this, "¡Selecciono el mismo archivo!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "¡El archivo no existe!");
+                }
             }
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_jmi_cruzarActionPerformed
 
@@ -2179,8 +2384,8 @@ public class Principal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "¡El registro que está buscando no se encontró!");
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "¡Error!");
+            //e.printStackTrace();
+            //JOptionPane.showMessageDialog(this, "¡Error!");
         }
     }//GEN-LAST:event_jmi_buscar2ActionPerformed
 
@@ -2207,11 +2412,13 @@ public class Principal extends javax.swing.JFrame {
                         do {
                             salir = false;
                             int longitud = campos.get(respuesta).getLongitud();
-                            System.out.println(campos.get(respuesta).isLlave());
                             if (!campos.get(respuesta).isLlave()) {//revisa que no se pueda modificar la llave principal
                                 if (campos.get(respuesta).getTipo().equals("String")) {
                                     String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud);
-                                    if (cadena.length() > longitud) {
+                                    if (cadena.contains(";") || cadena.contains("#") || cadena.contains("*") || cadena.contains("&")) {
+                                        salir = true;
+                                        JOptionPane.showMessageDialog(this, "La cadena ingresada contiene un caracter invalido");
+                                    } else if (cadena.length() > longitud) {
                                         salir = true;
                                         JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
                                     } else {
@@ -2219,15 +2426,18 @@ public class Principal extends javax.swing.JFrame {
                                         for (int j = cadena.length(); j < longitud; j++) {
                                             nueva_cadena += " ";
                                         }
-                                        buffer += nueva_cadena + ";";
+                                        buffer += nueva_cadena;
                                     }
                                 } else if (campos.get(respuesta).getTipo().equals("Char")) {
                                     String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud);
-                                    if (caracter.length() > longitud) {
+                                    if (caracter.contains(";") || caracter.contains("#") || caracter.contains("*") || caracter.contains("&")) {
+                                        salir = true;
+                                        JOptionPane.showMessageDialog(this, "El caracter ingresado es invalido");
+                                    } else if (caracter.length() > longitud) {
                                         salir = true;
                                         JOptionPane.showMessageDialog(this, "La longitud del campo tiene que ser menor o igual a " + longitud);
                                     } else {
-                                        buffer += caracter + ";";
+                                        buffer += caracter;
                                     }
                                 } else if (campos.get(respuesta).getTipo().equals("Int")) {
                                     int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
@@ -2243,7 +2453,7 @@ public class Principal extends javax.swing.JFrame {
                                         for (int j = num.length(); j < longitud; j++) {
                                             nueva_cadena += " ";
                                         }
-                                        buffer += nueva_cadena + ";";
+                                        buffer += nueva_cadena;
                                     }
                                 } else if (campos.get(respuesta).getTipo().equals("Double")) {
                                     double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
@@ -2256,7 +2466,7 @@ public class Principal extends javax.swing.JFrame {
                                         for (int j = num.length(); j < longitud; j++) {
                                             nueva_cadena += " ";
                                         }
-                                        buffer += nueva_cadena + ";";
+                                        buffer += nueva_cadena;
                                     }
                                 } else if (campos.get(respuesta).getTipo().equals("Short")) {
                                     short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
@@ -2269,7 +2479,7 @@ public class Principal extends javax.swing.JFrame {
                                         for (int j = num.length(); j < longitud; j++) {
                                             nueva_cadena += " ";
                                         }
-                                        buffer += nueva_cadena + ";";
+                                        buffer += nueva_cadena;
                                     }
                                 } else if (campos.get(respuesta).getTipo().equals("Long")) {
                                     long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
@@ -2282,7 +2492,7 @@ public class Principal extends javax.swing.JFrame {
                                         for (int j = num.length(); j < longitud; j++) {
                                             nueva_cadena += " ";
                                         }
-                                        buffer += nueva_cadena + ";";
+                                        buffer += nueva_cadena;
                                     }
                                 } else {//float
                                     float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre() + "\nLongitud: " + longitud));
@@ -2295,93 +2505,107 @@ public class Principal extends javax.swing.JFrame {
                                         for (int j = num.length(); j < longitud; j++) {
                                             nueva_cadena += " ";
                                         }
-                                        buffer += nueva_cadena + ";";
+                                        buffer += nueva_cadena;
                                     }
                                 }
-                                //Modificar el registro
-                                RandomAccessFile raf = new RandomAccessFile(file, "rw");
-                                raf.seek(buscado.offset);
-                                byte[] nuevo_registro = new byte[buscado.size];
-                                for (int i = 0; i < buscado.size; i++) {
-                                    nuevo_registro[i] = raf.readByte();
-                                }
-                                String nuevo_registro1 = "";
-                                for (int i = 0; i < nuevo_registro.length; i++) {
-                                    nuevo_registro1 += ((char) nuevo_registro[i]);
-                                }
-                                raf.close();
-                                String modificado = "";
-                                String acumulador = "";
-                                int contador_campo = 0;
-                                for (int i = 0; i < nuevo_registro1.length(); i++) {
-                                    if (nuevo_registro1.charAt(i) != ';') {
-                                        acumulador += nuevo_registro1.charAt(i);
-                                    } else {
-                                        if (contador_campo != respuesta) {
-                                            if (i != nuevo_registro.length - 1) {
-                                                modificado += acumulador + ";";
-                                            } else {
-                                                modificado += acumulador;
-                                            }
-                                        } else {
-                                            if (i != nuevo_registro.length - 1) {
-                                                modificado += buffer + ";";
-                                            } else {
-                                                modificado += buffer;
-                                            }
-                                        }
-                                        contador_campo++;
-                                        acumulador = "";
-                                    }
-                                }
-                                System.out.println(modificado);
-                                if (modificado.length() <= buscado.getSize()) {
-                                    RandomAccessFile rf = new RandomAccessFile(file, "rw");
-                                    int tam = modificado.length();
-                                    for (int i = 0; i < (buscado.getSize() - tam - 1); i++) {
-                                        modificado += " ";
-                                    }
-                                    modificado += ";";
-                                    rf.seek(buscado.getOffset());
-                                    rf.writeBytes(modificado);
-                                    rf.close();
-                                    JOptionPane.showMessageDialog(this, "¡Registro modificado exitosamente!");
-                                } else {
-                                    JOptionPane.showMessageDialog(this, "¡El nuevo registro no cumple con los requisitos!");
-                                }
+
                             } else {
                                 JOptionPane.showMessageDialog(this, "¡No se puede modificar la llave principal!");
                                 salir = false;
                             }
                         } while (salir);
+                        //Modificar el registro
+                        RandomAccessFile raf = new RandomAccessFile(file, "rw");
+                        raf.seek(buscado.offset);
+                        byte[] nuevo_registro = new byte[buscado.size];
+                        for (int i = 0; i < buscado.size; i++) {
+                            nuevo_registro[i] = raf.readByte();
+                        }
+                        String nuevo_registro1 = "";
+                        for (int i = 0; i < nuevo_registro.length; i++) {
+                            nuevo_registro1 += ((char) nuevo_registro[i]);
+                        }
+                        raf.close();
+                        String modificado = "";
+                        String acumulador = "";
+                        int contador_campo = 0;
+                        for (int i = 0; i < nuevo_registro1.length(); i++) {
+                            if (nuevo_registro1.charAt(i) != ';') {
+                                acumulador += nuevo_registro1.charAt(i);
+                            } else {
+                                if (contador_campo != respuesta) {
+                                    if (i != nuevo_registro1.length() - 1) {
+                                        modificado += acumulador + ";";
+                                    } else {
+                                        modificado += acumulador;
+                                    }
+                                } else {
+                                    if (i != nuevo_registro1.length() - 1) {
+                                        modificado += buffer + ";";
+                                    } else {
+                                        modificado += buffer;
+                                    }
+                                }
+                                contador_campo++;
+                                acumulador = "";
+                            }
+                        }
+                        if (modificado.length() <= buscado.getSize()) {
+                            RandomAccessFile rf = new RandomAccessFile(file, "rw");
+                            int tam = modificado.length();
+                            for (int i = 0; i < (buscado.getSize() - tam - 1); i++) {
+                                modificado += " ";
+                            }
+                            modificado += ";";
+                            rf.seek(buscado.getOffset());
+                            rf.writeBytes(modificado);
+                            rf.close();
+                            JOptionPane.showMessageDialog(this, "¡Registro modificado exitosamente!");
+                        } else {
+                            JOptionPane.showMessageDialog(this, "¡El nuevo registro no cumple con los requisitos!");
+                        }
                     } else {//variable
                         String buffer = "";
                         if (!campos.get(respuesta).isLlave()) {
-                            if (campos.get(respuesta).getTipo().equals("String")) {
-                                String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre());
-                                buffer += cadena;
-                            } else if (campos.get(respuesta).getTipo().equals("Char")) {
-                                String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre());
-                                buffer += caracter;
-                            } else if (campos.get(respuesta).getTipo().equals("Int")) {
-                                int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
-                                if (campos.get(respuesta).isLlave()) {
-                                    key = numero;
+                            boolean verificar = false;
+                            do {
+                                if (campos.get(respuesta).getTipo().equals("String")) {
+                                    String cadena = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre());
+                                    if (cadena.contains(";") || cadena.contains("#") || cadena.contains("*") || cadena.contains("&")) {
+                                        verificar = true;
+                                        JOptionPane.showMessageDialog(this, "La cadena ingresada contien un caracte invalido");
+                                    } else {
+                                        buffer += cadena;
+                                    }
+                                } else if (campos.get(respuesta).getTipo().equals("Char")) {
+                                    String caracter = JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre());
+                                    if (caracter.contains(";") || caracter.contains("#") || caracter.contains("*") || caracter.contains("&")) {
+                                        verificar = true;
+                                        JOptionPane.showMessageDialog(this, "La cadena ingresada contien un caracte invalido");
+                                    } else {
+                                        buffer += caracter;
+                                    }
+
+                                } else if (campos.get(respuesta).getTipo().equals("Int")) {
+                                    int numero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
+                                    if (campos.get(respuesta).isLlave()) {
+                                        key = numero;
+                                    }
+                                    buffer += numero;
+                                } else if (campos.get(respuesta).getTipo().equals("Double")) {
+                                    double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
+                                    buffer += numero;
+                                } else if (campos.get(respuesta).getTipo().equals("Short")) {
+                                    short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
+                                    buffer += peque;
+                                } else if (campos.get(respuesta).getTipo().equals("Long")) {
+                                    long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
+                                    buffer += largo;
+                                } else {//float
+                                    float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
+                                    buffer += flotante;
                                 }
-                                buffer += numero;
-                            } else if (campos.get(respuesta).getTipo().equals("Double")) {
-                                double numero = Double.parseDouble(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
-                                buffer += numero;
-                            } else if (campos.get(respuesta).getTipo().equals("Short")) {
-                                short peque = Short.parseShort(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
-                                buffer += peque;
-                            } else if (campos.get(respuesta).getTipo().equals("Long")) {
-                                long largo = Long.parseLong(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
-                                buffer += largo;
-                            } else {//float
-                                float flotante = Float.parseFloat(JOptionPane.showInputDialog(this, "Ingrese los datos del campo " + campos.get(respuesta).getNombre()));
-                                buffer += flotante;
-                            }
+                            } while (verificar);
                             //Modificar el registro
                             RandomAccessFile raf = new RandomAccessFile(file, "rw");
                             raf.seek(buscado.offset);
@@ -2402,13 +2626,13 @@ public class Principal extends javax.swing.JFrame {
                                     acumulador += nuevo_registro1.charAt(i);
                                 } else {
                                     if (contador_campo != respuesta) {
-                                        if (i != nuevo_registro.length - 1) {
+                                        if (i != nuevo_registro1.length() - 1) {
                                             modificado += acumulador + ";";
                                         } else {
                                             modificado += acumulador;
                                         }
                                     } else {
-                                        if (i != nuevo_registro.length - 1) {
+                                        if (i != nuevo_registro1.length() - 1) {
                                             modificado += buffer + ";";
                                         } else {
                                             modificado += buffer;
@@ -2420,9 +2644,9 @@ public class Principal extends javax.swing.JFrame {
                             }
                             if (modificado.length() <= buscado.getSize()) {
                                 RandomAccessFile rf = new RandomAccessFile(file, "rw");
-                                System.out.println(nuevo_registro1+ " "+buscado.getSize()+" "+modificado + " "+modificado.length());
+                                System.out.println(nuevo_registro1 + " " + buscado.getSize() + " " + modificado + " " + modificado.length());
                                 int tam = modificado.length();
-                                for (int i = 0; i < (nuevo_registro1.length() - tam-1); i++) {
+                                for (int i = 0; i < (nuevo_registro1.length() - tam - 1); i++) {
                                     modificado += " ";
                                 }
                                 modificado += ";";
@@ -2446,7 +2670,7 @@ public class Principal extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "¡Error!");
+            //JOptionPane.showMessageDialog(this, "¡Error!");
         }
     }//GEN-LAST:event_jmi_modificar2ActionPerformed
 
@@ -2524,6 +2748,13 @@ public class Principal extends javax.swing.JFrame {
             }
             posiciones.push(nuevo_acumulador);
             jb_atras.setEnabled(true);
+            DefaultTableModel model2 = (DefaultTableModel) jt_registros.getModel();
+            if (model2.getRowCount() > 0) {
+                jl_registros.setText((cont_registros + 1) + " - " + (cont_registros + model2.getRowCount()));
+                cont_registros += model2.getRowCount();
+            } else {
+                jl_registros.setText("0");
+            }
         }
     }//GEN-LAST:event_jb_siguienteMouseClicked
 
@@ -2533,6 +2764,7 @@ public class Principal extends javax.swing.JFrame {
             posiciones.pop();
             int nuevo_acumulador = (int) posiciones.top();
             DefaultTableModel model = (DefaultTableModel) jt_registros.getModel();
+            cont_registros -= model.getRowCount();
             model.setRowCount(0);
             try {
                 RandomAccessFile raf = new RandomAccessFile(file, "rw");
@@ -2606,6 +2838,12 @@ public class Principal extends javax.swing.JFrame {
             if (posiciones.size <= 1) {
                 jb_atras.setEnabled(false);
             }
+            DefaultTableModel model2 = (DefaultTableModel) jt_registros.getModel();
+            if (model2.getRowCount() > 0) {
+                jl_registros.setText((cont_registros - model2.getRowCount() + 1) + " - " + cont_registros);
+            } else {
+                jl_registros.setText("0");
+            }
         }
     }//GEN-LAST:event_jb_atrasMouseClicked
 
@@ -2622,6 +2860,8 @@ public class Principal extends javax.swing.JFrame {
             model.setColumnCount(0);
             jmi_abrir.setEnabled(true);
             jmi_cerrar.setEnabled(false);
+            cont_registros = 0;
+            jl_registros.setText("0");
             JOptionPane.showMessageDialog(this, "¡Archivo cerrado exitosamente!");
         }
     }//GEN-LAST:event_jmi_cerrarActionPerformed
@@ -2696,24 +2936,24 @@ public class Principal extends javax.swing.JFrame {
                     System.out.println(arbol);//aqui
                     sc.close();
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "¡Error!");
+                    //JOptionPane.showMessageDialog(this, "¡Error!");
                 }
                 JOptionPane.showMessageDialog(this, "¡Registro borrado exitosamente!");
             } else {
                 JOptionPane.showMessageDialog(this, "¡El registro que desea eliminar no se encontró!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "¡Error!");
+            //JOptionPane.showMessageDialog(this, "¡Error!");
         }
     }//GEN-LAST:event_jmi_eliminar2ActionPerformed
 
     private void jmi_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_excelActionPerformed
-        /*Excel e = new Excel();
+        Excel e = new Excel();
         try {
             e.exportarExcel(file, campos.size(), campos);
         } catch (IOException ex) {
-           // Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+            // Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jmi_excelActionPerformed
 
     private void jmi_xmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_xmlActionPerformed
@@ -2721,13 +2961,10 @@ public class Principal extends javax.swing.JFrame {
             Scanner sc = new Scanner(file);
             sc.useDelimiter(";");
             sc.next();
-            //DocumentBuilderFactory
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-            //DocumentBuilder
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            //Document
             Document xmlDoc = docBuilder.newDocument();
-            //Build XML elements
+            //-> Estructura
             //<Campos>
             //  <Campo>
             //      <Nombre> tal </Nombre>
@@ -2768,7 +3005,7 @@ public class Principal extends javax.swing.JFrame {
             while (sc.hasNext()) {
                 Element registro = xmlDoc.createElement("Registro");
                 for (int i = 0; i < campos.size(); i++) {
-                    Text contenido = xmlDoc.createTextNode(sc.next());//Contenido del campo
+                    Text contenido = xmlDoc.createTextNode(sc.next().trim());//Contenido del campo
                     Element name = xmlDoc.createElement(campos.get(i).getNombre());//nombre del campo
                     name.appendChild(contenido);//se le pone el contenido al campo
                     registro.appendChild(name);//se le agrega el campo al registro
@@ -2801,8 +3038,8 @@ public class Principal extends javax.swing.JFrame {
             serial.serialize(xmlDoc);
             JOptionPane.showMessageDialog(this, "¡Exportado a XML exitosamente!");
         } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "NOP");
+            //e.printStackTrace();
+            //JOptionPane.showMessageDialog(this, "NOP");
         }
     }//GEN-LAST:event_jmi_xmlActionPerformed
 
@@ -2848,6 +3085,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.ButtonGroup dato2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -2869,6 +3110,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jb_salir_var;
     private javax.swing.JButton jb_siguiente;
     private javax.swing.JLabel jl_archivoactual;
+    private javax.swing.JLabel jl_registros;
     private javax.swing.JMenu jm_archivo;
     private javax.swing.JMenu jm_campo;
     private javax.swing.JMenu jm_estandarizacion;

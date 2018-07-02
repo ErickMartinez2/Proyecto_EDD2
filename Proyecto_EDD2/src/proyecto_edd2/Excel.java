@@ -1,6 +1,6 @@
 package proyecto_edd2;
 
-/*import java.awt.Desktop;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,11 +12,11 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;*/
+import org.apache.poi.ss.usermodel.Workbook;
 
 public class Excel {
 
-    /*public void exportarExcel(File file, int size, ArrayList<Campo> campos) throws IOException {
+    public void exportarExcel(File file, int size, ArrayList<Campo> campos) throws IOException {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de excel", "xls");
         chooser.setFileFilter(filter);
@@ -101,5 +101,5 @@ public class Excel {
                 throw e;
             }
         }
-    }*/
+    }
 }
